@@ -1,3 +1,7 @@
+#
+#
+#  see https://00819.blogspot.com/2019/03/new-model-cli-6-month-delta-eps-pa-uc.html for the detail
+#
 # New model CLI 6 month delta, EPS, PA, UC and CS
 # when k2k is like
 k2k
