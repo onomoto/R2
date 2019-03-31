@@ -1,0 +1,37 @@
+#
+plot.default(na.trim(diff(cli_xts$oecd["2006-07-01::"],lag=6)),cli_xts$oecd["2007::"],type='b')
+tmp <- par('usr')
+plot.default(na.trim(diff(cli_xts$oecd["2006-07-01::"],lag=6)),cli_xts$oecd["2007::"],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]))
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2018-07-01::2019"],lag=6)),cli_xts$oecd["2019"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=9,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2017-07-01::2018"],lag=6)),cli_xts$oecd["2018"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=2,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2016-07-01::2017"],lag=6)),cli_xts$oecd["2017"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=3,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2015-07-01::2016"],lag=6)),cli_xts$oecd["2016"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=4,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2014-07-01::2015"],lag=6)),cli_xts$oecd["2015"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=5,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2013-07-01::2014"],lag=6)),cli_xts$oecd["2014"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=6,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2012-07-01::2013"],lag=6)),cli_xts$oecd["2013"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=7,lwd=2,pch='x')
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2011-07-01::2012"],lag=6)),cli_xts$oecd["2012"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=8,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2010-07-01::2011"],lag=6)),cli_xts$oecd["2011"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=9,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2009-07-01::2010"],lag=6)),cli_xts$oecd["2010"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=5,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2008-07-01::2009"],lag=6)),cli_xts$oecd["2009"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=6,lwd=2)
+
+#
+# color scheme doesn't work after this line by the unknown reason.
+#
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2007-07-01::2008"],lag=6)),cli_xts$oecd["2008"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=2,lwd=2)
+par(new=T)
+plot.default(na.trim(diff(cli_xts$oecd["2006-07-01::2007"],lag=6)),cli_xts$oecd["2007"],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=3,lwd=2,type='p')
+
+abline(v=0)
+abline(h=100)
