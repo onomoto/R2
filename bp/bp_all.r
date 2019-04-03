@@ -4,7 +4,7 @@ Sys.setenv(TZ=Sys.timezone())
 #
 # Update below to check file.exists.
 #
-if(file.exists("~/~/Downloads/bp2018.csv")){
+if(file.exists("~/Downloads/bp2018.csv")){
   bp2018 <- read.csv("~/Downloads/bp2018.csv")
   system("rm \"$HOME/Downloads/bp2018.csv\"")
 }else{
