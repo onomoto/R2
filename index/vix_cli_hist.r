@@ -1,3 +1,6 @@
+#
+# https://00819.blogspot.com/2019/03/vix-vs-cli-6-month-delta.html
+#
 # downloads ^VIX historical data from Yahoo Finance.
 #
 # VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
