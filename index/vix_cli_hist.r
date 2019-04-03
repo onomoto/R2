@@ -11,7 +11,11 @@ if(file.exists("~/Downloads/VIX.csv")){
   print("!!!FILE VIX.csv DOESN'T EXIST!!!!!")
 }
 last(VIX)
-end_date <- "2018-12-01"
+# end_date <- "2018-12-01"
+#
+#  PARAMETER! CAUTION!!!
+#
+end_date <- last(index(cli_xts))
 
 # select dates when CLI moves negative during 6 months.
 # mnt <- index(cli_xts$oecd["2000::2018"][cli_xts$oecd["2000::2018"]/as.vector(cli_xts$oecd["1999-07-01::2018-06-01"]) < 1])
