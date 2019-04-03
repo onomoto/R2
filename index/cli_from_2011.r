@@ -1,4 +1,7 @@
 #
+# plese refer the latter half of
+# https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html
+#
 plot.default(na.trim(diff(cli_xts$oecd["2010-07-01::"],lag=6)),cli_xts$oecd["2011::"],type='b')
 tmp <- par('usr')
 plot.default(na.trim(diff(cli_xts$oecd["2010-07-01::"],lag=6)),cli_xts$oecd["2011::"],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]))
