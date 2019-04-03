@@ -1,3 +1,7 @@
+#
+# https://00819.blogspot.com/2018/09/prepare-data-getsymbols-autoarima.html
+#
+
 len_mon <- 48  # # of months to predict
 gdp_g_r <- 1.04 # pesumed GDP growth rate
 i <- seq(2,len_mon/3,1)  # seq of quarters to predict
@@ -40,5 +44,5 @@ length(PAq)
 # result.gpuc <- lm(apply.quarterly(SP5[k2k],mean)[,1] ~ PAq[k2k] * UCq[k2k] * G[k2k]*CSq[k2k] - UCq[k2k] -G[k2k] - PAq[k2k]*G[k2k] - UCq[k2k]*G[k2k]*CSq[k2k])
 # summary(lm(apply.quarterly(SP5[k2k],mean)[,1] ~ PAq[k2k] * UCq[k2k] * G[k2k]*CSq[k2k] - UCq[k2k] -G[k2k] - PAq[k2k]*G[k2k] - UCq[k2k]*G[k2k]*CSq[k2k]))
 # SP5.result <- merge(residuals(result.gpuc),predict(result.gpuc),residuals(result.eps),predict(result.eps))
-# 
+#
 # GSPC.predict <- merge(to.monthly(GSPC)[substr(k2k,11,23)],last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,2]),n=length(SP5.result[,1])*3+1)$y,n=length(to.monthly(GSPC)[,1][substr(k2k,11,23)])),last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,4]),n=length(SP5.result[,1])*3+1)$y,n=length(to.monthly(GSPC)[,1][substr(k2k,11,23)])),suffixes=c('','spline','eps'))
