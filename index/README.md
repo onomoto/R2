@@ -8,4 +8,5 @@ this directory contains source code to handle macroecomics data and index histor
 * getsymbols_all.r : download and update all data related to GDP, PAYEMS, UNDCONSA ans SPCS10RSA, other data such S&P500, OECD composite leading indicator must be updated separately.
 * nikkei_gspc_jpy.r : draw the graph to represent lm(nikkei ~ spx + usdjpy).
 * eps_lm.r : the lattest model for spx. lm(spx ~ eps + PA + UC + CS + cli$oecd 6 month delta).
+* CSV : the director to stow CSV and other format data files.
 
