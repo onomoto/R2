@@ -3,6 +3,11 @@
 #  see https://00819.blogspot.com/2019/03/new-model-cli-6-month-delta-eps-pa-uc.html for the detail
 #
 # New model CLI 6 month delta, EPS, PA, UC and CS
+#
+# 1)this script will calculate eps model and also merge result from the other model.
+# 2)outputs will be stored in GSPC.predict.
+# 3)draw the graph for actual and theory
+#
 # when k2k is like
 k2k
 # [1] "2000-01-01::2018-12-31"
