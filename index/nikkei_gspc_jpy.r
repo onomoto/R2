@@ -1,12 +1,12 @@
 #
 # https://00819.blogspot.com/2018/02/calculate-nikkei225-vol3.html
-# 
-getSymbols("^GSPC")
+#
+getSymbols("^GSPC",auto.assign=TRUE)
 k3 <- paste("2007-01-01", index(last(GSPC)),sep="::")
 k3
 
 # download other data
-getSymbols("NIKKEI225",src="FRED") # download nikkei 225
+getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
 # getSymbols("DEXJPUS", src = "FRED")
 # getSymbols("YJUSDJPY",src="yahooj")
 getSymbols('YJUSDJPY', src="yahooj",auto.assign=TRUE)
