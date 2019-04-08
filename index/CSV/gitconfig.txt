@@ -19,3 +19,6 @@ remote.origin.url=https://github.com/onomoto/R
 remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
 branch.master.remote=origin
 branch.master.merge=refs/heads/master
+### added latter
+remote.upstream.url=https://github.com/onomoto/R
+remote.upstream.fetch=+refs/heads/*:refs/remotes/upstream/*
