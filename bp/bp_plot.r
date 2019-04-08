@@ -51,10 +51,10 @@ axis(4,at=c(135,130,125,120,115,85,80,75,70))
 bp.day <- apply.daily(bp.bangkok,mean)
 d <- intersect(intersect(index(bp.day["2019"]),seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days'))-17896,intersect(index(bp.day["2018"]),seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days'))-(17896-365))
 
-bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]]
-bp.day[seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]
-
-merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18"))
+# bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]]
+# bp.day[seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]
+# 
+# merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18"))
 
 
 plot(merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18")))
