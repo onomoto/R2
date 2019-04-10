@@ -7,3 +7,5 @@
 sed -n '/USA/p' CLI3.csv |awk -F, '{print $6"-01,"$7}'  |sed 's/\"//g' |awk 'BEGIN{print "DATE,DATA"}{print $0}' > usa.csv
 # extract OECD entries and exclude OECDE
 sed -n '/OECD[^E]/p' CLI3.csv |awk -F, '{print $6"-01,"$7}'  |sed 's/\"//g' |awk 'BEGIN{print "DATE,DATA"}{print $0}' > oecd.csv
+# 
+sed -n '/CHN/p' CLI3.csv |awk -F, '{print $6"-01,"$7}'  |sed 's/\"//g' |awk 'BEGIN{print "DATE,DATA"}{print $0}' > chn.csv
