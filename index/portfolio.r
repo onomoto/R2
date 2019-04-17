@@ -30,9 +30,7 @@ fas_s4 <- c(rep(0,length(date_stream)-length(fas_l4)),rep(500,length(fas_l4)))
 # 39.8312 was the price to be soldl at  2018-12-24.
 #
 fas_c4 <- c(rep(0,length(date_stream)-length(fas_l4)),rep(500*39.8312,length(fas_l4)))
-
-
-
+#
 # special capital gain divident for SPXL $1.6. 10% US income tax for Firstrade
 #
 spxl_l1 <- seq(as.Date("2017-12-15"),Sys.Date(),by="days")
