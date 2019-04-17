@@ -41,10 +41,10 @@ spxl_c1 <- c(rep(0,length(date_stream)-length(spxl_l1)),rep(23412+9326,length(sp
 # sold 1000 shares at 2018-12-24
 #
 spxl_l2 <- seq(as.Date("2018-12-24"),Sys.Date(),by="days")
-spxl_s2 <- c(rep(0,length(date_stream)-length(spxl_l4)),rep(1000,length(spxl_l4)))
+spxl_s2 <- c(rep(0,length(date_stream)-length(spxl_l2)),rep(1000,length(spxl_l2)))
 # record for materialized cash after 2017-12-04
 # 69.3 was the price to be soldl at  2017-12-04.
-spxl_c2 <- c(rep(0,length(date_stream)-length(spxl_l4)),rep(1000*29.557,length(spxl_l4)))
+spxl_c2 <- c(rep(0,length(date_stream)-length(spxl_l2)),rep(1000*29.557,length(spxl_l2)))
 
 
 
@@ -64,11 +64,11 @@ spxl_shares <- spxl_shares - spxl_s2
 
 # candleChart(to.weekly(fas_shares * FAS[,4] +spxl_shares * SPXL[,4]),theme='white')
 
-candleChart(to.weekly(fas_shares * FAS[,4] +spxl_shares * SPXL[,4]+as.xts(fas_c2+fas_c3+spxl_c4+spxl_c1+spxl_c2,index(fas_shares))),theme='white')
+candleChart(to.weekly(fas_shares * FAS[,4] +spxl_shares * SPXL[,4]+as.xts(fas_c2+fas_c3+fas_c4+spxl_c1+spxl_c2,index(fas_shares))),theme='white')
 
 # store xts data into weekly_pf
 
-weekly_pf <- to.weekly(fas_shares * FAS[,4] +spxl_shares * SPXL[,4]+as.xts(fas_c2+fas_c3+spxl_c4+spxl_c1+spxl_c2,index(fas_shares)))
+weekly_pf <- to.weekly(fas_shares * FAS[,4] +spxl_shares * SPXL[,4]+as.xts(fas_c2+fas_c3+fas_c4+spxl_c1+spxl_c2,index(fas_shares)))
 colnames(weekly_pf)[1] <- 'open'
 colnames(weekly_pf)[2] <- 'high'
 colnames(weekly_pf)[3] <- 'low'
