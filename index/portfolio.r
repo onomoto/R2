@@ -65,6 +65,12 @@ spxl_shares <- spxl_shares - spxl_s2
 candleChart(to.weekly(fas_shares * FAS[,4] +spxl_shares * SPXL[,4]+as.xts(fas_c2+fas_c3+fas_c4+spxl_c1+spxl_c2,index(fas_shares))),theme='white')
 t <- as.xts(rep(2150000,length(weekly_pf[,1])),index(weekly_pf))
 addTA(t,on=1,legend="",lty=2,order=10)
+open_v <- as.vector(weekly_pf[1,1])
+close_v <- as.vector(weekly_pf[length(weekly_pf[,1]),4])
+ratio <- (close_v/open_v)**(1/length(weekly_pf[,1]))
+t <- as.xts(open_v*ratio**(1:length(weekly_pf[,1])),index(weekly_pf))
+addTA(t,on=1,legend="",lty=2,order=10)
+
 
 # store xts data into weekly_pf
 
