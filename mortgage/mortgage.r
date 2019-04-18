@@ -1,4 +1,4 @@
-mortgage <- function(P=5000000, I=1, L=300, amort=T, plotData=T) {
+mortgage <- function(P=50000000, I=1, L=300, amort=T, plotData=T) {
 	J <- I/(12 * 100)
 	N <- L
 	M <- P*J/(1-(1+J)^(-N))
@@ -34,7 +34,7 @@ mortgage <- function(P=5000000, I=1, L=300, amort=T, plotData=T) {
 					     )
 		aDFyear <<- aDFyear
 		cat("The amortization data for each of the", N, "months are stored in \"aDFmonth\".\n\n")
-		cat("The amortization data for each of the", L, "years are stored in \"aDFyear\".\n\n")
+		cat("The amortization data for each of the", L/12, "years are stored in \"aDFyear\".\n\n")
 	}
 	if(plotData==T) {
 	barplot(t(aDFyear[,c(3,4)]),
@@ -49,7 +49,7 @@ mortgage <- function(P=5000000, I=1, L=300, amort=T, plotData=T) {
 cat("The monthly mortgage payments and amortization rates can be calculted with the mortgage() function like this: \n
 	mortgage(P=500000, I=6, L=30, amort=T, plotData=T)
 		P = principal (loan amount)
-		I = annual interest rate
+		I = annual interest rate by %.
 		L = length of the loan in months(300=25years,120=10years)
 
 
