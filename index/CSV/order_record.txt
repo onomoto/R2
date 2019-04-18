@@ -1,0 +1,60 @@
+----------------------------------------------------
+Fully Executed	13 Jan 2014	Buy
+P-500589	FAS	300 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 300 shares	91.3799 	USD
+---------------------------------------------------
+Fully Executed	09 Jan 2014	Buy
+P-449838	FAS	100 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 100 shares	91.6699	USD
+---------------------------------------------------
+Fully Executed	09 Jan 2014	Buy
+P-449832	SPXL	300 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 300 shares	 62.2399	USD
+---------------------------------------------------
+Fully Executed	02 Jan 2014	Buy
+P-296549	SPXL	200 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 200 shares	62.56	USD
+---------------------------------------------------
+Fully Executed	30 Dec 2013	Buy
+P-262561	SPXL	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	62.93	USD
+---------------------------------------------------
+Fully Executed	26 Dec 2013	Buy
+P-878321	FAS	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	89.81	USD
+---------------------------------------------------
+Fully Executed	26 Dec 2013	Buy
+P-878316	SPXL	1,000 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 1,000 shares	62.66	USD	
+---------------------------------------------------
+Fully Executed	23 Dec 2013	Buy
+P-864555	SPXL	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	61.57	USD
+---------------------------------------------------
+Fully Executed	23 Dec 2013	Buy
+P-864552	FAS	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	88.50	USD
+---------------------------------------------------
+Fully Executed	20 Dec 2013	Buy
+P-844082	FAS	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	86.00	USD
+---------------	--------------	----------	---
+Fully Executed	08 Dec 2013	Buy
+P-600562	SPXL	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	59.85	USD
+---------------------------------------------------
+Fully Executed	06 Dec 2013	Buy
+P-600562(598416001)	SPXL	500 shares
+Outstanding Qty: 0 shares
+Total Executed Qty: 500 shares	58.80USD
