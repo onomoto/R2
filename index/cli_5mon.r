@@ -35,9 +35,14 @@ func <- function(s="2011-01-01::",l=9){
     # print(offset+i*12+11)
     par(new=T)
     plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+11)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+11)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2)
+    if(i == 6){
+      par(new=T)
+      plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+11)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+11)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x')
+    }
     par(new=T)
   }
   abline(v=0)
   abline(h=100)
   abline(v=seq(0.5,-1,-0.1),col=6,lty=3)
 }
+func("2001-01-01::",9)
