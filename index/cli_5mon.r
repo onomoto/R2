@@ -13,12 +13,12 @@ func <- function(s="1992-01-01::",l=9){
   offset <- length(seq(as.Date(head_of_record),as.Date(s),by='months'))
   len_mon <- l*12-1
   # len_mon <- l
-  print(offset)
-  print(len_mon)
-  print(seq(as.Date(head_of_record),as.Date(s),by='months')[offset])
-  print(seq(as.Date(head_of_record),as.Date("2100-01-01"),by='months')[offset+len_mon])
+  # print(offset)
+  # print(len_mon)
+  # print(seq(as.Date(head_of_record),as.Date(s),by='months')[offset])
+  # print(seq(as.Date(head_of_record),as.Date("2100-01-01"),by='months')[offset+len_mon])
 
-  print(offset)
+  # print(offset)
   plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b')
   # print(offset)
   tmp <- par('usr')
@@ -28,8 +28,8 @@ func <- function(s="1992-01-01::",l=9){
   for(i in seq(0,l-1,1)){
     print(i)
     # print(offset)
-    print(offset+i*12)
-    print(offset+i*12+11)
+    # print(offset+i*12)
+    # print(offset+i*12+11)
     par(new=T)
     plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+11)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+11)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2)
     par(new=T)
