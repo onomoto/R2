@@ -4,9 +4,12 @@
 # lag is set to  5 months.
 #
 #   s = start date of the spiral like "1992-01-01::" DON'T FORGET DOUBLE COLON!!
-#   l = length of years like 9. use equal or less than 9
+#       Don't set before "1964-01-01"
+#   l = length of years like 9. recommend to use equal or less than 9. Don't exceed the current end of data.
 #
-func <- function(s="1992-01-01::",l=9){
+#   use like  > func("2001-01-01::",5)
+#
+func <- function(s="2011-01-01::",l=9){
 
   head_of_record <- "1964-01-01::"
   print(head_of_record)
