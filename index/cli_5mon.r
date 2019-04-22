@@ -32,7 +32,7 @@ func <- function(s="2011-01-01::",l=9){
   # print(offset)
   tmp <- par('usr')
   # par(new=T)
-  plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),lwd=1)
+  plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),lwd=1,main=paste("from",substr(s,1,9),len_mon+1,"months",sep=" "),ylab="",xlab="")
   par(new=T)
   for(i in seq(0,l-1,1)){
     print(i)
@@ -52,11 +52,11 @@ func <- function(s="2011-01-01::",l=9){
     # print(max_length)
     # print(len_mon)
     # print(offset)
-    plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2)
+    plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2,ylab="",xlab="",axes = F)
     if(i == 6){
       # when i ==6 "yellow" is used for dots, but offers poor visibility. plot 'x' upon them to improve.
       par(new=T)
-      plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x')
+      plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x',ylab="",xlab="",axes = F)
     }
     par(new=T)
   }
