@@ -14,7 +14,13 @@ func <- function(s="2011-01-01::",l=9){
   head_of_record <- "1964-01-01::"
   print(head_of_record)
   offset <- length(seq(as.Date(head_of_record),as.Date(s),by='months'))
+  max_length <- length(seq(as.Date(head_of_record),as.Date(index(last(cli_xts))),by='months'))
   len_mon <- l*12-1
+  # when the end period exceeds the current end, adjust # of months and years to avoid the counters go beyond the limit.
+  if(offset + len_mon > max_length){
+    len_mon <- max_length - offset
+    l <- ceiling(len_mon/12)
+  }
   # len_mon <- l
   # print(offset)
   # print(len_mon)
@@ -34,10 +40,22 @@ func <- function(s="2011-01-01::",l=9){
     # print(offset+i*12)
     # print(offset+i*12+11)
     par(new=T)
-    plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+11)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+11)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2)
+      # when the end period exceeds the current end, adjust # of months to avoid OOB
+      # otherwise months to go in each iteration is always 11.
+    if(offset+i*12+11 < max_length){
+      m <- 11
+    }else{
+      #adjust months to go as go within max_length.
+      m <- max_length - (offset+i*12)
+    }
+    # print(m)
+    # print(max_length)
+    # print(len_mon)
+    # print(offset)
+    plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2)
     if(i == 6){
       par(new=T)
-      plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+11)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+11)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x')
+      plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x')
     }
     par(new=T)
   }
