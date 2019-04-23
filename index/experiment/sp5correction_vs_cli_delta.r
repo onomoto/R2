@@ -14,7 +14,7 @@ cat("bp ");print(length(ind_bp))
 cat("bm ");print(length(ind_bm))
 cat("mp ");print(length(ind_mp))
 cat("pm ");print(length(ind_pm))
-cat("pm+bm+mp ");print(length(append(append(ind_pm,ind_bm),ind_mp)))
+# cat("pm+bm+mp ");print(length(append(append(ind_pm,ind_bm),ind_mp)))
 cat("pm+bm+mp ");print(length(c(ind_pm,ind_bm,ind_mp)))
 
 
