@@ -16,6 +16,7 @@ func <- function(s="2011-01-01::",l=9){
   offset <- length(seq(as.Date(head_of_record),as.Date(s),by='months'))
   max_length <- length(seq(as.Date(head_of_record),as.Date(index(last(cli_xts))),by='months'))
   len_mon <- l*12-1
+  lag_month <- 5
   # when the end period exceeds the current end, adjust # of months and years to avoid the counters go beyond the limit.
   if(offset + len_mon > max_length){
     len_mon <- max_length - offset
@@ -28,11 +29,11 @@ func <- function(s="2011-01-01::",l=9){
   # print(seq(as.Date(head_of_record),as.Date("2100-01-01"),by='months')[offset+len_mon])
 
   # print(offset)
-  plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b')
+  plot.default(na.trim(diff(cli_xts$oecd,lag=lag_month))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b')
   # print(offset)
   tmp <- par('usr')
   # par(new=T)
-  plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),lwd=1,main=paste("from",substr(s,1,9),len_mon+1,"months",sep=" "),ylab="",xlab="")
+  plot.default(na.trim(diff(cli_xts$oecd,lag=lag_month))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),lwd=1,main=paste("from",substr(s,1,9),len_mon+1,"months",sep=" "),ylab="",xlab="")
   par(new=T)
   for(i in seq(0,l-1,1)){
     print(i)
@@ -52,11 +53,11 @@ func <- function(s="2011-01-01::",l=9){
     # print(max_length)
     # print(len_mon)
     # print(offset)
-    plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2,ylab="",xlab="",axes = F)
+    plot.default(na.trim(diff(cli_xts$oecd,lag=lag_month))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),col=i+1,lwd=2,ylab="",xlab="",axes = F)
     if(i == 6){
       # when i ==6 "yellow" is used for dots, but offers poor visibility. plot 'x' upon them to improve.
       par(new=T)
-      plot.default(na.trim(diff(cli_xts$oecd,lag=5))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x',ylab="",xlab="",axes = F)
+      plot.default(na.trim(diff(cli_xts$oecd,lag=lag_month))[head_of_record][(offset+i*12):(offset+i*12+m)],cli_xts$oecd[head_of_record][(offset+i*12):(offset+i*12+m)],type='p',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),pch='x',ylab="",xlab="",axes = F)
     }
     par(new=T)
   }
