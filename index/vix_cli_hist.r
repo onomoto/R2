@@ -16,11 +16,12 @@ last(VIX)
 #  PARAMETER! CAUTION!!!
 #
 end_date <- last(index(cli_xts))
+lag_month <- 5
 
 # select dates when CLI moves negative during 6 months.
 # mnt <- index(cli_xts$oecd["2000::2018"][cli_xts$oecd["2000::2018"]/as.vector(cli_xts$oecd["1999-07-01::2018-06-01"]) < 1])
 #
-mnt <- index(na.trim(diff(cli_xts$oecd[paste("1999-07-01",end_date,sep="::")],lag=6))[na.trim(diff(cli_xts$oecd[paste("1999-07-01",end_date,sep="::")],lag=6)) < 0])
+mnt <- index(na.trim(diff(cli_xts$oecd[paste("1999-07-01",end_date,sep="::")],lag=lag_month))[na.trim(diff(cli_xts$oecd[paste("1999-07-01",end_date,sep="::")],lag=lag_month)) < 0])
 
 # compare monthly high between negative vs. positve
 t.test(as.vector(VIX[,2][mnt]),as.vector(VIX[,2][as.Date(setdiff(seq(as.Date("2000-01-01"),as.Date(end_date),by='months'),mnt))]))
