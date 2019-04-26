@@ -1,4 +1,7 @@
-func <- function(){
+
+# delta is parameter ration against month close vs. open, when delta is 0.9.
+# close price is 10% down from open
+func <- function(delta=0.9){
 
 ind_bp <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] > 0]
 
@@ -8,7 +11,7 @@ ind_mp <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xt
 
 ind_pm <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] < 0]
 
-sp_correction_ind <- index(SP5["1962::"][SP5["1962::"][,3] / SP5["1962::"][,2] < 0.9])
+sp_correction_ind <- index(SP5["1962::"][SP5["1962::"][,4] / SP5["1962::"][,1] < delta])
 
 cat("bp ");print(length(ind_bp))
 cat("bm ");print(length(ind_bm))
@@ -52,4 +55,4 @@ cat("correction sp5 vs. mp");print(sp_correction_ind[is.element(sp_correction_in
 # # t.test(as.vector(VIX[,4][ind_bp]),as.vector(VIX[,4][ind_bm]))
 
 }
-func()
+func(0.9)
