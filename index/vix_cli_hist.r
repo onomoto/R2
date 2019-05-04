@@ -18,22 +18,27 @@ last(VIX)
 #
 end_date <- last(index(cli_xts))
 lag_month <- 5
+#
+# CAUTION start_date must be "YYYY-MM-DD". DON'T REMOVE MM-DD!!!
+#
+start_date <- "2000-01-01"
+period <- paste(start_date,substr(as.character(index(last(cli_xts))),1,7),sep="::")
 
 # select dates when CLI moves negative during 6 months.
 # mnt <- index(cli_xts$oecd["2000::2018"][cli_xts$oecd["2000::2018"]/as.vector(cli_xts$oecd["1999-07-01::2018-06-01"]) < 1])
 #
-mnt <- index(na.trim(diff(cli_xts$oecd[paste("1999-07-01",end_date,sep="::")],lag=lag_month))[na.trim(diff(cli_xts$oecd[paste("1999-07-01",end_date,sep="::")],lag=lag_month)) < 0])
+mnt <- index(na.omit(diff(cli_xts$oecd,lag=lag_month))[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0])
 
 # compare monthly high between negative vs. positve
-t.test(as.vector(VIX[,2][mnt]),as.vector(VIX[,2][as.Date(setdiff(seq(as.Date("2000-01-01"),as.Date(end_date),by='months'),mnt))]))
+t.test(as.vector(VIX[,2][mnt]),as.vector(VIX[,2][as.Date(setdiff(seq(as.Date(start_date),as.Date(end_date),by='months'),mnt))]))
 
 # compare monthly close.
-t.test(as.vector(VIX[,4][mnt]),as.vector(VIX[,4][as.Date(setdiff(seq(as.Date("2000-01-01"),as.Date(end_date),by='months'),mnt))]))
+t.test(as.vector(VIX[,4][mnt]),as.vector(VIX[,4][as.Date(setdiff(seq(as.Date(start_date),as.Date(end_date),by='months'),mnt))]))
 
 # draw translucent histgram to overay the graph in comparison.
 # when rgb=(1,1,0), it creates "yellow" graph.
 # alpha is the parameter to specify the density from 0 to 1.
 
-hist(as.vector(VIX[,4][as.Date(setdiff(seq(as.Date("2000-01-01"),as.Date(end_date),by='months'),mnt))]),ylim=c(0,30),xlim=c(10,60),breaks=10,col=rgb(0, 1, 0, alpha=0.9))
+hist(as.vector(VIX[,4][as.Date(setdiff(seq(as.Date(start_date),as.Date(end_date),by='months'),mnt))]),ylim=c(0,30),xlim=c(10,60),breaks=10,col=rgb(0, 1, 0, alpha=0.9))
 par(new=T)
 hist(as.vector(VIX[,4][mnt]),ylim=c(0,30),xlim=c(10,60),breaks=20,col=rgb(1, 1, 0, alpha=0.5))
