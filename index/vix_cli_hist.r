@@ -1,7 +1,11 @@
 #
+# draw histgram according to frequency based upon monthly close price
 # https://00819.blogspot.com/2019/03/vix-vs-cli-6-month-delta.html
 #
 # downloads ^VIX historical data from Yahoo Finance.
+# adjust start date
+#
+start_date <- "2000-01-01"
 #
 # VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
 if(file.exists("~/VIX.csv")){
@@ -21,7 +25,7 @@ lag_month <- 5
 #
 # CAUTION start_date must be "YYYY-MM-DD". DON'T REMOVE MM-DD!!!
 #
-start_date <- "2000-01-01"
+
 period <- paste(start_date,substr(as.character(index(last(cli_xts))),1,7),sep="::")
 
 # select dates when CLI moves negative during 6 months.
