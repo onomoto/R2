@@ -1,6 +1,8 @@
 
-# delta is parameter ration against month close vs. open, when delta is 0.9.
+# delta is parameter relation against month close vs. open, when delta is 0.9.
 # close price is 10% down from open
+# when m is "c", its open vs. close. in the case of "h", it is high versus low
+#
 func <- function(delta=0.9,m="c"){
 
   ind_bp <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] > 0]
