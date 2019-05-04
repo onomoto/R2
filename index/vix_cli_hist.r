@@ -4,9 +4,10 @@
 # downloads ^VIX historical data from Yahoo Finance.
 #
 # VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
-if(file.exists("~/Downloads/VIX.csv")){
-  bp2018 <- read.csv("~/Downloads/VIX.csv")
-  system("rm \"$HOME/Downloads/VIX.csv\"")
+if(file.exists("~/VIX.csv")){
+  # VIX <- read.csv("~/VIX.csv")
+  VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
+  system("rm \"$HOME/VIX.csv\"")
 }else{
   print("!!!FILE VIX.csv DOESN'T EXIST!!!!!")
 }
