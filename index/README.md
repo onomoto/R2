@@ -1,16 +1,12 @@
 
 this directory contains source code to handle macroecomics data and index historical prices and to draw graphs.
 
-<<<<<<< HEAD
-* cli_delta_vs_gspc.r : plot default with cli 6month delta vs. gspc delta.
-=======
 * cli_delta_vs_gspc.r : plot scatter between with cli 6month delta vs. gspc delta.
->>>>>>> b9c813e3bd79f7dbab6465d01cab715ac23ddf97
 * cli_delta_vs_vix.r : plot scatter between cli 6month delta vs. vix delta.
 * [cli_from_2011.r](https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html) : plot spiral of cli 6 month delta and cli reading itself from 2011.
 * cli_from_2007.r : same as above but from 2007.
 * cli_5mon.r : draw spiral graph with give start date and # of months param.
-* cli_5mon_dalta_and_SPX_monthlyreturn.r : overlay cli delta with event v-line when SPX declines more than 5%.
+* cli_5mon_dalta_and_SPX_monthlyreturn.r : overlay cli delta with event v-line when SPX declines more than the given parameter.
 * [vix_hist_spx.r](https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html) : overlay graph. vix as histgram in red when cli 6month delta is positive and in blue otherwise. spx is overlaid. no longer necessary to synchronize the end of CLI and other data.this replaces vix_cli_sp.r.
   * [vix_cli_sp.r](https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html) : overlay graph. vix as histgram in red when cli 6month delta is positive and in blue otherwise. spx is overlaid.
 * [vix_cli_hist.r](https://00819.blogspot.com/2019/03/vix-vs-cli-6-month-delta.html) : draw the overlaid  histgram of vix when cli delta is positve and negative. this is also the sample to draw translucent and overlaid histgram.
