@@ -1,5 +1,5 @@
 
-this directory contains source code to handle macroecomics data and index historical prices and to draw graphs.
+this directory contains source code to handle macroecomics data and index historical prices.
 
 * cli_delta_vs_gspc.r : plot scatter between with cli 6month delta vs. gspc delta.
 * cli_delta_vs_vix.r : plot scatter between cli 6month delta vs. vix delta.
