@@ -16,4 +16,4 @@ this directory contains source code to handle macroecomics data and index histor
 * [padelta_spx_cliidelta.r](http://00819.blogspot.com/2019/02/plot-abline-eps-gspc.html) : PAYEMS delta, S&P500, Composite Leading Indicator and CLI 6 month delta are drawin in the single graph. The last two's baseline are set at 100 and 0 respectively in the same color.
 * CSV : the directory to stow CSV and other format data files.
 * experiment : the directory for experimental code.
-  * sp5correction_vs_cli_delta.r : count # of months with given percentage of decline for the total 4 cases when cli 5 months delta positive and negative and 1 month delta positive and negative
+  * [sp5correction_vs_cli_delta.r](https://00819.blogspot.com/2019/05/cli-5-month-delta-and-1-month-delta-vs.html) : count # of months with given percentage of decline for the total 4 cases when cli 5 months delta positive and negative and 1 month delta positive and negative
