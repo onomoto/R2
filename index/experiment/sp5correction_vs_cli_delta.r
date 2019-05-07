@@ -26,10 +26,10 @@ func <- function(delta=0.9,m="c"){
   #   print("?")            #  一致するものが
   # )
   if(a == "h"){
-    sp_correction_ind <- index(SP5["1962::"][SP5["1962::"][,3] / SP5["1962::"][,2] < delta])
+    sp_correction_ind <- as.Date(index(to.monthly(SP5)["1962::"][to.monthly(SP5)["1962::"][,3] / to.monthly(SP5)["1962::"][,2] < delta]))
   }
   else if(a == "c"){
-    sp_correction_ind <- index(SP5["1962::"][SP5["1962::"][,4] / SP5["1962::"][,1] < delta])
+    sp_correction_ind <- as.Date(index(to.monthly(SP5)["1962::"][to.monthly(SP5)["1962::"][,4] / to.monthly(SP5)["1962::"][,1] < delta]))
   }
   else{
     print("?")
