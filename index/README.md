@@ -11,6 +11,7 @@ this directory contains source code to handle macroecomics data and index histor
   * [vix_cli_sp.r](https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html) : overlay graph. vix as histgram in red when cli 6month delta is positive and in blue otherwise. spx is overlaid.
 * [vix_cli_hist.r](https://00819.blogspot.com/2019/03/vix-vs-cli-6-month-delta.html) : draw the overlaid  histgram of vix when cli delta is positve and negative. this is also the sample to draw translucent and overlaid histgram.
 * [getsymbols_all.r](http://00819.blogspot.com/2018/09/prepare-data-getsymbols-autoarima.html) : download and update all data related to GDP, PAYEMS, UNDCONSA and SPCS10RSA. other data such S&P500, OECD composite leading indicator must be updated separately.
+* getsp5.r : download updated GSPC and combined with CSV from 1950 to 2006 to create weekly S&P 500 data from 1950 to the present.
 * [nikkei_gspc_jpy.r](https://00819.blogspot.com/2018/02/calculate-nikkei225-vol3.html) : draw the graph to represent lm(nikkei ~ spx + usdjpy).
 * [eps_lm.r](http://00819.blogspot.com/2019/03/new-model-cli-6-month-delta-eps-pa-uc.html) : the lattest model for spx. lm(spx ~ eps + PA + UC + CS + cli$oecd 6 month delta).
 * [padelta_spx_cliidelta.r](http://00819.blogspot.com/2019/02/plot-abline-eps-gspc.html) : PAYEMS delta, S&P500, Composite Leading Indicator and CLI 6 month delta are drawin in the single graph. The last two's baseline are set at 100 and 0 respectively in the same color.
