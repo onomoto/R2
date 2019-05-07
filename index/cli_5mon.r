@@ -65,7 +65,8 @@ func <- function(s="2011-01-01::",l=9){
   abline(h=100)
   # abline(v=seq(0.5,-1,-0.1),col=6,lty=3)
   # automatically calculate the upper and lower limit of vline.
-  # abline(v=seq(ceiling(tmp[1]),floor(tmp[2]),0.1),col=6,lty=3)
-  abline(v=seq(ceiling(tmp[1]),round(tmp[2],digit=1),0.1),col=6,lty=3)
+  # might be able to use 'floor(tmp[2]*10)/10' instead of round(x,digit=1)
+  abline(v=seq(ceiling((tmp[1]*10))/10,floor(tmp[2]*10)/10,0.1),col=6,lty=3)
+
 }
 func("2001-01-01::",9)
