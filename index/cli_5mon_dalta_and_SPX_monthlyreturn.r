@@ -7,7 +7,7 @@ func <- function(s="2000-01-01::",c=0.95){
   start_date <- s
   change_rate <- c
   # events <- xts(round(monthlyReturn(GSPC[start_date])[monthlyReturn(GSPC[start_date]) < -0.05],digits = 3),as.Date(mondate(index(monthlyReturn(GSPC[start_date])[monthlyReturn(GSPC[start_date]) < -0.05]))))
-
+  SP5 <- to.monthly(SP5)
   events <- xts(round(SP5[start_date][,4]/SP5[start_date][,1][SP5[start_date][,4]/SP5[start_date][,1] < change_rate],digits =4),as.Date(mondate(index(SP5[start_date][,4]/SP5[start_date][,1][SP5[start_date][,4]/SP5[start_date][,1] < change_rate]))))
 
   #
