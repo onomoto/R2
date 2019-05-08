@@ -1,10 +1,32 @@
 #
 # https://00819.blogspot.com/2018/02/calculate-nikkei225-vol3.html
 #
-getSymbols("^GSPC",auto.assign=TRUE)
+# getSymbols("^GSPC",auto.assign=TRUE)
+## test code to handle weekdays starts
+Sys.setlocale("LC_ALL",'en_US')
+if(weekdays(Sys.Date()) != "Monday"){ 
+  if(as.Date(last(index(GSPC)))+1 != Sys.Date()){
+     getSymbols("^GSPC",auto.assign=TRUE)
+     print("not monday")
+     cat("the last update was")
+     print(as.Date(last(index(GSPC))))
+   }else{
+     print("not monday but updated!")
+   }
+}else{
+       if(as.Date(last(index(GSPC)))+3 != Sys.Date()){
+          getSymbols("^GSPC",auto.assign=TRUE)
+          print("monday  lazy friday")
+          cat("the last update was")
+          print(as.Date(last(index(GSPC))))
+    }else{
+      print("monday and friday!")
+    }
+}
+## test code to handle weekdays ends
+Sys.setlocale("LC_ALL",'ja_JP')
 k3 <- paste("2007-01-01", index(last(GSPC)),sep="::")
 k3
-
 # download other data
 getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
 # getSymbols("DEXJPUS", src = "FRED")
