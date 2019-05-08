@@ -18,9 +18,9 @@ func <- function(){
             print("monday  lazy friday")
             cat("the last update was")
             print(as.Date(last(index(GSPC))))
-      }else{
+        }else{
         print("monday and friday!")
-      }
+        }
   }
   Sys.setlocale("LC_ALL",'ja_JP')
   ## testcode ends here.
