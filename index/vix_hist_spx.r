@@ -1,5 +1,8 @@
-# mnt <- index(cli_xts$oecd["2000::2018"][cli_xts$oecd["2000::2018"] < 100 & cli_xts$oecd["2000::2018"]/as.vector(cli_xts$oecd["1999-07-01::2018-06-01"]) < 1])
-# plot.zoo(merge(SP5["2000::"][,4]/SP5["2000::"][,1]-1,SP5[mnt][,4]/SP5[mnt][,1]-1),type='h',col = c("red", "blue"), plot.type = "single")
+# 
+# draw overlay graph of 
+# 1) VIX close histgram and 
+# 2)SPX line graph. the histgram is draw blue when both CLI 5 month and 1month delta is less than 0.
+# 
 if(file.exists("~/VIX.csv")){
   # VIX <- read.csv("~/VIX.csv")
   VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
@@ -13,9 +16,6 @@ lag_month <- 5
 period <- paste(start_date,substr(as.character(index(last(cli_xts))),1,7),sep="::")
 
 # mnt <- index(cli_xts$oecd["2000::2019"][cli_xts$oecd["2000::2019"]/as.vector(cli_xts$oecd["1999-07-01::2018-08-01"]) < 1])
-# DON'T USE getsymbols as it has just limted scope of data.
-# getSymbols('^VIX',src="yahoo",auto.assign=TRUE)
-# VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
 mnt4 <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0 & na.omit(diff(cli_xts$oecd))[period] < 0])
 # plot.zoo(merge(VIX["2000::2019-02"][,4],VIX[mnt4][,4]),type='h',col = c("red", "blue"), plot.type = "single")
 plot.zoo(merge(VIX[period][,4],VIX[mnt4][,4]),type='h',col = c("red", "blue"), plot.type = "single")
