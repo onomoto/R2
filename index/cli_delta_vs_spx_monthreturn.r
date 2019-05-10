@@ -21,8 +21,10 @@ func <- function(p="2000-01-01",c=0.95,l=5){
     event_date <- as.Date(mondate(index(SP5[period][,4]/SP5[period][,1][SP5[period][,4]/SP5[period][,1] < change_rate])))
     mnt_bm <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0 & na.omit(diff(cli_xts$oecd))[period] < 0])
     mnt_mp <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0 & na.omit(diff(cli_xts$oecd))[period] > 0])
+    mnt_pm <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] > 0 & na.omit(diff(cli_xts$oecd))[period] < 0])
 
-    plot.zoo(merge(VIX[period][,4],VIX[mnt_bm][,4],VIX[mnt_mp][,4]),type='h',col = c("blue", "red",rgb(1,0,1,alpha=0.9)), plot.type = "single",lwd=3)
+
+    plot.zoo(merge(VIX[period][,4],VIX[mnt_bm][,4],VIX[mnt_mp][,4],VIX[mnt_pm][,4]),type='h',col = c("blue", "red",rgb(1,0,1,alpha=0.9),rgb(1,0,1,alpha=0.9)), plot.type = "single",lwd=3)
     if(nchar(p) > 12){
         y_start <- seq(as.Date(substr(period,1,10)),as.Date(paste(substr(period,13,16),"-01-01",sep="")),by='years')
     } else{
@@ -30,7 +32,7 @@ func <- function(p="2000-01-01",c=0.95,l=5){
     }
     for(i in seq(1,length(y_start),1)){
         abline(v=y_start[i],col=rgb(0,1,0,alpha=0.9),lty=3)
-        print(i)
+        # print(i)
     }
     abline(v=y_start[1],col=rgb(0,1,0,alpha=0.9),lty=3)
 
@@ -42,7 +44,7 @@ func <- function(p="2000-01-01",c=0.95,l=5){
     # abline(v=event_date[1],col = "gray60",lty=3)
     for(i in seq(1,length(event_date),1)){
         abline(v=event_date[i],col = "gray60",lty=2,lwd=2)
-        # print(i)
+        print(i)
     }
     abline(v=event_date[1],col = "gray60",lty=2,lwd=2)
   #
