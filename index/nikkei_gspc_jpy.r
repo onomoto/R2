@@ -1,60 +1,89 @@
 #
 # https://00819.blogspot.com/2018/02/calculate-nikkei225-vol3.html
 #
-# getSymbols("^GSPC",auto.assign=TRUE)
+
 ## test code to handle weekdays starts
 Sys.setlocale("LC_ALL",'en_US')
-if(weekdays(Sys.Date()) != "Monday"){ 
-  if(as.Date(last(index(GSPC)))+1 != Sys.Date()){
-     getSymbols("^GSPC",auto.assign=TRUE)
-     print("not monday")
-     cat("the last update was")
-     print(as.Date(last(index(GSPC))))
-   }else{
-     print("not monday but updated!")
-   }
+today <- Sys.Date()
+# today <- as.Date("2019-05-10")
+wd <- weekdays(today)
+# wd <- weekdays(as.Date("2019-05-10"))
+last_update <- last(index(GSPC))
+# last_update <- "2019-05-08"
+
+if(wd == "Monday"){ 
+  if(as.Date(last_update)+3 != today){
+    getSymbols("^GSPC",auto.assign=TRUE)
+    print("monday  lazy friday")
+    cat("the last update was")
+    print(as.Date(last_update))
+  }else{
+    print("monday and working friday!")
+  }
+}else if(wd == "Sunday"){
+  if(as.Date(last_update)+2 != today){
+    getSymbols("^GSPC",auto.assign=TRUE)
+    print("sunday  lazy friday")
+    cat("the last update was")
+    print(as.Date(last_update))
+  }else{
+    print("sunday and working friday!")
+  }
 }else{
-       if(as.Date(last(index(GSPC)))+3 != Sys.Date()){
-          getSymbols("^GSPC",auto.assign=TRUE)
-          print("monday  lazy friday")
-          cat("the last update was")
-          print(as.Date(last(index(GSPC))))
-    }else{
-      print("monday and friday!")
-    }
-}
-if(weekdays(Sys.Date()) != "Monday"){ 
-  if(as.Date(last(index(GSPC)))+1 != Sys.Date()){
-     getSymbols("YJUSDJP",auto.assign=TRUE)
-     print("not monday")
-     cat("the last update was")
-     print(as.Date(last(index(GSPC))))
-   }else{
-     print("not monday but updated!")
-   }
-}else{
-       if(as.Date(last(index(GSPC)))+3 != Sys.Date()){
-          getSymbols("YJUSDJP",auto.assign=TRUE)
-          print("monday  lazy friday")
-          cat("the last update was")
-          print(as.Date(last(index(GSPC))))
-    }else{
-      print("monday and friday!")
-    }
+  if(as.Date(last_update)+1 != today){
+    getSymbols("^GSPC",auto.assign=TRUE)
+    print("not monday, lazy yesterday")
+    cat("the last update was")
+    print(as.Date(last_update))
+  }else{
+    print("not monday, worked yesterday")
+  }
 }
 
 
-## test code to handle weekdays ends
+last_update <- last(index(YJUSDJP))
+# last_update <- "2019-05-08"
+
+if(wd == "Monday"){ 
+  if(as.Date(last_update)+3 != today){
+    getSymbols("YJUSDJPY",src="yahooj")
+    print("monday  lazy friday")
+    cat("the last update was")
+    print(as.Date(last_update))
+  }else{
+    print("monday and working friday!")
+  }
+}else if(wd == "Sunday"){
+  if(as.Date(last_update)+2 != today){
+    getSymbols("YJUSDJPY",src="yahooj")
+    print("sunday  lazy friday")
+    cat("the last update was")
+    print(as.Date(last_update))
+  }else{
+    print("sunday and working friday!")
+  }
+}else{
+  if(as.Date(last_update)+1 != today){
+    getSymbols("YJUSDJPY",src="yahooj")
+    print("not monday, lazy yesterday")
+    cat("the last update was")
+    print(as.Date(last_update))
+  }else{
+    print("not monday, worked yesterday")
+  }
+}
+
 Sys.setlocale("LC_ALL",'ja_JP')
+## test code to handle weekdays ends
+
+
+
 k3 <- paste("2007-01-01", index(last(GSPC)),sep="::")
 k3
 # download other data
 getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
-# getSymbols("DEXJPUS", src = "FRED")
-# getSymbols("YJUSDJPY",src="yahooj")
-# getSymbols('YJUSDJPY', src="yahooj",auto.assign=TRUE)
 N225 <- NIKKEI225
-# result <- summary(lm(to.monthly(N225[k3])[,4] ~  to.monthly(GSPC[k3])[,4] + to.monthly(DEXJPUS[k3])[,4]))
+
 result_nikkei <- lm(to.monthly(N225[k3])[,4] ~  to.monthly(GSPC[k3])[,4] + to.monthly(YJUSDJPY[k3])[,4])
 result_nikkei$coefficients[2]*last(GSPC)[,4]+result_nikkei$coefficients[3]*as.vector(last(YJUSDJPY)[,4])+result_nikkei$coefficients[1]
 # plot(merge(as.xts(predict(result_nikkei),index(residuals(result_nikkei))),to.monthly(N225[k3])[,4],residuals(result_nikkei)))
