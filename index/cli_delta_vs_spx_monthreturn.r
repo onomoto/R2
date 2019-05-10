@@ -5,7 +5,7 @@
 # argument c is between 0 and 1
 # argument l is between 1 and 12
 #
-func <- function(p="2000-01-01",c=0.95,l=5){
+func <- function(p="2000-01-01",c=0.95,l=5,d="C"){
     if(nchar(p) > 12){
         period <- p
     } else{
@@ -22,26 +22,30 @@ func <- function(p="2000-01-01",c=0.95,l=5){
     mnt_bm <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0 & na.omit(diff(cli_xts$oecd))[period] < 0])
     mnt_mp <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0 & na.omit(diff(cli_xts$oecd))[period] > 0])
     mnt_pm <- index(cli_xts$oecd[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] > 0 & na.omit(diff(cli_xts$oecd))[period] < 0])
+    if(d == "V"){
+        VDATA <- VIX[,4]
+    }else if(d == "C"){
+        VDATA <- na.omit(diff(cli_xts$oecd,lag=lag_month))[period]
+    }else{
+        stop("wrong arg! V or C")
+    }
 
-
-    plot.zoo(merge(VIX[period][,4],VIX[mnt_bm][,4],VIX[mnt_mp][,4],VIX[mnt_pm][,4]),type='h',col = c("blue", "red",rgb(1,0,1,alpha=0.9),rgb(1,0,1,alpha=0.9)), plot.type = "single",lwd=3)
+    plot.zoo(merge(VDATA[period],VDATA[mnt_bm],VDATA[mnt_mp],VDATA[mnt_pm]),type='h',col = c("blue", "red",rgb(1,0,1,alpha=0.9),rgb(1,0,1,alpha=0.9)), plot.type = "single",lwd=3)
+    #
+    # draw yearly v-line.
+    #
     if(nchar(p) > 12){
         y_start <- seq(as.Date(substr(period,1,10)),as.Date(paste(substr(period,13,16),"-01-01",sep="")),by='years')
     } else{
         y_start <- seq(as.Date(substr(period,1,10)),as.Date("2019-01-01"),by='years')
     }
     for(i in seq(1,length(y_start),1)){
-        abline(v=y_start[i],col=rgb(0,1,0,alpha=0.9),lty=3)
-        # print(i)
+        abline(v=y_start[i],col=rgb(0,1,0,alpha=0.9),lty=1)
     }
-    abline(v=y_start[1],col=rgb(0,1,0,alpha=0.9),lty=3)
-
-    # abline(v=seq(as.Date(start_date),as.Date("2019-01-01"),by='years'), col=rgb(0,1,0,alpha=0.9),lty=2)
-    # for(i in length(seq(as.Date(start_date),as.Date("2019-01-01"),by='years')),1)){
-    #     abline(v=seq(as.Date(start_date),as.Date("2019-01-01"),by='years')[i],col = "gray60",lty=3)
-    #     print(i)
-    # }
-    # abline(v=event_date[1],col = "gray60",lty=3)
+    abline(v=y_start[1],col=rgb(0,1,0,alpha=0.9),lty=1)
+    #
+    # draw event v line.
+    #
     for(i in seq(1,length(event_date),1)){
         abline(v=event_date[i],col = "gray60",lty=2,lwd=2)
         print(i)
@@ -65,4 +69,4 @@ func <- function(p="2000-01-01",c=0.95,l=5){
 #   #
 #   addEventLines(events[1], srt=90, pos=2,col=4)
 }
-func("2000-01-01",0.95,5)
+func("2000-01-01",0.95,5,"C")
