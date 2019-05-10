@@ -3,6 +3,7 @@ this directory contains source code to handle macroecomics data and index histor
 
 * cli_delta_vs_gspc.r : plot scatter between with cli 6month delta vs. gspc delta.
 * cli_delta_vs_vix.r : plot scatter between cli 6month delta vs. vix delta.
+* cli_delta_vs_spx_monthreturn.r : CLI delta or VIX histgram vs. SPX price change eventline. able to swith CLI delta or VIX by parameter. 
 * [cli_5mon.r](https://00819.blogspot.com/2019/05/cli5monr-draw-spiral-graph-of-cli-5.html) : draw spiral graph with given start date and # of years param. the latter is automatically adjusted with the end of data.
   * [cli_from_2011.r](https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html) : plot spiral of cli 6 month delta and cli reading itself from 2011.
   * cli_from_2007.r : same as above but from 2007.
