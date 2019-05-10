@@ -23,6 +23,27 @@ if(weekdays(Sys.Date()) != "Monday"){
       print("monday and friday!")
     }
 }
+if(weekdays(Sys.Date()) != "Monday"){ 
+  if(as.Date(last(index(GSPC)))+1 != Sys.Date()){
+     getSymbols("YJUSDJP",auto.assign=TRUE)
+     print("not monday")
+     cat("the last update was")
+     print(as.Date(last(index(GSPC))))
+   }else{
+     print("not monday but updated!")
+   }
+}else{
+       if(as.Date(last(index(GSPC)))+3 != Sys.Date()){
+          getSymbols("YJUSDJP",auto.assign=TRUE)
+          print("monday  lazy friday")
+          cat("the last update was")
+          print(as.Date(last(index(GSPC))))
+    }else{
+      print("monday and friday!")
+    }
+}
+
+
 ## test code to handle weekdays ends
 Sys.setlocale("LC_ALL",'ja_JP')
 k3 <- paste("2007-01-01", index(last(GSPC)),sep="::")
@@ -31,7 +52,7 @@ k3
 getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
 # getSymbols("DEXJPUS", src = "FRED")
 # getSymbols("YJUSDJPY",src="yahooj")
-getSymbols('YJUSDJPY', src="yahooj",auto.assign=TRUE)
+# getSymbols('YJUSDJPY', src="yahooj",auto.assign=TRUE)
 N225 <- NIKKEI225
 # result <- summary(lm(to.monthly(N225[k3])[,4] ~  to.monthly(GSPC[k3])[,4] + to.monthly(DEXJPUS[k3])[,4]))
 result_nikkei <- lm(to.monthly(N225[k3])[,4] ~  to.monthly(GSPC[k3])[,4] + to.monthly(YJUSDJPY[k3])[,4])
