@@ -10,9 +10,9 @@ func <- function(){
 #
 # skip unncessary download. recoginze Saturdy, Sunday and other days, but not bank holidays.
 #
-  if(my_update_check(GSPC,Sys.Date()) == "S"){
-    print("SKIP")
-  }
+# if(my_update_check(GSPC,Sys.Date()) == "S"){
+#   print("SKIP")
+# }
   if(my_update_check(GSPC,Sys.Date()) == "D"){
     print("DOWNLOAD")
     getSymbols("^GSPC",auto.assign=TRUE)

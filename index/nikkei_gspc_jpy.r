@@ -4,25 +4,25 @@
 
 
 
-if(my_update_check(GSPC,Sys.Date()) == "S"){
-  print("SKIP")
-}
+# if(my_update_check(GSPC,Sys.Date()) == "S"){
+#   print("SKIP")
+# }
 if(my_update_check(GSPC,Sys.Date()) == "D"){
   print("DOWNLOAD")
   getSymbols("^GSPC",auto.assign=TRUE)
 }
 
-if(my_update_check(YJUSDJPY,Sys.Date()) == "S"){
-  print("SKIP")
-}
+# if(my_update_check(YJUSDJPY,Sys.Date()) == "S"){
+#   print("SKIP")
+# }
 if(my_update_check(YJUSDJPY,Sys.Date()) == "D"){
   print("DOWNLOAD")
   getSymbols("YJUSDJPY",auto.assign=TRUE,src="yahooj")
 }
 
-if(my_update_check(N225,Sys.Date()) == "S"){
-  print("SKIP")
-}
+# if(my_update_check(N225,Sys.Date()) == "S"){
+#   print("SKIP")
+# }
 if(my_update_check(N225,Sys.Date()) == "D"){
   print("DOWNLOAD")
   getSymbols("NIKKEI225",src="FRED")
