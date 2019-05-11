@@ -15,17 +15,19 @@ if(my_update_check(GSPC,Sys.Date()) == "T"){
 if(my_update_check(YJUSDJPY,Sys.Date()) == "F"){
   print("SKIP")
 }
-if(my_update_check(GSPC,Sys.Date()) == "T"){
+if(my_update_check(YJUSDJPY,Sys.Date()) == "T"){
   print("DOWNLOAD")
-  getSymbols("YJUSDJPY",auto.assign=TRUE)
+  getSymbols("YJUSDJPY",auto.assign=TRUE,src="yahooj")
 }
 
 if(my_update_check(N225,Sys.Date()) == "F"){
   print("SKIP")
 }
-if(my_update_check(GSPC,Sys.Date()) == "T"){
+if(my_update_check(N225,Sys.Date()) == "T"){
   print("DOWNLOAD")
-  getSymbols("N225",auto.assign=TRUE)
+  getSymbols("NIKKEI225",src="FRED")
+  # don't use auto.assign here.
+  # getSymbols("N225",auto.assign=TRUE,src="FRED")
 }
 
 
