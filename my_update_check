@@ -1,0 +1,50 @@
+
+
+my_update_check <- function(symbol,date){
+    Sys.setlocale("LC_ALL",'en_US')
+    today <- date
+    sym <- symbol
+    # today <- as.Date("2019-05-10")
+    wd <- weekdays(today)
+    # wd <- weekdays(as.Date("2019-05-10"))
+    last_update <- last(index(sym))
+    if(wd == "Monday"){ 
+        if(as.Date(last_update)+3 != today){
+  #          getSymbols(as.character(sym),src="yahooj")
+            print("monday  lazy friday")
+            cat("the last update was")
+            print(as.Date(last_update))
+            CODE <- "T"
+        }else{
+            print("monday and working friday!")
+            print(as.Date(last_update))
+            CODE <- "F"
+        }
+    }else if(wd == "Sunday"){
+        if(as.Date(last_update)+2 != today){
+   #         getSymbols(as.character(sym),src="yahooj")
+            print("sunday  lazy friday")
+            cat("the last update was")
+            print(as.Date(last_update))
+            CODE <- "T"
+        }else{
+            print("sunday and working friday!")
+            print(as.Date(last_update))
+            CODE <- "F"
+        }
+    }else{
+        if(as.Date(last_update)+1 != today){
+    #        getSymbols(as.character(sym),src="yahooj")
+            print("not monday, lazy yesterday")
+            cat("the last update was")
+            print(as.Date(last_update))
+            CODE <- "T"
+        }else{
+            print("not monday, worked yesterday")
+            print(as.Date(last_update))
+            CODE <- "F"
+        }
+    }
+    Sys.setlocale("LC_ALL",'ja_JP')
+    return(CODE)
+}

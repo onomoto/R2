@@ -41,7 +41,7 @@ if(wd == "Monday"){
 }
 
 
-last_update <- last(index(YJUSDJP))
+last_update <- last(index(YJUSDJPY))
 # last_update <- "2019-05-08"
 
 if(wd == "Monday"){ 
