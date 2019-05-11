@@ -15,7 +15,9 @@ func <- function(){
 # }
   if(my_update_check(GSPC,Sys.Date()) == "D"){
     print("DOWNLOAD")
-    getSymbols("^GSPC",auto.assign=TRUE)
+    # getSymbols("^GSPC",auto.assign=TRUE)
+    getSymbols("^GSPC",auto.assign=TRUE,env=.GlobalEnv)
+    
   }
 
 # coverting "GSPC" here is a bad idea. caused wrong alingment between years/weeks/months.
