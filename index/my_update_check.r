@@ -6,6 +6,7 @@
 # 5. put back to locale to "JP"
 #
 my_update_check <- function(symbol,date){
+    locale <- substr(Sys.getlocale(),1,5)
     Sys.setlocale("LC_ALL",'en_US')
     today <- date
     sym <- symbol
@@ -50,6 +51,6 @@ my_update_check <- function(symbol,date){
             CODE <- "F"
         }
     }
-    Sys.setlocale("LC_ALL",'ja_JP')
+    Sys.setlocale("LC_ALL",locale)
     return(CODE)
 }
