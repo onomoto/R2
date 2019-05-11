@@ -10,10 +10,10 @@ func <- function(){
 #
 # skip unncessary download. recoginze Saturdy, Sunday and other days, but not bank holidays.
 #
-  if(my_update_check(GSPC,Sys.Date()) == "F"){
+  if(my_update_check(GSPC,Sys.Date()) == "S"){
     print("SKIP")
   }
-  if(my_update_check(GSPC,Sys.Date()) == "T"){
+  if(my_update_check(GSPC,Sys.Date()) == "D"){
     print("DOWNLOAD")
     getSymbols("^GSPC",auto.assign=TRUE)
   }
@@ -21,8 +21,8 @@ func <- function(){
 # coverting "GSPC" here is a bad idea. caused wrong alingment between years/weeks/months.
 # SP5 <<- append(work["::2006"],merge(to.weekly(GSPC)[,c(1,2,3,4,6)],to.weekly(GSPC)[,5]))
 # append daily to daily to generate whole record.
-# 
+#
   SP5 <<- append(work["::2006"],merge(GSPC[,c(1,2,3,4,6)],GSPC[,5]))
-  
+
 }
 func()
