@@ -1,5 +1,10 @@
-
-
+# 0. set locale to "en_US"
+# 1. check the give date by parameter date
+# 2. check the last updated date of symbole which is also given as paramter
+# 3. from tuesday to Saturday. today is the last update + 1
+# 4. Sunday, last update +2, Monday, +3
+# 5. put back to locale to "JP"
+#
 my_update_check <- function(symbol,date){
     Sys.setlocale("LC_ALL",'en_US')
     today <- date
@@ -10,7 +15,7 @@ my_update_check <- function(symbol,date){
     last_update <- last(index(sym))
     if(wd == "Monday"){ 
         if(as.Date(last_update)+3 != today){
-  #          getSymbols(as.character(sym),src="yahooj")
+  #         getSymbols(as.character(sym),src="yahooj")
             print("monday  lazy friday")
             cat("the last update was")
             print(as.Date(last_update))
@@ -22,7 +27,7 @@ my_update_check <- function(symbol,date){
         }
     }else if(wd == "Sunday"){
         if(as.Date(last_update)+2 != today){
-   #         getSymbols(as.character(sym),src="yahooj")
+   #        getSymbols(as.character(sym),src="yahooj")
             print("sunday  lazy friday")
             cat("the last update was")
             print(as.Date(last_update))
@@ -34,7 +39,7 @@ my_update_check <- function(symbol,date){
         }
     }else{
         if(as.Date(last_update)+1 != today){
-    #        getSymbols(as.character(sym),src="yahooj")
+    #       getSymbols(as.character(sym),src="yahooj")
             print("not monday, lazy yesterday")
             cat("the last update was")
             print(as.Date(last_update))
