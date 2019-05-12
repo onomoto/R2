@@ -1,7 +1,7 @@
 # 0. set locale to "en_US"
-# 1. check the give date by parameter date
+# 1. check the given date by parameter "date"
 # 2. check the last updated date of symbole which is also given as paramter
-# 3. from tuesday to Saturday. today is the last update + 1
+# 3. from tuesday to Saturday. today should be the last update + 1,otherwise dowload data
 # 4. Sunday, last update +2, Monday, +3
 # 5. put back to locale to "JP"
 #
