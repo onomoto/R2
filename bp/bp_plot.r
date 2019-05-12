@@ -1,23 +1,6 @@
-# plot(bp.xts[,c(1,2)][bp.xts$High > 95],col = c("red", "blue"),lwd=c(3,3,2,2),major.ticks='days',grid.ticks.on='days',type='p',ylim=c(60,160))
-# # draw a horizontal line at 130 as the benchmark
-# addSeries(as.xts(rep(130,length(index(bp.xts[bp.xts$High > 95]))),index(bp.xts[bp.xts$High > 95])),ylim=c(60,160),on=1,col=5,lwd=1)
-# # draw another line at 85.
-# # addSeries(as.xts(rep(85,length(index(bp.xts[bp.xts$High > 95]))),index(bp.xts[bp.xts$High > 95])),ylim=c(60,160),on=1,col=5,lwd=1)
-# l <- length(index(bp.xts[bp.xts$High > 95]))
-# addSeries(merge(as.xts(rep(125,l),index(bp.xts[bp.xts$High > 95]),rep(75,l)),
-# rep(mean(bp.xts[,1][bp.xts$High > 95]),l)),ylim=c(60,160),on=1,col=5,lwd=1)
-
-
-# len <- length(index(bp.xts[bp.xts$High > 95]))
-# plot(bp.xts[,c(1,2)][bp.xts$High > 95],col = c("red", "blue"),lwd=c(3,3,2,2),
-# major.ticks='days',grid.ticks.on='days',type='p',ylim=c(60,160))
-# addSeries(merge(as.xts(rep(125,len),index(bp.xts[bp.xts$High > 95])),rep(75,len),
-#      rep(mean(bp.xts[,1][bp.xts$High > 95]),len),
-#      rep(mean(bp.xts[,2][bp.xts$High > 95]),len)), ylim=c(60,160),on=1,col=4,lwd=1)
-# events <- xts(c("natrix","weight","abort natrix","70k","75k","80k","85k"),as.Date(c("2018-06-20", "2018-07-14","2018-08-09","2019-01-23","2019-02-14","2019-03-15","2019-4-16")))
-# addEventLines(events, srt=90, pos=2,col=10)
-# axis(2,at=c(135,130,125,120,115,85,80,75,70))
-# axis(4,at=c(135,130,125,120,115,85,80,75,70))
+#
+# daily
+#
 
 start_date <- "2018-02-01::"
 len <- length(index(bp.xts[start_date][bp.xts[start_date]$High > 95]))
@@ -30,7 +13,9 @@ events <- xts(c("weight","70k","75k","80k","85k"),as.Date(c("2018-07-14","2019-0
 addEventLines(events, srt=90, pos=2,col=10)
 axis(4,at=c(seq(70,140,5)))
 
-
+#
+# moving average plus daily
+#
 
 
 len <- length(as.vector(na.omit(filter(apply.daily(bp.bangkok,mean)[,1],rep(1,7))/7)))
@@ -47,28 +32,15 @@ addEventLines(events, srt=90, pos=2,col=10)
 axis(2,at=c(135,130,125,120,115,85,80,75,70))
 axis(4,at=c(135,130,125,120,115,85,80,75,70))
 
-
-
-
-# addSeries(as.xts(rep(mean(bp.xts[,1][bp.xts$High > 95]),len),last(index(apply.daily(bp.bangkok,mean)[,2]),len)),on=1,col=6,lwd=1)
-#
-# addSeries(as.xts(rep(mean(bp.xts[,2][bp.xts$High > 95]),len),last(index(apply.daily(bp.bangkok,mean)[,2]),len)),on=1,col=6,lwd=1)
-#
-# addSeries(as.xts(rep(last(as.vector(na.omit(filter(apply.daily(bp.bangkok,mean)[,2],rep(1,7))/7))),len),last(index(apply.daily(bp.bangkok,mean)[,2]),len)),on=1,col=6,lwd=1)
-#
-# addSeries(as.xts(rep(last(as.vector(na.omit(filter(apply.daily(bp.bangkok,mean)[,1],rep(1,7))/7))),len),last(index(apply.daily(bp.bangkok,mean)[,2]),len)),on=1,col=6,lwd=1)
-#
 # events <- xts(c("natrix","weight","abort natrix","70k","75k"),as.Date(c("2018-06-20", "2018-07-14","2018-08-09","2019-01-23","2019-02-14")))
 # addEventLines(events, srt=90, pos=2,col=10)
 
+#
+# 2018 vs. 2019 comparison
+#
+
 bp.day <- apply.daily(bp.bangkok,mean)
 d <- intersect(intersect(index(bp.day["2019"]),seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days'))-17896,intersect(index(bp.day["2018"]),seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days'))-(17896-365))
-
-# bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]]
-# bp.day[seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]
-#
-# merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18"))
-
 
 plot(merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18")))
 # addEventLines(events, srt=90, pos=2,col=10)
