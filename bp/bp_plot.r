@@ -44,3 +44,17 @@ d <- intersect(intersect(index(bp.day["2019"]),seq(as.Date("2019-01-01"),as.Date
 
 plot(merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18")))
 # addEventLines(events, srt=90, pos=2,col=10)
+# adjust mix-max of ylim by min() and max()
+#
+# week average graph.
+#
+plot(apply.weekly(bp.day,mean),type='p',ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
+#
+# draw the horizontal line at 125
+#
+# addSeries(as.xts(rep(125,length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
+# addSeries(as.xts(rep(85,length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
+addSeries(as.xts(rep(mean(bp.xts[,2]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
+addSeries(as.xts(rep(mean(bp.xts[,1]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
+axis(2,at=c(135,130,125,120,115,85,80,75,70))
+axis(4,at=c(135,130,125,120,115,85,80,75,70))
