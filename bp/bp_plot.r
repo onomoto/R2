@@ -16,8 +16,6 @@ axis(4,at=c(seq(70,140,5)))
 #
 # moving average plus daily
 #
-
-
 len <- length(as.vector(na.omit(filter(apply.daily(bp.bangkok,mean)[,1],rep(1,7))/7)))
 plot(merge(as.xts(as.vector(na.omit(filter(apply.daily(bp.bangkok,mean)[,1],rep(1,7))/7)),last(index(apply.daily(bp.bangkok,mean)[,2]),len)),
 as.vector(na.omit(filter(apply.daily(bp.bangkok,mean)[,2],rep(1,7))/7)),
@@ -50,11 +48,14 @@ plot(merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]]
 #
 plot(apply.weekly(bp.day,mean),type='p',ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
 #
-# draw the horizontal line at 125
+# draw the horizontal line at last weeks's average.
 #
 # addSeries(as.xts(rep(125,length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
 # addSeries(as.xts(rep(85,length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
-addSeries(as.xts(rep(mean(bp.xts[,2]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
-addSeries(as.xts(rep(mean(bp.xts[,1]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
+addSeries(as.xts(rep(last(apply.weekly(bp.day,mean)[,1]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
+addSeries(as.xts(rep(last(apply.weekly(bp.day,mean)[,2]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
+
+events <- xts(c("weight","70k","75k","80k","85k"),as.Date(c("2018-07-14","2019-01-23","2019-02-14","2019-03-15","2019-4-16")))
+addEventLines(events, srt=90, pos=2,col=10)
 axis(2,at=c(135,130,125,120,115,85,80,75,70))
 axis(4,at=c(135,130,125,120,115,85,80,75,70))
