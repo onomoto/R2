@@ -5,7 +5,7 @@
 # downloads ^VIX historical data from Yahoo Finance.
 # adjust start date
 #
-# s is start date like "2011-01-01"
+# s is start date like "2011-01-01" OR "2010-01-01::2019-01-31"
 # b1 is # of breaks during cli delta is positive
 # b2 is for negative
 # d is # of months to calculate delta.
@@ -28,19 +28,28 @@ func <- function(s="2001-01-01",b1=10,b2=10,d=5,yu=60,xu=60){
   #
   #  PARAMETER! CAUTION!!!
   #
-  end_date <- last(index(cli_xts))
+  if(nchar(s) == 10){
+      end_date <- last(index(cli_xts))
+      period <- paste(start_date,substr(as.character(index(last(cli_xts))),1,7),sep="::")
+  }else if(nchar(s) == 22){
+      end_date <- substr(s,13,22)
+      period <- s
+  }else{
+    stop("1st parameter should be YYYY-MM-DD:: or YYYY-MM-DD::YYYY-MM-DD!")
+  }
+  # end_date <- last(index(cli_xts))
   lag_month <- d
   #
-  # CAUTION start_date must be "YYYY-MM-DD". DON'T REMOVE MM-DD!!!
+  # CAUTION start_date must be "YYYY-MM-DD". OR "YYYY-MM-DD::YYYY-MM-DD" DON'T REMOVE MM-DD!!!
   #
-
-  period <- paste(start_date,substr(as.character(index(last(cli_xts))),1,7),sep="::")
-
   # select dates when CLI moves negative during 6 months.
   # mnt <- index(cli_xts$oecd["2000::2018"][cli_xts$oecd["2000::2018"]/as.vector(cli_xts$oecd["1999-07-01::2018-06-01"]) < 1])
   #
   mnt <- index(na.omit(diff(cli_xts$oecd,lag=lag_month))[period][na.omit(diff(cli_xts$oecd,lag=lag_month))[period] < 0])
-
+  cat("total is ")
+  cat(length(seq(as.Date(start_date),as.Date(end_date),by='months')))
+  cat(" months\n")
+  print(mnt)
   # compare monthly high between negative vs. positve
   print(t.test(as.vector(VIX[,2][mnt]),as.vector(VIX[,2][as.Date(setdiff(seq(as.Date(start_date),as.Date(end_date),by='months'),mnt))])))
 
