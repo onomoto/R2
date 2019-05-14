@@ -7,7 +7,7 @@
 #
 # s is start date like "2011-01-01" OR "2010-01-01::2019-01-31"
 # b1 is # of breaks during cli delta is positive
-# b2 is for negative
+# b2 is # of negative
 # d is # of months to calculate delta.
 # yu is ylim upperlimit
 # xu is xlim upperlimit
@@ -28,14 +28,15 @@ func <- function(s="2001-01-01",b1=10,b2=10,d=5,yu=60,xu=60){
   #
   #  PARAMETER! CAUTION!!!
   #
-  if(nchar(s) == 10){
-      end_date <- last(index(cli_xts))
+  if(nchar(s) == 10){  # for the case of "YYYY-MM-DD"
+      end_date <- last(index(cli_xts))  # pick up the ending date from the last index.
       period <- paste(start_date,substr(as.character(index(last(cli_xts))),1,7),sep="::")
-  }else if(nchar(s) == 22){
+  }else if(nchar(s) == 22){ # for the case of "YYYY-MM-DD::YYYY-MM-DD"
       end_date <- substr(s,13,22)
       period <- s
-  }else{
-    stop("1st parameter should be YYYY-MM-DD:: or YYYY-MM-DD::YYYY-MM-DD!")
+  }else{ 
+    # stop when neither of them is the case.
+    stop("1st parameter should be YYYY-MM-DD or YYYY-MM-DD::YYYY-MM-DD!")
   }
   # end_date <- last(index(cli_xts))
   lag_month <- d
