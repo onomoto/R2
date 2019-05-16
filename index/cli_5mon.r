@@ -69,4 +69,4 @@ func <- function(s="2011-01-01::",l=9){
   abline(v=seq(ceiling((tmp[1]*10))/10,floor(tmp[2]*10)/10,0.1),col=6,lty=3)
 
 }
-func("2001-01-01::",9)
+func("2011-01-01::",9)
