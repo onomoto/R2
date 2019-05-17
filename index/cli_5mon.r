@@ -9,14 +9,14 @@
 #
 #   use like  > func("2001-01-01::",5)
 #
-func <- function(s="2011-01-01::",l=9){
+func <- function(s="2011-01-01::",l=9,m=5){
 
   head_of_record <- "1964-01-01::"
   print(head_of_record)
   offset <- length(seq(as.Date(head_of_record),as.Date(s),by='months'))
   max_length <- length(seq(as.Date(head_of_record),as.Date(index(last(cli_xts))),by='months'))
   len_mon <- l*12-1
-  lag_month <- 5
+  lag_month <- m
   # when the end period exceeds the current end, adjust # of months and years to avoid the counters go beyond the limit.
   if(offset + len_mon > max_length){
     len_mon <- max_length - offset
