@@ -11,9 +11,10 @@ start_index <- 1
 iteration <- 0
 performance_val <- c()
 period_length <- c()
+lag_month <- 5
 
 
-for(i in seq(1,length(diff(cli_xts$oecd)[period]),1,)){
+for(i in seq(1,length(diff(cli_xts$oecd,lag=lag_month)[period]),1,)){
   if(as.vector(diff(cli_xts$oecd)[period])[i] > 0){  # up is "> 0"
     w <- append(w,1)
   }else{
