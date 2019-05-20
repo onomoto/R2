@@ -5,9 +5,10 @@
 #
 w <- c()
 last_date <- last(index(cli_xts$oecd))
-start_date <- ["1995-01-01"]
+start_date <- "1980-01-01"
 period <- paste(start_date,last_date,sep='::')
 start_index <- 1
+iteration <- 0
 
 
 for(i in seq(1,length(diff(cli_xts$oecd)[period]),1,)){
@@ -23,14 +24,19 @@ for(i in seq(1,length(diff(cli_xts$oecd)[period]),1,)){
     if(month_flag == 0){
       month_flag <- 1
       start_price <- as.vector(to.monthly(SP5[period])[,4][i])
-      print(index(to.monthly(SP5[period])[,4][i]))
+      # print(index(to.monthly(SP5[period])[,4][i]))
+      cat("from ")
+      cat(as.character(as.Date(index(to.monthly(SP5[period])[,4][i]))))
       start_index <- i
     }
   }else if(w[i] ==0){
     if(month_flag == 1){
       cat(" ")
       cat(i - start_index)
-      print(" month(s)")
+      cat(" month(s)")
+      cat("\n")
+      iteration <- iteration +1
+      print(iteration)
       print(as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
       # print(i - start_index)
       month_flag <- 0
