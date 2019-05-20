@@ -5,7 +5,7 @@
 #
 w <- c()
 last_date <- last(index(cli_xts$oecd))
-start_date <- "1980-01-01"
+start_date <- "1970-01-01"
 period <- paste(start_date,last_date,sep='::')
 start_index <- 1
 iteration <- 0
@@ -50,3 +50,5 @@ for(i in seq(1,length(diff(cli_xts$oecd)[period]),1,)){
 }
 mean(period_length)
 mean(performance_val)
+# t_minus <- performance_val
+t_plus <- performance_val
