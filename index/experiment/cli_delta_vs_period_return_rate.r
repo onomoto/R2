@@ -9,6 +9,8 @@ start_date <- "1980-01-01"
 period <- paste(start_date,last_date,sep='::')
 start_index <- 1
 iteration <- 0
+performance_val <- c()
+period_length <- c()
 
 
 for(i in seq(1,length(diff(cli_xts$oecd)[period]),1,)){
@@ -40,6 +42,11 @@ for(i in seq(1,length(diff(cli_xts$oecd)[period]),1,)){
       print(as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
       # print(i - start_index)
       month_flag <- 0
+      period_length <- append(period_length,i-start_index)
+      performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i]) / start_price)
+      print(last(performance_val)**(1/last(period_length)))
     }
   }
 }
+mean(period_length)
+mean(performance_val)
