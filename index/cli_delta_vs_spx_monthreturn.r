@@ -46,11 +46,18 @@ func <- function(p="2000-01-01",c=0.95,l=5,d="C"){
     #
     # draw event v line.
     #
-    for(i in seq(1,length(event_date),1)){
-        abline(v=event_date[i],col = "gray60",lty=2,lwd=1)
-        print(i)
+    # cat("length event_date")
+    # print(length(event_date))
+    # fix bug: add code for the case param "c" is too low to catch any event
+    #
+    if(length(event_date) != 0){
+      for(i in seq(1,length(event_date),1)){
+          abline(v=event_date[i],col = "gray60",lty=2,lwd=1)
+          print(i)
+      }
+      abline(v=event_date[1],col = "gray60",lty=2,lwd=1)
     }
-    abline(v=event_date[1],col = "gray60",lty=2,lwd=1)
+
   #
   # draw graph of cli 5 months delta of oecd all, usa and china.
   #
