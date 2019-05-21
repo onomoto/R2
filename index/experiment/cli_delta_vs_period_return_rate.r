@@ -28,6 +28,8 @@ func <- function(pm="plus",s="1970-01-01",l=1){
   result <- c()
   rate <- c()
   plus_or_minus <- pm
+  open_p <- c()
+  close_p <- c()
 
 # put flag on the months accoring to the parameter. for "minus" cli delta is less than ZERO, for plus the opposite.
   for(i in seq(1,length(diff(cli_xts$oecd,lag=lag_month)[period]),1,)){
@@ -73,6 +75,8 @@ func <- function(pm="plus",s="1970-01-01",l=1){
         month_flag <- 0 # when period ends, intialize the flag.
         period_length <- append(period_length,i-start_index)
         performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i-1]) / start_price)
+        open_p <- append(open_p,start_price)
+        close_p <- append(close_p,as.vector(to.monthly(SP5[period])[,4][i-1]))
         rate <- append(rate,last(performance_val)**(1/last(period_length))-1)
       }
     }
@@ -80,7 +84,7 @@ func <- function(pm="plus",s="1970-01-01",l=1){
   cat("\n")
   print(mean(period_length))
   print(mean(performance_val))
-  return(merge(result,period_length,rate))
+  return(merge(result,period_length,rate,open_p,close_p))
 
 }
 # t_minus <- performance_val
