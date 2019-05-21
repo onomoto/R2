@@ -67,12 +67,12 @@ func <- function(pm="plus",s="1970-01-01",l=1){
         iteration <- iteration +1
         cat(iteration)
         cat(" ")
-        result <- append(result,as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
+        result <- append(result,as.xts(as.vector(to.monthly(SP5[period])[,4][i-1]) / start_price,index(to.monthly(SP5[period])[,4][i-1])))
         # print(as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
         # print(i - start_index)
         month_flag <- 0 # when period ends, intialize the flag.
         period_length <- append(period_length,i-start_index)
-        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i]) / start_price)
+        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i-1]) / start_price)
         rate <- append(rate,last(performance_val)**(1/last(period_length))-1)
       }
     }
