@@ -3,15 +3,15 @@
 # close price is 10% down from open
 # when m is "c", its open vs. close. in the case of "h", it is high versus low
 #
-func <- function(delta=0.9,m="c"){
+func <- function(delta=0.9,m="c",l=5){
+  lag_month <- l
+  ind_bp <- index(na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"])[na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] > 0]
 
-  ind_bp <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] > 0]
+  ind_bm <- index(na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"])[na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"] < 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] < 0]
 
-  ind_bm <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] < 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] < 0]
+  ind_mp <- index(na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"])[na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"] < 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] > 0]
 
-  ind_mp <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] < 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] > 0]
-
-  ind_pm <- index(na.omit(diff(cli_xts$oecd,lag=5))["1962::"])[na.omit(diff(cli_xts$oecd,lag=5))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] < 0]
+  ind_pm <- index(na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"])[na.omit(diff(cli_xts$oecd,lag=lag_month))["1962::"] > 0 & na.omit(diff(cli_xts$oecd,lag=1))["1962::"] < 0]
 
 # sp_correction_ind <- index(SP5["1962::"][SP5["1962::"][,4] / SP5["1962::"][,1] < delta])
 # sp_correction_ind <- index(SP5["1962::"][SP5["1962::"][,3] / SP5["1962::"][,2] < delta])
@@ -57,4 +57,4 @@ func <- function(delta=0.9,m="c"){
 # # t.test(as.vector(VIX[,4][ind_bp]),as.vector(VIX[,4][ind_bm]))
 
 }
-func(0.9,"c")
+func(0.9,"c",5)
