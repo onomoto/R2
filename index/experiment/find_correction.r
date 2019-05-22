@@ -67,6 +67,10 @@ for(i in seq(1,length(output[period_date]),1)){
     # cat(" ")
 }
 abline(v=index(output[period_date])[1],col=rgb(0.5,0,0.5,alpha=0.1),lty=1,lwd=1)
+#
+# or plot.xts() graph
+#
+plot(as.xts(output[,1]-1,index(output)),type='h')
 
 Sys.time()
 b <- Sys.time()
