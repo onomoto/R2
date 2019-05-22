@@ -9,8 +9,8 @@
   # len <- 23
   # change to decide based upon strings length.
   last_pos <- nchar(as.character(getwd())) -2
-  save.image(file=gsub(" ","-",paste(substr(getwd(),start_pos,last_pos),Sys.time(),sep="/")))
-  # 
+  save.image(file=gsub("[ :.]","-",paste(substr(getwd(),start_pos,last_pos),Sys.time(),sep="/")))
+  #
   # OR store working image at the working directory
   #
   # save.image(file=gsub(" ","-",paste(getwd(),Sys.time(),sep="/")))
