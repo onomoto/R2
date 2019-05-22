@@ -53,9 +53,11 @@ func <- function(p="2000-01-01",c=0.95,l=5,d="C"){
     if(length(event_date) != 0){
       for(i in seq(1,length(event_date),1)){
           abline(v=event_date[i],col = "gray60",lty=2,lwd=1)
-          print(i)
+          cat(i)
+          cat(" ")
       }
       abline(v=event_date[1],col = "gray60",lty=2,lwd=1)
+      cat("\n")
     }
 
   #
