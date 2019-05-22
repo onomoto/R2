@@ -45,6 +45,8 @@ func <- function(pm="plus",s="1970-01-01",l=1){
       }else{
         w <- append(w,0)
       }
+    }else{
+      stop("please use plus or minus as 1st parameter")
     }
   }
   month_flag <- 0 # status flag
