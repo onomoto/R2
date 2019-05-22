@@ -1,18 +1,18 @@
 op <- options(digits.secs = 6)
 Sys.time()
 a <- Sys.time()
-j <- 0
+# j <- 0
 correction_ratio <- 0.9
 hist_high <- c()
 recent_high <- c()
 correction_flag <- c()
 output <- c()
 status_flag <- 0
-depth <- c()
-# depth <- as.xts(0,0,0,as.Date("1950-01-01"))
-depth_ratio <- 0
-depth_new <- c()
-depth_date <- as.Date("1950-01-01")
+# depth <- c()
+# # depth <- as.xts(0,0,0,as.Date("1950-01-01"))
+# depth_ratio <- 0
+# depth_new <- c()
+# depth_date <- as.Date("1950-01-01")
 search_range <- 250
 for( i in seq(search_range,length(index(SP5)),1)) {
   z <- i-search_range+1
