@@ -6,6 +6,7 @@ correction_ratio <- 0.9
 hist_high <- c()
 recent_high <- c()
 correction_flag <- c()
+output <- c()
 status_flag <- 0
 depth <- c()
 # depth <- as.xts(0,0,0,as.Date("1950-01-01"))
@@ -34,17 +35,39 @@ recent_high <- merge(recent_high,correction_flag)
 recent_high <- merge(recent_high,SP5[,4][search_range:length(index(SP5))])
 for(i in seq(1,length(index(recent_high)),1)){
   if(recent_high[,2][i] == 1 && status_flag == 0){
-    print("starts at ")
-    print(index(recent_high[i]))
+    # print("starts at ")
+    # print(index(recent_high[i]))
+    output <- append(output,
+    as.xts(recent_high[,3][i]/recent_high[,1][i],index(recent_high[i])))
     status_flag <- 1
+  }
+  if(recent_high[,2][i] == 1 && status_flag == 1){
+    # print("starts at ")
+    # print(index(recent_high[i]))
+    output <- append(output,
+    as.xts(recent_high[,3][i]/recent_high[,1][i],index(recent_high[i])))
+    # status_flag <- 1
   }
   if(recent_high[,2][i] == 0 && status_flag == 1){
     print("ends at ")
     print(index(recent_high[i]))
+    # output <- append(output,
+    # as.xts(recent_high[,3][i]/recent_high[,1][i],index(recent_high[i])))
     status_flag <- 0
   }
 
 }
+#
+# use with plot.default() graph
+#
+period_date <- "1970::"
+for(i in seq(1,length(output[period_date]),1)){
+    abline(v=index(output[period_date])[i],col=rgb(0.5,0,0.5,alpha=0.1),lty=1,lwd=1)
+    # cat(i)
+    # cat(" ")
+}
+abline(v=index(output[period_date])[1],col=rgb(0.5,0,0.5,alpha=0.1),lty=1,lwd=1)
+
 Sys.time()
 b <- Sys.time()
 b - a
