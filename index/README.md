@@ -2,12 +2,12 @@
 this directory contains source code to handle macroecomics data and index historical prices.
 * Data and Download
   * cli_load.r : load cli data from preprocessed CSV files in ~/Downloads.
-  * cli_download.sed : sed script to preprocess csv from https://data.oecd.org/leadind/composite-leading-indicator-cli.htm. 
+  * cli_download.sed : sed script to preprocess csv from https://data.oecd.org/leadind/composite-leading-indicator-cli.htm.
   * [getsymbols_all.r](http://00819.blogspot.com/2018/09/prepare-data-getsymbols-autoarima.html) : download and update all data related to GDP, PAYEMS, UNDCONSA and SPCS10RSA. other data such S&P500, OECD composite leading indicator must be updated separately.
   * getsp5.r : download updated GSPC and combined with CSV from 1950 to 2006 to create daily S&P 500 data from 1950 to the present.
 * cli_delta_vs_gspc.r : plot scatter between with cli 6month delta vs. gspc delta.
 * cli_delta_vs_vix.r : plot scatter between cli 6month delta vs. vix delta.
-* cli_delta_vs_spx_monthreturn.r : CLI delta or VIX histgram vs. SPX price change eventline. able to swith CLI delta or VIX by parameter. 
+* cli_delta_vs_spx_monthreturn.r : CLI delta or VIX histgram vs. SPX price change eventline. able to swith CLI delta or VIX by parameter.
 * [cli_5mon.r](https://00819.blogspot.com/2019/05/cli5monr-draw-spiral-graph-of-cli-5.html) : draw spiral graph with given start date and # of years param. the latter is automatically adjusted with the end of data.
   * [cli_from_2011.r](https://00819.blogspot.com/2019/03/vix-cli-6-month-delta-and-s.html) : plot spiral of cli 6 month delta and cli reading itself from 2011.
   * cli_from_2007.r : same as above but from 2007.
@@ -22,6 +22,8 @@ this directory contains source code to handle macroecomics data and index histor
 * CSV : the directory to stow CSV and other format data files.
 * experiment : the directory for experimental code.
   * [sp5correction_vs_cli_delta.r](https://00819.blogspot.com/2019/05/cli-5-month-delta-and-1-month-delta-vs.html) : count # of months with given percentage of decline for the total 4 cases when cli 5 months delta positive and negative and 1 month delta positive and negative
-  * find_correction.r : go through the entire daily price data of S&P 500 from 1950-01-01 and find price correction. 
+  * [find_correction.r](https://pbs.twimg.com/media/D7OJEIEVUAYnOzO.jpg) : go through the entire daily price data of S&P 500 from 1950-01-01 and find price correction.
   * find_seq.r : go through the entire daily price data of S&P 500 from 1950-01-01 and find the days when price goes up in consequetive longer than its designated limit of days.
-  * cli_delta_vs_period_return_rate.r : indentify the period start and ends when cli delta is in either "plus" or "minus". 2) calculate index updown ratio and daily avarage exponential rate during period.
+  * cli_delta_vs_period_return_rate.r :
+    1. indentify the period start and ends when cli delta is in either "plus" or "minus".
+    1. calculate index updown ratio and daily avarage exponential rate during period.
