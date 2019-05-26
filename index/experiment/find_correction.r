@@ -132,7 +132,7 @@ for(i in seq(1,length(index(output)),1)) {
       cat(round(100*depth_ratio,digits=2))
       cat("% and last for ")
       cat(day_count)
-      cat(" days oecd clie delta is ")
+      cat(" days oecd cli delta = ")
       cat(round(diff(cli_xts$oecd)[substr(start_date,1,7)],digits=2))
       cat(" \n")
       day_count <- 0
