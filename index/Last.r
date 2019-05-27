@@ -5,6 +5,7 @@
   # save working image in the parent directory. expected the length of the directory name is fixed.
   # adjust value "len" to fit the length of the result "getwd()".
   #
+  op <- options(digits.secs = 2)
   start_pos <- 1
   # len <- 23
   # change to decide based upon strings length.
