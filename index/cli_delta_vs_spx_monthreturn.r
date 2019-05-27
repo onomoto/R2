@@ -30,7 +30,7 @@ func <- function(p="2000-01-01",c=0.95,l=5,d="C"){
         stop("wrong arg! V or C")
     }
 
-    plot.zoo(merge(VDATA[period],VDATA[mnt_bm],VDATA[mnt_mp],VDATA[mnt_pm]),type='h',col = c("blue", "red",rgb(0.8,0,1,alpha=0.9),rgb(1,0,0.8,alpha=0.9)), plot.type = "single",lwd=3)
+    plot.zoo(merge(VDATA[period],VDATA[mnt_bm],VDATA[mnt_mp],VDATA[mnt_pm]),type='h',col = c("blue", "red",rgb(0,0.8,0.8,alpha=0.9),rgb(0.4,0.8,0,alpha=0.9)), plot.type = "single",lwd=3)
     #
     # draw yearly v-line.
     #
