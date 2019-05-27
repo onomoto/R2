@@ -11,6 +11,7 @@ func <- function(d=output){
   depth_ratio <- as.vector(correction_data[1,1])
   len <- correction_data[i,2]
   day_num <- correction_data[1,2]
+  start_date <- index(correction_data[1])
   for(i in seq(2,length(index(correction_data)),1)) {
     len <- correction_data[i,2]
 
@@ -34,4 +35,4 @@ func <- function(d=output){
     }
   }
 }
-func(output)
+func(correction_data)
