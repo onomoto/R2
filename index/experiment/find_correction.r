@@ -113,39 +113,39 @@ func <- function(){
 
 
 
-output <- func()
-day_count <- 0
-day_num <- output[1,2]
-depth_ratio <- 1
-for(i in seq(1,length(index(output)),1)) {
-  len <- output[i,2]
-  if(i == 1){
-    start_date <- index(output[i])
-    depth_ratio <- output[i,1]
-  }else{
-    # if(depth_ratio > as.vector(output[i,1])){
-    #   depth_ratio <- as.vector(output[i,1])
-    # }
-    if(day_num != as.vector(output[i,2]) -1 || i == length(index(output))){
-      cat(as.character(as.Date(start_date)))
-      cat(" bottom is ")
-      cat(round(100*depth_ratio,digits=2))
-      cat("% and last for ")
-      cat(day_count)
-      cat(" days oecd cli delta = ")
-      cat(round(diff(cli_xts$oecd)[substr(start_date,1,7)],digits=2))
-      cat(" \n")
-      day_count <- 0
-      depth_ratio <- 1
-      start_date <- index(output[i])
-    }
-  }
-  day_num <- output[i,2]
-  day_count <- day_count+1
-  if(depth_ratio > as.vector(output[i,1])){
-    depth_ratio <- as.vector(output[i,1])
-  }
-}
+# output <- func()
+# day_count <- 0
+# day_num <- output[1,2]
+# depth_ratio <- 1
+# for(i in seq(1,length(index(output)),1)) {
+#   len <- output[i,2]
+#   if(i == 1){
+#     start_date <- index(output[i])
+#     depth_ratio <- output[i,1]
+#   }else{
+#     # if(depth_ratio > as.vector(output[i,1])){
+#     #   depth_ratio <- as.vector(output[i,1])
+#     # }
+#     if(day_num != as.vector(output[i,2]) -1 || i == length(index(output))){
+#       cat(as.character(as.Date(start_date)))
+#       cat(" bottom is ")
+#       cat(round(100*depth_ratio,digits=2))
+#       cat("% and last for ")
+#       cat(day_count)
+#       cat(" days oecd cli delta = ")
+#       cat(round(diff(cli_xts$oecd)[substr(start_date,1,7)],digits=2))
+#       cat(" \n")
+#       day_count <- 0
+#       depth_ratio <- 1
+#       start_date <- index(output[i])
+#     }
+#   }
+#   day_num <- output[i,2]
+#   day_count <- day_count+1
+#   if(depth_ratio > as.vector(output[i,1])){
+#     depth_ratio <- as.vector(output[i,1])
+#   }
+# }
 
 #
 # or plot.xts() graph
