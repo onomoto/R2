@@ -18,6 +18,10 @@ for(i in seq(1,length(index(events)),1)){
 }
 addEventLines(events[1], srt=90, pos=2,col=10)
 axis(4,at=c(seq(70,140,5)))
+#
+# 2 panel graph weekly mean value year-to-year comparison.
+#
+plot.zoo(na.omit(diff(apply.weekly(bp.day,mean),lag=52)),type='h',lwd=5)
 
 #
 # moving average plus daily
