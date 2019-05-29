@@ -33,7 +33,11 @@ func <- function(s="2000-01-01::",c=0.95,l=5){
   #
   if(exists("correction_start_date")){
       for(i in seq(1,length(correction_start_date),1)){
-        addEventLines(correction_start_date[i], srt=90, pos=2,col=2)
+        if(correction_start_date[i,1] < 30){
+          addEventLines(correction_start_date[i], srt=90, pos=2,col=2,lty=2)
+        }else{
+          addEventLines(correction_start_date[i], srt=90, pos=2,col=rgb(1,0,0,alpha=0.5),lwd=4)
+        }
       }
     addEventLines(correction_start_date[1], srt=90, pos=2,col=2)
   }
