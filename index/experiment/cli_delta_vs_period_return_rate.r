@@ -55,7 +55,7 @@ func <- function(pm="plus",s="1970-01-01",l=1){
     if(w[i] == 1){
       if(month_flag == 0){ # when w is 1 and month_flag is 0, the period starts
         month_flag <- 1
-        start_price <- as.vector(to.monthly(SP5[period])[,4][i])
+        start_price <- as.vector(to.monthly(SP5[period])[,1][i]) #dc 0531
         # print(index(to.monthly(SP5[period])[,4][i]))
         # cat("from ")
         # cat(as.character(as.Date(index(to.monthly(SP5[period])[,4][i]))))
