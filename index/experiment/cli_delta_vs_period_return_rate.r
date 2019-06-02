@@ -61,6 +61,16 @@ func <- function(pm="plus",s="1970-01-01",l=1){
         # cat(as.character(as.Date(index(to.monthly(SP5[period])[,4][i]))))
         start_index <- i
       }
+      # dc 0602 add output at the end of loop
+      if(i == length(diff(cli_xts$oecd,lag=lag_month)[period])){
+        # print("end of the loop")
+        result <- append(result,as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
+                period_length <- append(period_length,i-start_index)
+        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i-1]) / start_price)
+        open_p <- append(open_p,start_price)
+        close_p <- append(close_p,as.vector(to.monthly(SP5[period])[,4][i-1]))
+        rate <- append(rate,last(performance_val)**(1/last(period_length))-1)
+      }
 # check stream and when flag is changes 1 to 0. it is the start of period.
     }else if(w[i] ==0){
       if(month_flag == 1){ # when w is 0 and month_flag is 1, the period ends
@@ -91,4 +101,4 @@ func <- function(pm="plus",s="1970-01-01",l=1){
 }
 # t_minus <- performance_val
 # t_plus <- performance_val
-func("plus","1970-01-01")
+func("minus","1970-01-01")
