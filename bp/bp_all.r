@@ -49,17 +49,6 @@ bp.day <- merge(as.xts(as.vector(bp.xts[,1]),as.Date(index(bp.xts),tz=tzone(bp.x
 colnames(bp.day)[1] <- "high"
 colnames(bp.day)[2] <- "low"
 apply.weekly(bp.day,mean)
-# plot(apply.weekly(bp.day,mean),type='p')
-#
-# # adjust mix-max of ylim by min() and max()
-# #
-# plot(apply.weekly(bp.day,mean),type='p',ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
-# #
-# # draw the horizontal line at 125
-# #
-# # addSeries(as.xts(rep(125,length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
-# # addSeries(as.xts(rep(85,length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10))
-# addSeries(as.xts(rep(mean(bp.xts[,2]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
-# addSeries(as.xts(rep(mean(bp.xts[,1]),length(apply.weekly(bp.day,mean)[,1])),index(apply.weekly(bp.day,mean))),on=1,ylim=c( min(apply.weekly(bp.day,mean)[,2])-10,max(apply.weekly(bp.day,mean)[,1])+10),col=2)
-# axis(2,at=c(135,130,125,120,115,85,80,75,70))
-# axis(4,at=c(135,130,125,120,115,85,80,75,70))
+apply.monthly(bp.bangkok,mean)
+na.omit(diff(apply.monthly(bp.bangkok,mean),lag=12))
+
