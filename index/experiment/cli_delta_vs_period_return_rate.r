@@ -101,4 +101,9 @@ func <- function(pm="plus",s="1970-01-01",l=1){
 }
 # t_minus <- performance_val
 # t_plus <- performance_val
+func("plus","1970-01-01")
 func("minus","1970-01-01")
+# histogram
+hist(as.vector(func("minus","1970-01-01")[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
+par(new=T)
+hist(as.vector(func("plus","1970-01-01")[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))

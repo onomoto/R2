@@ -27,3 +27,4 @@ this directory contains source code to handle macroecomics data and index histor
   * [cli_delta_vs_period_return_rate.r](https://00819.blogspot.com/2019/06/s-500-performance-comparison-between.html) :
     1. indentify the period start and ends when cli delta is in either "plus" or "minus".
     1. calculate index updown ratio and daily avarage exponential rate during period.
+    1. draw the overlaid [histogram](https://00819.blogspot.com/2019/06/histogram-performance-comparison.html) for the compaison.
