@@ -66,9 +66,9 @@ func <- function(pm="plus",s="1970-01-01",l=1){
         # print("end of the loop")
         result <- append(result,as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
                 period_length <- append(period_length,i-start_index)
-        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i-1]) / start_price)
+        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i]) / start_price) # bf 0605 put the end month of record at the end of the loop.
         open_p <- append(open_p,start_price)
-        close_p <- append(close_p,as.vector(to.monthly(SP5[period])[,4][i-1]))
+        close_p <- append(close_p,as.vector(to.monthly(SP5[period])[,4][i])) # bf 0605 same as above.
         rate <- append(rate,last(performance_val)**(1/last(period_length))-1)
       }
 # check stream and when flag is changes 1 to 0. it is the start of period.
