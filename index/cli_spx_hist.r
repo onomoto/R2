@@ -29,3 +29,4 @@ abline(v=seq(as.Date("1990-01-01"),index(last(cli_xts$oecd)),by='years'), col=rg
 par(new=T)
 # adjust lwd= for better looking. draw after other graph as to show histogram the most forefront.
 plot.zoo(merge(log(to.monthly(SP5)[mnt_plus][,4]),log(to.monthly(SP5)[mnt_minus][,4])),type='h',col = c("blue", "red"), plot.type = "single",lwd=4)
+abline(h=log(seq(500,2500,500)),col=rgb(0,1,1,alpha=0.9),lty=2)  # horizontal line from 500 to 2500 interval=500.
