@@ -48,9 +48,13 @@ func <- function(k="2000-01-01::2018-12-31" ,l=5){
   result.gpuc <<- lm(apply.quarterly(SP5[k2k],mean)[,1] ~ PAq[k2k] * UCq[k2k] * G[k2k]*CSq[k2k] - UCq[k2k] -G[k2k] - PAq[k2k]*G[k2k] - UCq[k2k]*G[k2k]*CSq[k2k])
 
   SP5.result <<- merge(residuals(result.gpuc),predict(result.gpuc),residuals(result.eps),predict(result.eps))
-  GSPC.predict <<- merge(to.monthly(GSPC)[substr(k2k,11,23)],last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,2]),n=length(SP5.result[,1])*3-2)$y,n=length(to.monthly(GSPC)[,1][substr(k2k,11,23)])),last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,4]),n=length(SP5.result[,1])*3-2)$y,n=length(to.monthly(GSPC)[,1][substr(k2k,11,23)])),suffixes=c('','spline','eps'))
+  # GSPC.predict <<- merge(to.monthly(GSPC)[substr(k2k,11,23)],last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,2]),n=length(SP5.result[,1])*3-2)$y,n=length(to.monthly(GSPC)[,1][substr(k2k,11,23)])),last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,4]),n=length(SP5.result[,1])*3-2)$y,n=length(to.monthly(GSPC)[,1][substr(k2k,11,23)])),suffixes=c('','spline','eps'))
 
-  plot(merge(GSPC.predict[,4],GSPC.predict[,7],GSPC.predict[,8],GSPC.predict[,4]-GSPC.predict[,7],GSPC.predict[,4]-GSPC.predict[,8]),main="GSPC.predict[,4] vs. GSPC.predict[,7]",grid.ticks.on='months')
+  GSPC.predict <<- merge(to.monthly(SP5)[k2k],
+  last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,2]),n=length(SP5.result[,1])*3)$y,n=length(to.monthly(SP5)[,1][k2k])),
+  last(spline(seq(1,length(SP5.result[,1]),1),as.vector(SP5.result[,4]),n=length(SP5.result[,1])*3)$y,n=length(to.monthly(SP5)[,1][k2k])),suffixes=c('','spline','eps'))
+
+  plot(merge(GSPC.predict[,4],GSPC.predict[,6],GSPC.predict[,7],GSPC.predict[,4]-GSPC.predict[,6],GSPC.predict[,4]-GSPC.predict[,7]),main="GSPC.predict[,4] vs. GSPC.predict[,7]",grid.ticks.on='months')
   tmp.legend <- "Black: actual \nRed: spline\nGreen: eps"
   addLegend(legend.loc = "topleft", legend.names = tmp.legend,col=3)
   tmp.addTA <- as.xts(rep(2800,length(index(GSPC.predict))),index(GSPC.predict))
