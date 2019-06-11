@@ -5,6 +5,10 @@ counter <- 1
 limit <- 6
 Events <- c()
 for( i in seq(2,length(index(SP5)),1)){
+  if((i %% 500) == 0){
+    cat(".")
+    cat("")
+  }
   if(SP5[,4][i] > as.vector(SP5[,4][i-1])){
     counter <- counter +1
   }else{
