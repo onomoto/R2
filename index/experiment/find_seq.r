@@ -2,7 +2,7 @@ op <- options(digits.secs = 6)
 # Sys.time()
 a <- Sys.time()
 counter <- 1
-limit <- 5
+limit <- 10
 Events <- c()
 for( i in seq(2,length(index(SP5)),1)){
   if(SP5[,4][i] > as.vector(SP5[,4][i-1])){
@@ -34,3 +34,7 @@ Events
 b <- Sys.time()
 b - a
 op <- options(digits.secs = 2)
+cat("+ ")
+length(which(diff(cli_xts$oecd)[substr(index(Events),1,7)] > 0))
+cat("- ")
+length(which(diff(cli_xts$oecd)[substr(index(Events),1,7)] < 0))
