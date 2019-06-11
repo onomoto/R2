@@ -2,7 +2,7 @@ op <- options(digits.secs = 6)
 # Sys.time()
 a <- Sys.time()
 counter <- 1
-limit <- 10
+limit <- 6
 Events <- c()
 for( i in seq(2,length(index(SP5)),1)){
   if(SP5[,4][i] > as.vector(SP5[,4][i-1])){
@@ -15,7 +15,7 @@ for( i in seq(2,length(index(SP5)),1)){
         # cat("\n")
         Events <<- append(Events,as.xts(counter,index(SP5[,4][i-1])))
       }
-      counter <- 0
+      counter <- 1
   }
 }
 cat(counter)
