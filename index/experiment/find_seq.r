@@ -35,6 +35,6 @@ b <- Sys.time()
 b - a
 op <- options(digits.secs = 2)
 cat("+ ")
-length(which(diff(cli_xts$oecd)[substr(index(Events),1,7)] > 0))
+length(which(diff(cli_xts$oecd)[substr(index(Events["1962::"]),1,7)] > 0))
 cat("- ")
-length(which(diff(cli_xts$oecd)[substr(index(Events),1,7)] < 0))
+length(which(diff(cli_xts$oecd)[substr(index(Events["1962::"]),1,7)] < 0))
