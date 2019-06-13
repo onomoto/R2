@@ -37,7 +37,6 @@ func <- function(k="2000-01-01::2018-12-31" ,l=5){
   # apply.quarterly(UC[k2k], mean)                           1.126e-01  3.999e-02   2.816  0.00632 **
   # apply.quarterly(diff(cli_xts$oecd, lag = 6)[k2k], mean)  7.684e+01  9.961e+00   7.715 6.12e-11 ***
   # ---
-  # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
   #
   # Residual standard error: 74.13 on 70 degrees of freedom
   # Multiple R-squared:  0.9806, Adjusted R-squared:  0.9792
