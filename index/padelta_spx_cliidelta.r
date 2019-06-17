@@ -4,21 +4,21 @@
 start_date <- "1992-01-01"
 end_date <- last(index(cli_xts))
 period <- paste(start_date,end_date,sep="::")
-lag_month <- 5
+lag_month <- 1
 #
 year_seq <- seq(as.Date(start_date),as.Date(end_date),by='years')
 mnt <- seq(as.Date(start_date),as.Date(end_date),by='months')
 plot.default(mnt,na.omit(diff(PA))[period],type='h',axes=F,col=3)
 par(new=T)
 # mnt <- seq(as.Date("1992-02-01"),as.Date("2018-12-31"),by='months')
-plot.default(mnt,to.monthly(SP5[period])[,4],type='l')
+plot.default(mnt,log(to.monthly(SP5[period])[,4]),type='l')
 # abline(v=as.Date("2019-01-01"),col = "gray60",lty=3)
 # abline(v=as.Date("2018-01-01"),col = "gray60",lty=3)
 # abline(v=as.Date("2015-01-01"),col = "gray60",lty=3)
 # abline(v=as.Date("2017-01-01"),col = "gray60",lty=3)
 # abline(v=as.Date("2016-01-01"),col = "gray60",lty=3)
 abline(v=year_seq,col = "gray60",lty=3)
-abline(h=2000,col="gray60",lty=3)
+abline(h=log(seq(500,2500,500)),col="gray60",lty=2)
 abline(h=1191.5,col=2,lty=2)
 # abline(v=as.Date("2014-01-01"),col = "gray60",lty=3)
 par(new=T)
