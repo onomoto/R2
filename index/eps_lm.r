@@ -42,7 +42,7 @@ func <- function(k="2000-01-01::2018-12-31" ,l=5){
   # Multiple R-squared:  0.9806, Adjusted R-squared:  0.9792
   # F-statistic: 706.6 on 5 and 70 DF,  p-value: < 2.2e-16
 
-  result.eps <<- lm(apply.quarterly(SP5[,4][k2k],mean) ~ eps_year_xts[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(CS[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(diff(cli_xts$oecd,lag=6)[k2k],mean))
+  result.eps <<- lm(apply.quarterly(SP5[,4][k2k],mean) ~ eps_year_xts[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(CS[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(diff(cli_xts$oecd,lag=lag_month)[k2k],mean))
 
   result.gpuc <<- lm(apply.quarterly(SP5[k2k],mean)[,1] ~ PAq[k2k] * UCq[k2k] * G[k2k]*CSq[k2k] - UCq[k2k] -G[k2k] - PAq[k2k]*G[k2k] - UCq[k2k]*G[k2k]*CSq[k2k])
 
