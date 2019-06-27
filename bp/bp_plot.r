@@ -21,7 +21,8 @@ axis(4,at=c(seq(70,140,5)))
 #
 # 2 panel graph weekly mean value year-to-year comparison.
 #
-plot.zoo(na.omit(diff(apply.weekly(bp.day,mean),lag=52)),type='h',lwd=5)
+# plot.zoo(na.omit(diff(apply.weekly(bp.day,mean),lag=52)),type='h',lwd=5)
+plot.zoo(cbind(as.vector(na.omit(diff(apply.weekly(bp.day,mean)[,1],lag=52))),as.vector(na.omit(diff(apply.weekly(bp.day,mean)[,2],lag=52)))),type='h',lwd=5,main='YOY weekly difference')
 
 #
 # moving average plus daily
@@ -51,7 +52,7 @@ axis(4,at=c(135,130,125,120,115,85,80,75,70))
 bp.day <- apply.daily(bp.bangkok,mean)
 d <- intersect(intersect(index(bp.day["2019"]),seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days'))-17896,intersect(index(bp.day["2018"]),seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days'))-(17896-365))
 
-plot(merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18")))
+plot(merge(bp.day[seq(as.Date("2019-01-01"),as.Date("2019-12-31"),by='days')[d]],as.vector(bp.day[,1][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),as.vector(bp.day[,2][seq(as.Date("2018-01-01"),as.Date("2018-12-31"),by='days')[d]]),suffixes = c("","h18","h18")),main='YOY daily comparison')
 # addEventLines(events, srt=90, pos=2,col=10)
 # adjust mix-max of ylim by min() and max()
 #
