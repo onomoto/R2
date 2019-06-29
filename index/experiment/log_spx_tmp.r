@@ -1,0 +1,6 @@
+plot(log(merge(tmp.predict[,c(4,6,7)],rep(as.vector(rep(last(SP5[,4]),length(index(tmp.predict))))))[,c(1,2,3)]),type='p',pch='+')
+lines(log(merge(tmp.predict[,c(4,6,7)],rep(as.vector(rep(last(SP5[,4]),length(index(tmp.predict))))))[,4]),col=4)
+addSeries(as.xts(rep(log(2000),length(index(tmp.predict))),index(tmp.predict)),on=1,col=3)
+addSeries(as.xts(rep(log(2500),length(index(tmp.predict))),index(tmp.predict)),on=1,col=3)
+addSeries(as.xts(rep(log(1500),length(index(tmp.predict))),index(tmp.predict)),on=1,col=3)
+addSeries(as.xts(rep(log(1000),length(index(tmp.predict))),index(tmp.predict)),on=1,col=3)
