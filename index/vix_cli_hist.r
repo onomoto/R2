@@ -61,8 +61,8 @@ func <- function(s="2001-01-01",b1=10,b2=10,d=5,yu=60,xu=60){
   # when rgb=(1,1,0), it creates "yellow" graph.
   # alpha is the parameter to specify the density from 0 to 1.
 
-  hist(as.vector(VIX[,4][as.Date(setdiff(seq(as.Date(start_date),as.Date(end_date),by='months'),mnt))]),ylim=c(0,yu),xlim=c(10,xu),breaks=b1,col=rgb(0, 1, 0, alpha=0.9))
+  hist(as.vector(VIX[,4][as.Date(setdiff(seq(as.Date(start_date),as.Date(end_date),by='months'),mnt))]),ylim=c(0,yu),xlim=c(10,xu),breaks=b1,col=rgb(0, 1, 0, alpha=0.9),xlab='VIX monthly close',ylab='VIX',main='vix_cli_hist.r')
   par(new=T)
-  hist(as.vector(VIX[,4][mnt]),xlim=c(10,xu),ylim=c(0,yu),breaks=b2,col=rgb(1, 1, 0, alpha=0.5))
+  hist(as.vector(VIX[,4][mnt]),xlim=c(10,xu),ylim=c(0,yu),breaks=b2,col=rgb(1, 1, 0, alpha=0.5),xlab='',ylab='',main='')
 }
 func("2011-01-01",10,40,5,15,35)

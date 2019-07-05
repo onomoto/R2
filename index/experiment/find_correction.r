@@ -75,16 +75,7 @@ func <- function(){
 
     # at the end of correction
     if(recent_high[,2][i] == 0 && status_flag == 1){
-      # cat("start at ")
-      # cat(as.character(as.Date(start_date)))
-      # cat(" bottom is ")
-      # cat(round(100*depth_ratio,digits=2))
-      # cat("% and last for ")
-      # cat(day_count)
-      # cat(" days\n")
-      # output <- append(output,
-      # as.xts(recent_high[,3][i]/recent_high[,1][i],index(recent_high[i])))
-      # put correction status = OFF
+
       depth_ratio <- 0 # initialize
       status_flag <- 0
       day_count <- 0
@@ -98,10 +89,7 @@ func <- function(){
   len <- c()
   for(i in seq(1,length(index(output)),1)) {
     len <- append(len,length(index(SP5[paste(as.character(index(SP5[1])),as.character(index(output[i])),sep="::")])))
-    # cat("")
-    # cat(i)
-    # cat(i)
-    # cat(" ")
+
     if((i %% 100) == 0){
       cat("#")
       cat("")
@@ -113,43 +101,6 @@ func <- function(){
 correction_data <- func()
 
 
-# output <- func()
-# day_count <- 0
-# day_num <- output[1,2]
-# depth_ratio <- 1
-# for(i in seq(1,length(index(output)),1)) {
-#   len <- output[i,2]
-#   if(i == 1){
-#     start_date <- index(output[i])
-#     depth_ratio <- output[i,1]
-#   }else{
-#     # if(depth_ratio > as.vector(output[i,1])){
-#     #   depth_ratio <- as.vector(output[i,1])
-#     # }
-#     if(day_num != as.vector(output[i,2]) -1 || i == length(index(output))){
-#       cat(as.character(as.Date(start_date)))
-#       cat(" bottom is ")
-#       cat(round(100*depth_ratio,digits=2))
-#       cat("% and last for ")
-#       cat(day_count)
-#       cat(" days oecd cli delta = ")
-#       cat(round(diff(cli_xts$oecd)[substr(start_date,1,7)],digits=2))
-#       cat(" \n")
-#       day_count <- 0
-#       depth_ratio <- 1
-#       start_date <- index(output[i])
-#     }
-#   }
-#   day_num <- output[i,2]
-#   day_count <- day_count+1
-#   if(depth_ratio > as.vector(output[i,1])){
-#     depth_ratio <- as.vector(output[i,1])
-#   }
-# }
-
-#
-# or plot.xts() graph
-#
 
 plot(as.xts(correction_data[,1]-1,index(correction_data)),type='h')
 #
@@ -157,11 +108,8 @@ Sys.time()
 b <- Sys.time()
 b - a
 op <- options(digits.secs = 2)
-#
-# use with plot.default() graph
-#
 
-period_date <- "1995-01-01::2019-03-01"
+period_date <- paste("1995-01-01",last(index(cli_xts)),sep="::")
 plot.default(index(diff(cli_xts)[period_date]),diff(cli_xts[,1])[period_date],type='h')
 for(i in seq(1,length(correction_data[period_date]),1)){
     abline(v=index(correction_data[period_date])[i],col=rgb(0.5,0,0.5,alpha=0.1),lty=1,lwd=1)

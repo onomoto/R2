@@ -10,7 +10,7 @@ func <- function(pm="plus",s="1970-01-01",l=1){
   cat(length(s))
   if(nchar(s) == 10){ # use nchar() to measure strings length, not length()
     cat("1")
-    last_date <- last(index(cli_xts$oecd))
+    last_date <- substr(last(index(cli_xts$oecd)),1,7)
     start_date <- s
     period <- paste(start_date,last_date,sep='::')
   }else{
@@ -63,12 +63,12 @@ func <- function(pm="plus",s="1970-01-01",l=1){
       }
       # dc 0602 add output at the end of loop
       if(i == length(diff(cli_xts$oecd,lag=lag_month)[period])){
-        # print("end of the loop")
+        print("end of the loop")
         result <- append(result,as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
                 period_length <- append(period_length,i-start_index)
-        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i-1]) / start_price)
+        performance_val <- append(performance_val,as.vector(to.monthly(SP5[period])[,4][i]) / start_price) # bf 0605 put the end month of record at the end of the loop.
         open_p <- append(open_p,start_price)
-        close_p <- append(close_p,as.vector(to.monthly(SP5[period])[,4][i-1]))
+        close_p <- append(close_p,as.vector(to.monthly(SP5[period])[,4][i])) # bf 0605 same as above.
         rate <- append(rate,last(performance_val)**(1/last(period_length))-1)
       }
 # check stream and when flag is changes 1 to 0. it is the start of period.
@@ -101,9 +101,17 @@ func <- function(pm="plus",s="1970-01-01",l=1){
 }
 # t_minus <- performance_val
 # t_plus <- performance_val
-func("plus","1970-01-01")
-func("minus","1970-01-01")
+wp <- func("plus","1970-01-01")
+wp
+wm <- func("minus","1970-01-01")
+wm
 # histogram
-hist(as.vector(func("minus","1970-01-01")[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
+# hist(as.vector(func("minus","1970-01-01")[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
+# par(new=T)
+# hist(as.vector(func("plus","1970-01-01")[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
+
+hist(as.vector(wm[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
 par(new=T)
-hist(as.vector(func("plus","1970-01-01")[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
+hist(as.vector(wp[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
+rbind(merge(wp,rep(1,25),suffixes =c('','p_or_m')),merge(wm,rep(-1,26)))
+
