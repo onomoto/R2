@@ -113,4 +113,4 @@ wm
 hist(as.vector(wm[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
 par(new=T)
 hist(as.vector(wp[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
-rbind(merge(wp,rep(1,25)),merge(wm,rep(-1,26)))
+rbind(merge(wp,rep(1,25),suffixes =c('','p_or_m')),merge(wm,rep(-1,26)))
