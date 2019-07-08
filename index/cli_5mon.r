@@ -37,7 +37,7 @@ func <- function(s="2011-01-01::",l=9,m=5,y_adj=0.08){
   tmp <- par('usr')
   # par(new=T)
   plot.default(na.trim(diff(cli_xts$oecd,lag=lag_month))[head_of_record][offset:(offset+len_mon)],cli_xts$oecd[head_of_record][offset:(offset+len_mon)],type='b',xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),lwd=1,main=paste("from",substr(s,1,10),"for",len_mon+1,"months",sep=" "),ylab="",xlab="")
-  legend(pos.x-0.05,pos.y+y_adj,paste('←',substr(index(last(cli_xts$oecd[head_of_record][offset:(offset+len_mon)])),1,7) ,sep=''),bty='n')  
+  legend(pos.x-0.05,pos.y+y_adj,paste('←',substr(index(last(cli_xts$oecd[head_of_record][offset:(offset+len_mon)])),1,7) ,sep=''),bty='n',xjust=0)  
   par(new=T)
   for(i in seq(0,l-1,1)){
     print(i)
