@@ -18,7 +18,7 @@ func <- function(s="2001-01-01",b1=10,b2=10,d=5,yu=60,xu=60){
   start_date <- s
   if(file.exists("~/VIX.csv")){
     # VIX <- read.csv("~/VIX.csv")
-    VIX <- as.xts(read.zoo(read.csv("~/VIX.csv")))
+    VIX <<- as.xts(read.zoo(read.csv("~/VIX.csv")))
     system("rm \"$HOME/VIX.csv\"")
   }else{
     print("!!!FILE VIX.csv DOESN'T EXIST!!!!!")
