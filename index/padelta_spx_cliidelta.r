@@ -2,7 +2,8 @@
  #  https://00819.blogspot.com/2019/02/plot-abline-eps-gspc.html for the reference
  #
 start_date <- "1992-01-01"
-end_date <- last(index(cli_xts))
+# end_date <- last(index(cli_xts))
+end_date <- as.Date(as.yearmon((mondate(index(last(cli_xts)))+0)),frac=1)
 period <- paste(start_date,end_date,sep="::")
 lag_month <- 1
 #
