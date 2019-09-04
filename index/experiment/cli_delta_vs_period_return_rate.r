@@ -119,6 +119,6 @@ rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-
 library(ggplot2)
 df <- data.frame(d=rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))[,1],f=rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))[,6])
 p <- ggplot(df, aes(x=result,fill=as.character(p_or_m)))
-p <- p + geom_histogram(bins=50,position = "identity", alpha = 0.7)
+p <- p + geom_histogram(bins=30,position = "identity", alpha = 0.5)
 plot(p)
 
