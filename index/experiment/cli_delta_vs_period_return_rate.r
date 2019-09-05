@@ -4,7 +4,7 @@
 # 3)compare SPX close price between the end month of cli_xts delta is plus(or minus) and its start.
 # 4)return xts objects which contains. start month of period, updown ration, length of months and monthly average return during period.
 
-func <- function(pm="plus",s="1970-01-01",l=1){
+func <- function(pm="plus",s="1970-01-01",l=1,th=0){
   w <- c()
   cat("0")
   cat(length(s))
@@ -30,17 +30,18 @@ func <- function(pm="plus",s="1970-01-01",l=1){
   plus_or_minus <- pm
   open_p <- c()
   close_p <- c()
+  thrsd <- th
 
 # put flag on the months accoring to the parameter. for "minus" cli delta is less than ZERO, for plus the opposite.
   for(i in seq(1,length(diff(cli_xts$oecd,lag=lag_month)[period]),1,)){
     if(plus_or_minus == "minus"){
-      if(as.vector(diff(cli_xts$oecd,lag=lag_month)[period])[i] < 0){  # up is "> 0"
+      if(as.vector(diff(cli_xts$oecd,lag=lag_month)[period])[i] < thrsd){  # up is "> 0"
         w <- append(w,1)
       }else{
         w <- append(w,0)
       }
     }else if(plus_or_minus == "plus"){
-      if(as.vector(diff(cli_xts$oecd,lag=lag_month)[period])[i] > 0){  # up is "> 0"
+      if(as.vector(diff(cli_xts$oecd,lag=lag_month)[period])[i] > thrsd){  # up is "> 0"
         w <- append(w,1)
       }else{
         w <- append(w,0)
@@ -109,9 +110,17 @@ wm
 # hist(as.vector(func("minus","1970-01-01")[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
 # par(new=T)
 # hist(as.vector(func("plus","1970-01-01")[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
+# hist(as.vector(wm[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
+# par(new=T)
+# hist(as.vector(wp[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
+rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))
 
-hist(as.vector(wm[,1])-1,col=rgb(0.5,1,0),breaks=20,xlim=c(-0.6,0.5),ylim=c(0,8))
-par(new=T)
-hist(as.vector(wp[,1])-1,col=rgb(0.5,0,1,alpha=0.4),breaks=10,xlim=c(-0.6,0.5),ylim=c(0,8))
-rbind(merge(wp,rep(1,25),suffixes =c('','p_or_m')),merge(wm,rep(-1,26)))
-
+library(ggplot2)
+df <- data.frame(d=rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))[,1],f=rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))[,6])
+p <- ggplot(df, aes(x=result,fill=as.character(p_or_m),color=as.character(p_or_m)))
+p <- p + geom_histogram(bins=30,position = "identity", alpha = 0.5)
+# p <- p + scale_color_brewer(palette = "Set2")
+# p <- p + scale_fill_brewer(palette = "Paired")
+p <- p + scale_color_brewer(palette = "Set1")
+p <- p + scale_fill_brewer(palette = "RdYlGn")
+plot(p)
