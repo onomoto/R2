@@ -11,8 +11,9 @@ func <- function(x,sl,sh,ml,mh){
   r <- sl+d*(a/b)
   return(r)
 }
-#
-mi <- func(as.vector(idx["1995::2018"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2018"]))[1],range(as.vector(idx["1995::2018"]))[2])
+# this should be here
+idx <- log(apply.monthly(SP5[,4],mean))/100
+mi <- func(as.vector(idx["1995::2019-06"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
 # mi <- as.vector(idx["1995::2018"])
 
 func <- function(x){
@@ -22,12 +23,12 @@ func <- function(x){
   if(x < -0.1){return("lower")}
 }
 w <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
-idx <- log(apply.monthly(SP5[,4],mean))/100
+# idx <- log(apply.monthly(SP5[,4],mean))/100
 #
 # in the case of line graph, x-axis vector should continuous. thus, "t=index(w["1995::2018"])" is right.
 # don't put descrete data into x-axis.
 
-df <- data.frame(i=mi,d=as.vector(w["1995::2018"]),t=index(w["1995::2018"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2018"],1,func)))
+df <- data.frame(i=mi,d=as.vector(w["1995::2019-06"]),t=index(w["1995::2019-06"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2019-06"],1,func)))
 
 
 
