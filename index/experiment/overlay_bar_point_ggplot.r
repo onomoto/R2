@@ -36,7 +36,7 @@ p <- ggplot(df,aes(x=t,y=d))
 #
 # need to investigate mapping= designator. somehow it's necessary to overlay y-axis coordinated graph.
 #
-p <- p + geom_bar(mapping=aes(x=t,y=d,fill=sign),stat = "identity",alpha=0.4) # need identity to draw value itself.
+p <- p + geom_bar(mapping=aes(x=t,y=d,fill=sign),stat = "identity",alpha=0.4,width = 15) # need identity to draw value itself.
 p <- p + geom_path(df,mapping=aes(x=t,y=i),stat="identity", position="identity",colour="black")
 p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 # same as above about mapping=
