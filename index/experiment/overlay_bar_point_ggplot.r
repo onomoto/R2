@@ -8,7 +8,7 @@ func <- function(x){
   if(x > -0.1){return("lowermiddle")}
   if(x < -0.1){return("lower")}
 }
-df <- data.frame(d=as.vector(w["1995::2019-06"]),t=index(w["1995::2019-06"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2019-06"],1,func)))
+# df <- data.frame(d=as.vector(w["1995::2019-06"]),t=index(w["1995::2019-06"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2019-06"],1,func)))
 # convert geometory of data df$i to df$d.
 posconv <- function(x,sl,sh,ml,mh){
   # (x-ml)/(mh-ml) = (r-sl)/(sh-sl)
