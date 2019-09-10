@@ -56,7 +56,7 @@ j <- 1
 for( i in vlabel){ p <- p+annotate("text",label=as.character(i),x=as.Date("1995-01-01"), y=s[j]*1.02);
 j<-j+1}
 # p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
-p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.4) 
+p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.4,alpha=0.4) 
 
 plot(p)
 # remove unnecessary function.
