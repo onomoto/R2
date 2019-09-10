@@ -21,7 +21,8 @@ posconv <- function(x,sl,sh,ml,mh){
 # this should be here
 
 idx <- log(apply.monthly(SP5[,4],mean))/100
-mi <- posconv(as.vector(idx["1995::2019-06"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
+# 
+# mi <- posconv(as.vector(idx["1995::2019-06"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
 
 w <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
 #
@@ -30,18 +31,44 @@ w <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
 
 df <- data.frame(i=mi,d=as.vector(w["1995::2019-06"]),t=index(w["1995::2019-06"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2019-06"],1,func)))
 
+mi <- posconv(as.vector(idx["1995::2019-06"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
 
 
 p <- ggplot(df,aes(x=t,y=d))
 #
 # need to investigate mapping= designator. somehow it's necessary to overlay y-axis coordinated graph.
 #
-p <- p + geom_bar(mapping=aes(x=t,y=d,fill=sign),stat = "identity",alpha=0.4,width = 15) # need identity to draw value itself.
+p <- p + geom_bar(mapping=aes(x=t,y=d,fill=sign),stat = "identity",alpha=0.84,width = 15) # need identity to draw value itself.
 p <- p + geom_path(df,mapping=aes(x=t,y=i),stat="identity", position="identity",colour="black")
 p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 # same as above about mapping=
 p <- p + geom_point(df,mapping=aes(x=t,y=i,color=sign),size=1)
+p <- p+theme( rect = element_rect(fill = "white", colour = "black",
+                                  size = 0, linetype = 1),
+              panel.background = element_rect(fill = "lightgrey",
+                                              colour = "lightblue"),
+              # size = 0.5, linetype = "solid"),
+              panel.grid = element_blank(),
+              axis.title.x=element_blank(),axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())
+# 
+vlabel <- seq(500,3250,500)
+s <- posconv(log(vlabel)/100,range(df$d)[1],range(df$d)[2],
+            range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
+
+# s <- seq((1+floor(min(tmp.predict[,c(4,6,7)])/500))*500,floor(max(tmp.predict[,c(4,6,7)])/500)*500,500)
+p <- p + geom_hline(yintercept = s,size=0.4,linetype=1,colour="white") #horizontal line
+j <- 1
+for( i in vlabel){ p <- p+annotate("text",label=as.character(i),x=as.Date("1995-01-01"), y=s[j]*1.02);
+j<-j+1}
+# p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
+p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.4) 
 
 plot(p)
 # remove unnecessary function.
 remove(posconv)
+remove(s)
+remove(j)
+remove(mi)
+remove(w)
+remove(idx)
+remove(df)
