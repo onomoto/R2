@@ -32,7 +32,9 @@ p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 p <- p + geom_path(aes(y=g),colour='red')
 p <- p + geom_path(aes(y=e),colour='blue')
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
-p <- p + labs(title = "CLI Delta")
+p <- p + labs(title = "SPX + Theory + Residual + CLI Delta",fill="CLI Delta",colour = "CLI Delta")
+# p <- p + scale_fill_discrete(name="Experimental\nCondition")
+# p <- p +scale_colour_discrete(name  ="CLI Delta") + scale_shape_discrete(name  ="CLI Delta")
 
 plot(p)
 # remove unnecessary function.
