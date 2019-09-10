@@ -19,20 +19,15 @@ posconv <- function(x,sl,sh,ml,mh){
   return(r)
 }
 # this should be here
-
 idx <- log(apply.monthly(SP5[,4],mean))/100
 # 
-# mi <- posconv(as.vector(idx["1995::2019-06"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
-
 w <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
 #
 # in the case of line graph, x-axis vector should continuous. thus, "t=index(w["1995::2018"])" is right.
 # don't put descrete data into x-axis.
+mi <- posconv(as.vector(idx["1995::2019-06"]),range(as.vector(w["1995::2019-06"]))[1],range(as.vector(w["1995::2019-06"]))[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
 
 df <- data.frame(i=mi,d=as.vector(w["1995::2019-06"]),t=index(w["1995::2019-06"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2019-06"],1,func)))
-
-mi <- posconv(as.vector(idx["1995::2019-06"]),range(df$d)[1],range(df$d)[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
-
 
 p <- ggplot(df,aes(x=t,y=d))
 #
