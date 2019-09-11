@@ -22,7 +22,7 @@ s <- seq((1+floor(min(tmp.predict[,c(4,6,7)])/500))*500,floor(max(tmp.predict[,c
 p <- p + geom_hline(yintercept = log(s),size=0.4,linetype=1,colour="white") #horizontal line
 p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
 p <- p + geom_vline(xintercept=seq(as.Date("2001-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.4) 
-for( i in s){ p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01"), y=log(s*1.03))}
+for( i in s){ p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01"), y=log(s*1.03),colour='white')}
 # p <- p + theme(plot.background = element_rect(fill = "darkblue"))
 # p <- p + theme_classic()
 # p <- p +  theme_grey()

@@ -45,16 +45,17 @@ p <- p+theme( rect = element_rect(fill = "white", colour = "black",
               # size = 0.5, linetype = "solid"),
               panel.grid = element_blank(),
               axis.title.x=element_blank(),axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())
-# 
+# parameter for position and lable of v-lines.
 vlabel <- seq(500,3250,500)
+# convert raw values into the positon.
 s <- posconv(log(vlabel)/100,range(df$d)[1],range(df$d)[2],
             range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
 
 # s <- seq((1+floor(min(tmp.predict[,c(4,6,7)])/500))*500,floor(max(tmp.predict[,c(4,6,7)])/500)*500,500)
+# output h-line
 p <- p + geom_hline(yintercept = s,size=0.4,linetype=1,colour="white") #horizontal line
-j <- 1
-for( i in vlabel){ p <- p+annotate("text",label=as.character(i),x=as.Date("1995-01-01"), y=s[j]*1.02);
-j<-j+1}
+# output lable of h-line
+for( i in seq(1,length(vlabel),1)){ p <- p+annotate("text",label=as.character(vlabel[i]),x=as.Date("1995-01-01"), y=s[i]+0.002,colour='white');print(vlabel[i])};
 # p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
 p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.4,alpha=0.4) 
 
@@ -62,7 +63,6 @@ plot(p)
 # remove unnecessary function.
 remove(posconv)
 remove(s)
-remove(j)
 remove(mi)
 remove(w)
 remove(idx)
