@@ -38,7 +38,7 @@ p <- p + geom_path(df,mapping=aes(x=t,y=i),stat="identity", position="identity",
 p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 # same as above about mapping=
 p <- p + geom_point(df,mapping=aes(x=t,y=i,color=sign),size=1)
-p <- p+theme( rect = element_rect(fill = "white", colour = "black",
+p <- p+theme( rect = element_rect(fill = "grey88", colour = "black",
                                   size = 0, linetype = 1),
               panel.background = element_rect(fill = "grey88",
                                               colour = "lightblue"),
@@ -58,6 +58,8 @@ p <- p + geom_hline(yintercept = s,size=0.4,linetype=1,colour="white",alpha=0.4)
 for( i in seq(1,length(vlabel),1)){ p <- p+annotate("text",label=as.character(vlabel[i]),x=as.Date("1995-01-01"), y=s[i]+0.002,colour='white');print(vlabel[i])};
 # p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
 p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.6,alpha=0.4) 
+p <- p + labs(title = "VIX + SPX + CLI Delta",fill="",color="")
+
 
 plot(p)
 # remove unnecessary function.
