@@ -23,7 +23,7 @@ func <- function(df,m=6){
                   # element_rect(fill = "white", colour = "black",
                   #                   size = 0, linetype = 1),
                 axis.title.x=element_blank(),axis.title.y=element_blank(),
-                panel.background = element_rect(fill = "skyblue",
+                panel.background = element_rect(fill = "lightsteelblue1",
                                                 colour = "lightblue"))
   plot(p)
 }
