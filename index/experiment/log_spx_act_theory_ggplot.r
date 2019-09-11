@@ -33,7 +33,7 @@ for( i in s){ p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01
 #                    axis.line = element_line(size = 0.5, linetype = "solid",
 #                                             colour = "black"))
 # invalidate x-axis title text and ticks.
-p <- p+theme( rect = element_rect(fill = "white", colour = "black",
+p <- p+theme( rect = element_rect(fill = "lightblue", colour = "white",
                                   size = 0, linetype = 1),
               panel.background = element_rect(fill = "lightblue",
                                               colour = "lightblue"),
@@ -41,7 +41,7 @@ p <- p+theme( rect = element_rect(fill = "white", colour = "black",
               panel.grid = element_blank(),
               axis.title.x=element_blank(),axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())
 # 
-
+p <- p + labs(title = "SPX + Theory on log scale",fill="",color="")
 plot(p)
 remove(s)
 remove(df)

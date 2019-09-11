@@ -33,6 +33,19 @@ p <- p + geom_path(aes(y=g),colour='red')
 p <- p + geom_path(aes(y=e),colour='blue')
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
 p <- p + labs(title = "SPX + Theory + Residual + CLI Delta",fill="CLI Delta",colour = "CLI Delta")
+p <- p+theme( rect = element_rect(fill = "grey88", 
+                                  colour = "black",
+                                  size = 0, 
+                                  linetype = 1),
+              panel.background = element_rect(fill = "grey88",
+                                              colour = "lightblue"),
+              # size = 0.5, linetype = "solid"),
+              # panel.grid = element_blank(),
+              axis.title.x=element_blank(),
+              axis.title.y=element_blank(),
+              # axis.text.y=element_blank(),
+              # axis.ticks.y=element_blank()
+              )
 # p <- p + scale_fill_discrete(name="Experimental\nCondition")
 # p <- p +scale_colour_discrete(name  ="CLI Delta") + scale_shape_discrete(name  ="CLI Delta")
 
