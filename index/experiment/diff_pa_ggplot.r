@@ -25,6 +25,7 @@ func <- function(df,m=6){
                 axis.title.x=element_blank(),axis.title.y=element_blank(),
                 panel.background = element_rect(fill = "lightsteelblue1",
                                                 colour = "lightblue"))
+  p <- p + labs(title = "NFP monthly delta",fill="")
   plot(p)
 }
 func(df,6)
