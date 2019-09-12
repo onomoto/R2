@@ -41,7 +41,7 @@ my_update_check <- function(symbol,date){
             CODE <- SKIP
         }
     }else{
-        if(as.Date(last_update)+1 != today){
+        if(as.Date(last_update)+1 != today && as.Date(last_update) != today   ){
     #       getSymbols(as.character(sym),src="yahooj")
             print("not monday, lazy yesterday")
             cat("the last update was")
