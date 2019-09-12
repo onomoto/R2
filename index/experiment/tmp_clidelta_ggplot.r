@@ -1,17 +1,20 @@
-kikan <- "2000-01-01::2019-06-01"
+kikan <- "2000-01-01::"
 func <- function(x){
+  if(is.na(x)){return("NA")}
   if(x > 0.1){return("upper")}
   if(x > 0){return("uppermiddle")}
   if(x > -0.1){return("lowermiddle")}
   if(x < -0.1){return("lower")}
 }
 
+delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(cli_xts$oecd)[kikan])))
 #  [kikan]
 df <- data.frame(i=as.vector(tmp.predict[kikan][,4]),
 g=as.vector(tmp.predict[kikan][,6]),
 e=as.vector(tmp.predict[kikan][,7]),
 r=as.vector(tmp.predict[kikan][,4]-tmp.predict[kikan][,7]),
-c=as.vector(apply(diff(cli_xts$oecd)[kikan],1,func)),
+# c=as.vector(apply(diff(cli_xts$oecd)[kikan],1,func)),
+c=as.vector(apply(matrix(delta,ncol=1),1,func)),
 t=as.Date(index(tmp.predict[kikan])))
 
 colnames(df)[1] <- 'i'
@@ -33,9 +36,9 @@ p <- p + geom_path(aes(y=g),colour='red')
 p <- p + geom_path(aes(y=e),colour='blue')
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
 p <- p + labs(title = "SPX + Theory + Residual + CLI Delta",fill="CLI Delta",colour = "CLI Delta")
-p <- p+theme( rect = element_rect(fill = "grey88", 
+p <- p+theme( rect = element_rect(fill = "grey88",
                                   colour = "black",
-                                  size = 0, 
+                                  size = 0,
                                   linetype = 1),
               panel.background = element_rect(fill = "grey88",
                                               colour = "lightblue"),

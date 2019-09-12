@@ -3,6 +3,7 @@
 # need to investigate mapping=
 #
 func <- function(x){
+  if(is.na(x)){return("NA")}
   if(x > 0.1){return("upper")}
   if(x > 0){return("uppermiddle")}
   if(x > -0.1){return("lowermiddle")}
@@ -18,16 +19,22 @@ posconv <- function(x,sl,sh,ml,mh){
   r <- sl+d*(a/b)
   return(r)
 }
+kikan <- "1995::"
 # this should be here
 idx <- log(apply.monthly(SP5[,4],mean))/100
-# 
+#
 w <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
+delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(w[kikan])) - length(diff(cli_xts$oecd)[kikan])))
 #
 # in the case of line graph, x-axis vector should continuous. thus, "t=index(w["1995::2018"])" is right.
 # don't put descrete data into x-axis.
-mi <- posconv(as.vector(idx["1995::2019-06"]),range(as.vector(w["1995::2019-06"]))[1],range(as.vector(w["1995::2019-06"]))[2],range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
+mi <- posconv(as.vector(idx[kikan]),range(as.vector(w[kikan]))[1],range(as.vector(w[kikan]))[2],range(as.vector(idx[kikan]))[1],range(as.vector(idx[kikan]))[2])
 
-df <- data.frame(i=mi,d=as.vector(w["1995::2019-06"]),t=index(w["1995::2019-06"]),sign=as.vector(apply(diff(cli_xts$oecd)["1995::2019-06"],1,func)))
+df <- data.frame(i=mi,
+  d=as.vector(w[kikan]),
+  t=index(w[kikan]),
+  sign=as.vector(apply(matrix(delta,ncol=1),1,func)))
+  # sign=as.vector(apply(diff(cli_xts$oecd)[kikan],1,func)))
 
 p <- ggplot(df,aes(x=t,y=d))
 #
@@ -49,7 +56,7 @@ p <- p+theme( rect = element_rect(fill = "grey88", colour = "black",
 vlabel <- seq(500,3250,500)
 # convert raw values into the positon.
 s <- posconv(log(vlabel)/100,range(df$d)[1],range(df$d)[2],
-            range(as.vector(idx["1995::2019-06"]))[1],range(as.vector(idx["1995::2019-06"]))[2])
+            range(as.vector(idx[kikan]))[1],range(as.vector(idx[kikan]))[2])
 
 # s <- seq((1+floor(min(tmp.predict[,c(4,6,7)])/500))*500,floor(max(tmp.predict[,c(4,6,7)])/500)*500,500)
 # output h-line
@@ -57,7 +64,7 @@ p <- p + geom_hline(yintercept = s,size=0.4,linetype=1,colour="white",alpha=0.4)
 # output lable of h-line
 for( i in seq(1,length(vlabel),1)){ p <- p+annotate("text",label=as.character(vlabel[i]),x=as.Date("1995-01-01"), y=s[i]+0.002,colour='white');print(vlabel[i])};
 # p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
-p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.6,alpha=0.4) 
+p <- p + geom_vline(xintercept=seq(as.Date("1996-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.6,alpha=0.4)
 p <- p + labs(title = "VIX + SPX + CLI Delta",fill="",color="")
 
 
