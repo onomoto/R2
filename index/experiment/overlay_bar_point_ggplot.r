@@ -40,14 +40,14 @@ p <- ggplot(df,aes(x=t,y=d))
 #
 # need to investigate mapping= designator. somehow it's necessary to overlay y-axis coordinated graph.
 #
-p <- p + geom_bar(mapping=aes(x=t,y=d,fill=sign),stat = "identity",alpha=0.84,width = 15) # need identity to draw value itself.
+p <- p + geom_bar(mapping=aes(x=t,y=d,fill=sign),stat = "identity",alpha=0.84,width = 10) # need identity to draw value itself.
 p <- p + geom_path(df,mapping=aes(x=t,y=i),stat="identity", position="identity",colour="black")
 p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 # same as above about mapping=
 p <- p + geom_point(df,mapping=aes(x=t,y=i,color=sign),size=1)
-p <- p+theme( rect = element_rect(fill = "grey88", colour = "black",
+p <- p+theme( rect = element_rect(fill = "grey77", colour = "black",
                                   size = 0, linetype = 1),
-              panel.background = element_rect(fill = "grey88",
+              panel.background = element_rect(fill = "grey77",
                                               colour = "lightblue"),
               # size = 0.5, linetype = "solid"),
               panel.grid = element_blank(),
