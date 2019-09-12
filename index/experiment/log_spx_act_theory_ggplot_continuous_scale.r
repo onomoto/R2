@@ -4,7 +4,7 @@ func <- function(x){
 
 }
 
-spx_mean <- apply.monthly(SP5[,4],mean)["1995::"]
+spx_mean <- apply.monthly(SP5[,4],mean)["1985::"]
 lag <- 5
 delta <- append(as.vector(diff(cli_xts$oecd,lag)[paste(as.Date(head(index(spx_mean),1)),"::",sep="")]),rep(NA,length(index(spx_mean)) - length(diff(cli_xts$oecd,lag)[paste(as.Date(head(index(spx_mean),1)),"::",sep="")])))
 
@@ -60,7 +60,7 @@ p <- p+theme( rect = element_rect(fill = "lightblue", colour = "white",
               axis.title.x=element_blank(),axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())
 #
 p <- p + labs(title = "SPX + Theory on log scale",fill="",color="")
- p <- p + scale_color_continuous(low = "red" , high = "yellow1", na.value = "black")
+ p <- p + scale_color_continuous(low = "black" , high = "yellow1", na.value = "red")
           # scale_color_continuous()
 plot(p)
 remove(s)
