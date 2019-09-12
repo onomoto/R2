@@ -5,7 +5,8 @@ func <- function(x){
 }
 
 spx_mean <- apply.monthly(SP5[,4],mean)["1995::"]
-delta <- append(as.vector(diff(cli_xts$oecd)[paste(as.Date(head(index(spx_mean),1)),"::",sep="")]),rep(NA,length(index(spx_mean)) - length(diff(cli_xts$oecd)[paste(as.Date(head(index(spx_mean),1)),"::",sep="")])))
+lag <- 5
+delta <- append(as.vector(diff(cli_xts$oecd,lag)[paste(as.Date(head(index(spx_mean),1)),"::",sep="")]),rep(NA,length(index(spx_mean)) - length(diff(cli_xts$oecd,lag)[paste(as.Date(head(index(spx_mean),1)),"::",sep="")])))
 
 
 df <- data.frame(
