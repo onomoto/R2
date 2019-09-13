@@ -1,10 +1,10 @@
 kikan <- "2000-01-01::"
 func <- function(x){
-  if(is.na(x)){return("NA")}
-  if(x > 0.1){return("upper")}
-  if(x > 0){return("uppermiddle")}
-  if(x > -0.1){return("lowermiddle")}
-  if(x < -0.1){return("lower")}
+  if(is.na(x)){return(NA)}
+  if(x > 0.1){return("a")}
+  if(x > 0){return("b")}
+  if(x > -0.1){return("c")}
+  if(x < -0.1){return("d")}
 }
 
 delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(cli_xts$oecd)[kikan])))
@@ -36,6 +36,8 @@ p <- p + geom_path(aes(y=g),colour='red')
 p <- p + geom_path(aes(y=e),colour='blue')
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
 p <- p + labs(title = "SPX + Theory + Residual + CLI Delta",fill="CLI Delta",colour = "CLI Delta")
+p <- p +scale_color_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
+p <- p +scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
 p <- p+theme( rect = element_rect(fill = "grey88",
                                   colour = "black",
                                   size = 0,
