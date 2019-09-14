@@ -47,7 +47,7 @@ p <- p +scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Delt
 
 p <- p+theme( rect = element_rect(fill = "lightblue", colour = "white",
                                   size = 0, linetype = 1),
-              panel.background = element_rect(fill = "lightblue",
+              panel.background = element_rect(fill = "gold4",
                                               colour = "lightblue"),
                                               # size = 0.5, linetype = "solid"),
               panel.grid = element_blank(),

@@ -68,7 +68,7 @@ p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 p <- p + geom_point(df,mapping=aes(x=t,y=i,color=sign),size=1)
 p <- p+theme( rect = element_rect(fill = "grey77", colour = "black",
                                   size = 0, linetype = 1),
-              panel.background = element_rect(fill = "grey77",
+              panel.background = element_rect(fill = "grey33",
                                               colour = "lightblue"),
               # size = 0.5, linetype = "solid"),
               panel.grid = element_blank(),

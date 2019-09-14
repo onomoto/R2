@@ -3,7 +3,7 @@
 #
 #   s = start date of the spiral like "1992-01-01::" DON'T FORGET DOUBLE COLON!!
 #       Don't set before "1964-01-01"
-#   m = length of detal, by month. like 1 or 2 or any other integer.
+#   m = length of delta, by month. like 1 or 2 or any other integer.
 #   xts = xts object like cli_xts$oecd,
 #   use like  > func("2001-01-01::",5,cli_xts_$oecd)
 #
