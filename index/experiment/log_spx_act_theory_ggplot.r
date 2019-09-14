@@ -1,9 +1,11 @@
+
+
 func <- function(x){
-  if(is.na(x)){return("NA")}
-  if(x > 0.1){return("upper")}
-  if(x > 0){return("uppermiddle")}
-  if(x > -0.1){return("lowermiddle")}
-  if(x < -0.1){return("lower")}
+  if(is.na(x)){return(NA)}
+  if(x > 0.1){return("a")}
+  if(x > 0){return("b")}
+  if(x > -0.1){return("c")}
+  if(x < -0.1){return("d")}
 }
 
 delta <- append(as.vector(diff(cli_xts$oecd)[paste(as.Date(head(index(tmp.predict),1)),"::",sep="")]),rep(NA,length(index(tmp.predict)) - length(diff(cli_xts$oecd)[paste(as.Date(head(index(tmp.predict),1)),"::",sep="")])))
@@ -40,16 +42,9 @@ p <- p + geom_hline(yintercept = log(s),size=0.4,linetype=1,colour="white") #hor
 p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
 p <- p + geom_vline(xintercept=seq(as.Date("2001-01-01"),as.Date("2019-01-01"),by='years'), colour="white",size=0.4)
 for( i in s){ p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01"), y=log(s*1.03),colour='white')}
-# p <- p + theme(plot.background = element_rect(fill = "darkblue"))
-# p <- p + theme_classic()
-# p <- p +  theme_grey()
-# P <- p + theme(panel.border = element_blank(),
-#                    panel.grid.major = element_blank(),
-#                    rect = element_blank(),
-#                    panel.grid.minor = element_blank(),
-#                    axis.line = element_line(size = 0.5, linetype = "solid",
-#                                             colour = "black"))
-# invalidate x-axis title text and ticks.
+p <- p +scale_color_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
+p <- p +scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
+
 p <- p+theme( rect = element_rect(fill = "lightblue", colour = "white",
                                   size = 0, linetype = 1),
               panel.background = element_rect(fill = "lightblue",
