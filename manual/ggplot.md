@@ -2,11 +2,11 @@
  異なる種類のデータを統合するときはこのdata frame作成時にやる。
  カラム名がggplot()内部での変数名となるので、注意！
 
-df <- data.frame(
+`df <- data.frame(
   i=as.vector(cov),
   # when number of colors =8 watermark[1] till watermark[7] are used.
   c=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5],watermark[6],watermark[7])),
-  t=as.Date(index(cov)))
+  t=as.Date(index(cov)))`
 
 # ggplot作成の第一歩。fillで塗りつぶし色を決定する基準を指定する。
 
@@ -15,7 +15,7 @@ df <- data.frame(
 * y軸と違いx軸は大概の場合、常に共通なので、aes(x=<column name of data frame>) を使ってここで指定すると良い。
 * 以降はオブジェクト p に対して更新を行う。
 
-p <- ggplot(df, aes(x=i,fill=factor(c)))
+`p <- ggplot(df, aes(x=i,fill=factor(c)))`
 
 * ぞれぞれ棒グラフの作成、分散図の作成、線グラフの作成 yにデータフレームのカラム名のうち適当なものを指定する。
 * 色を付けたい場合はaes(fill=<column name of data frame>)などとする。
@@ -95,7 +95,7 @@ p <- p + theme(axis.text = element_text(colour = "red", size = rel(1.5)) )
 
 p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01"), y=log(s*1.03),colour='white')
 
-#過去に使用した関数
+# 過去に使用した関数
 
 p <- p + geom_bar
 p <- p + geom_path
