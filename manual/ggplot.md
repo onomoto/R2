@@ -10,16 +10,16 @@ df <- data.frame(
 
 # ggplot作成の第一歩。fillで塗りつぶし色を決定する基準を指定する。
 
-*離散量で指定したいときはfactor()を使用する。
-*連続量を使うときはnumericなどの型のデータをそのまま指定すれば良い。
-*y軸と違いx軸は大概の場合、常に共通なので、aes(x=<column name of data frame>) を使ってここで指定すると良い。
-*以降はオブジェクト p に対して更新を行う。
+* 離散量で指定したいときはfactor()を使用する。
+* 連続量を使うときはnumericなどの型のデータをそのまま指定すれば良い。
+* y軸と違いx軸は大概の場合、常に共通なので、aes(x=<column name of data frame>) を使ってここで指定すると良い。
+* 以降はオブジェクト p に対して更新を行う。
 
 p <- ggplot(df, aes(x=i,fill=factor(c)))
 
-*ぞれぞれ棒グラフの作成、分散図の作成、線グラフの作成 yにデータフレームのカラム名のうち適当なものを指定する。
-*色を付けたい場合はaes(fill=<column name of data frame>)などとする。
-*geom_segment()は任意の2つの座標の間に線分を引く
+* ぞれぞれ棒グラフの作成、分散図の作成、線グラフの作成 yにデータフレームのカラム名のうち適当なものを指定する。
+* 色を付けたい場合はaes(fill=<column name of data frame>)などとする。
+* geom_segment()は任意の2つの座標の間に線分を引く
 
 p <- p + geom_bar(aes(y=r),stat = "identity",fill='pink',colour="black") # need identity to draw value itself.
 p <- p + geom_point(aes(y=i),stat="identity", position="identity",colour="green",size=0.8)
