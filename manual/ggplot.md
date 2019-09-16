@@ -1,12 +1,12 @@
-# data frame を作成する。
+*``# data frame を作成する。
  異なる種類のデータを統合するときはこのdata frame作成時にやる。
  カラム名がggplot()内部での変数名となるので、注意！
 
-`df <- data.frame(
-  i=as.vector(cov),
-  # when number of colors =8 watermark[1] till watermark[7] are used.
-  c=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5],watermark[6],watermark[7])),
-  t=as.Date(index(cov)))`
+`df <- data.frame(`
+`  i=as.vector(cov),`
+`  # when number of colors =8 watermark[1] till watermark[7] are used.`
+`  c=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5],watermark[6],watermark[7])),`
+`  t=as.Date(index(cov)))`
 
 # ggplot作成の第一歩。fillで塗りつぶし色を決定する基準を指定する。
 
@@ -21,10 +21,10 @@
 * 色を付けたい場合はaes(fill=<column name of data frame>)などとする。
 * geom_segment()は任意の2つの座標の間に線分を引く
 
-p <- p + geom_bar(aes(y=r),stat = "identity",fill='pink',colour="black") # need identity to draw value itself.
-p <- p + geom_point(aes(y=i),stat="identity", position="identity",colour="green",size=0.8)
-p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",linetype="dotted")
-p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-01"),yend=log(3000),color='white',size=0.02,linetype=2)
+`p <- p + geom_bar(aes(y=r),stat = "identity",fill='pink',colour="black") # need identity to draw value itself.`
+`p <- p + geom_point(aes(y=i),stat="identity", position="identity",colour="green",size=0.8)`
+`p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",linetype="dotted")`
+`p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-01"),yend=log(3000),color='white',size=0.02,linetype=2)`
 
 棒グラフに色をつけたい場合。
 
