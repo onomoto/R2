@@ -41,7 +41,7 @@ p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-0
 
 ### 棒グラフに色をつけたい場合。
 
-この例ではfillとcolor(colour)双方をつかっているの。詳細は`scale_color_brewer()`と`scale_fill_brewer()`で追加の設定を行う。
+この例ではfillとcolor(colour)双方をつかっている。詳細は`scale_color_brewer()`と`scale_fill_brewer()`で追加の設定を行う。
 ~~~
 p <- p + geom_bar(aes(y=r,fill=clidelta),stat = "identity",colour="black") # need identity to draw value itself.
 p <- p + geom_point(mapping=aes(y=i,colour=clidelta),stat="identity", position="identity",size=0.8)
