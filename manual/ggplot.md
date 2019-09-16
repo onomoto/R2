@@ -93,23 +93,23 @@ p <- p + theme(axis.text = element_text(colour = "red", size = rel(1.5)) )
 
 コメント入力
 
-p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01"), y=log(s*1.03),colour='white')
+`p <- p+annotate("text",label=as.character(s),x=as.Date("2000-01-01"), y=log(s*1.03),colour='white')`
 
 # 過去に使用した関数
 
-p <- p + geom_bar
-p <- p + geom_path
-p <- p + labs
-p <- p + scale_fill_date
-p <- p + scale_x_date
-p <- p + geom_bar
-p <- p + geom_histogram
-p <- p + geom_hline
-p <- p + geom_path
-p <- p + geom_point
-p <- p + geom_vline
-p <- p + labs
-p <- p + scale_color_brewer
-p <- p + scale_fill_brewer
-p <- p + scale_x_date
-p <- p + theme
+* p <- p + geom_bar
+* p <- p + geom_path
+* p <- p + labs
+* p <- p + scale_fill_date
+* p <- p + scale_x_date
+* p <- p + geom_bar
+* p <- p + geom_histogram
+* p <- p + geom_hline
+* p <- p + geom_path
+* p <- p + geom_point
+* p <- p + geom_vline
+* p <- p + labs
+* p <- p + scale_color_brewer
+* p <- p + scale_fill_brewer
+* p <- p + scale_x_date
+* p <- p + theme
