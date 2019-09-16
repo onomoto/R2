@@ -2,11 +2,13 @@
  異なる種類のデータを統合するときはこのdata frame作成時にやる。
  カラム名がggplot()内部での変数名となるので、注意！
 
-`df <- data.frame(`
-`  i=as.vector(cov),`
-`  # when number of colors =8 watermark[1] till watermark[7] are used.`
-`  c=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5],watermark[6],watermark[7])),`
-`  t=as.Date(index(cov)))`
+~~~
+df <- data.frame(
+  i=as.vector(cov),
+  # when number of colors =8 watermark[1] till watermark[7] are used.
+  c=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5],watermark[6],watermark[7])),
+  t=as.Date(index(cov)))
+~~~
 
 # ggplot作成の第一歩。fillで塗りつぶし色を決定する基準を指定する。
 
