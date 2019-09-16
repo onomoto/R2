@@ -31,7 +31,7 @@ p <- ggplot(df,aes(x=t))
 # p <- p + geom_bar(aes(y=r),stat = "identity",fill='pink',colour="black") # need identity to draw value itself.
 # p <- p + geom_point(aes(y=i),stat="identity", position="identity",colour="green",size=0.8)
 p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",linetype="solid")
-p <- p + geom_point(aes(y=i,color=clidelta),stat="identity", position="identity",size=1.4)
+p <- p + geom_point(aes(y=i,color=clidelta),stat="identity", position="identity",size=1.8)
 p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 # same as above about mapping=
 p <- p + geom_path(aes(y=g),colour='red')
