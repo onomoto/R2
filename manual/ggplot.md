@@ -5,7 +5,7 @@
 * 異なる種類のデータを統合するときはこのdata frame作成時にやる。
 * カラム名がggplot()内部での変数名となるので、注意！
 
-~~~
+~~~r
 df <- data.frame(
   i=as.vector(cov),
   c=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5],watermark[6],watermark[7])),
@@ -21,7 +21,7 @@ df <- data.frame(
 * 連続量を使うときはnumericなどの型のデータをそのまま指定すれば良い。
 * y軸と違いx軸は大概の場合、常に共通なので、aes(x=<column name of data frame>) を使ってここで指定すると良い。
 * 以降はオブジェクト p に対して更新を行う。
-~~~
+~~~r
 p <- ggplot(df, aes(x=i,fill=factor(c)))
 ~~~
 
@@ -32,7 +32,7 @@ p <- ggplot(df, aes(x=i,fill=factor(c)))
 * 色を付けたい場合はaes(fill=<column name of data frame>)などとする。
 * geom_segment()は任意の2つの座標の間に線分を引く
 
-~~~
+~~~r
 p <- p + geom_bar(aes(y=r),stat = "identity",fill='pink',colour="black") # need identity to draw value itself.
 p <- p + geom_point(aes(y=i),stat="identity", position="identity",colour="green",size=0.8)
 p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",linetype="dotted")
