@@ -13,6 +13,7 @@ df <- data.frame(i=as.vector(tmp.predict[kikan][,4]),
 g=as.vector(tmp.predict[kikan][,6]),
 e=as.vector(tmp.predict[kikan][,7]),
 r=as.vector((tmp.predict[kikan][,4]/tmp.predict[kikan][,7])-1)*5000,
+r2=as.vector((tmp.predict[kikan][,4]/tmp.predict[kikan][,6])-1)*5000,
 # c=as.vector(apply(diff(cli_xts$oecd)[kikan],1,func)),
 c=as.vector(apply(matrix(delta,ncol=1),1,func)),
 t=as.Date(index(tmp.predict[kikan])))
@@ -21,7 +22,8 @@ colnames(df)[1] <- 'i'
 colnames(df)[2] <- 'g'
 colnames(df)[3] <- 'e'
 colnames(df)[4] <- 'r'
-colnames(df)[5] <- 'clidelta'
+colnames(df)[5] <- 'r2'
+colnames(df)[6] <- 'clidelta'
 
 p <- ggplot(df,aes(x=t))
 #
@@ -40,7 +42,7 @@ p <- p+annotate("text",label=as.character("5%"),x=as.Date("2020-01-01"), y=300,c
 p <- p + geom_hline(yintercept = -250,size=0.5,linetype=1,colour="white",alpha=1)
 p <- p+annotate("text",label=as.character("-5%"),x=as.Date("2020-01-01"), y=-200,colour='black')
 p <- p + geom_bar(aes(y=r,fill=clidelta),stat = "identity",colour="black") # need identity to draw value itself.
-
+p <- p + geom_bar(aes(y=r2),stat = "identity",alpha=0.5) # need identity to draw value itself.
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
 p <- p + labs(title = "SPX + Theory + Residual% + CLI 1 month Delta",fill="CLI Delta",colour = "CLI Delta")
 p <- p +scale_color_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
