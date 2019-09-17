@@ -82,7 +82,7 @@ p <- p + scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Del
 ## 任意の線を引く
 水平線を引く。
 ~~~r
-p <- p + geom_vline(xintercept=seq(as.Date(paste(substr(index(head(spx_mean,1)),1,7),"-01",sep="")),as.Date("2019-01-01"),by='years'), colour="white",size=0.4,alpha=0.5)
+p <- p + geom_hline(yintercept = 250,size=0.5,linetype=1,colour="white",alpha=1)
 ~~~
 垂直線を引く。
 ~~~r
