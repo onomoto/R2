@@ -41,6 +41,6 @@ func <- function(s="2000-01-01::",c=0.95,l=5){
       }
     addEventLines(correction_start_date[1], srt=90, pos=2,col=2)
   }
-  addSeries(as.xts(rep(last(diff(cli_xts$oecd,1)),length(index(cli_xts$oecd[start_date]))),index(cli_xts$oecd[start_date])),on=1,col=3)
+  addSeries(as.xts(rep(last(diff(cli_xts$oecd,lag_month)),length(index(cli_xts$oecd[start_date]))),index(cli_xts$oecd[start_date])),on=1,col=3)
 }
 func("2000-01-01::",0.95,1)
