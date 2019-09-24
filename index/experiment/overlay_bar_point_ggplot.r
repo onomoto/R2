@@ -30,11 +30,13 @@ func <- function(z,a,b,c,d,e){
 posconv <- function(x,sl,sh,ml,mh){
   # (x-ml)/(mh-ml) = (r-sl)/(sh-sl)
   a <- x-ml
+  # if(a == 0){return(sl)}
   b <- mh-ml
   d <- sh-sl
   r <- sl+d*(a/b)
   return(r)
 }
+
 kikan <- "1995::"
 # this should be here
 idx <- log(apply.monthly(SP5[,4],mean))/100
@@ -97,7 +99,7 @@ plot(p)
 # remove unnecessary function.
 remove(posconv)
 remove(s)
-remove(mi)
-remove(w)
+# remove(mi)
+# remove(w)
 remove(idx)
 remove(df)
