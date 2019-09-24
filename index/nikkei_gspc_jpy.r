@@ -40,7 +40,9 @@ k3
 # getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
 N225 <- NIKKEI225
 
-result_nikkei <- lm(to.monthly(N225[k3])[,4] ~  to.monthly(SP5[k3])[,4] + to.monthly(YJUSDJPY[k3])[,4])
+
+result_nikkei <- lm(apply.monthly(na.omit(N225[k3]),mean)  ~  apply.monthly(SP5[k3][,4],mean) + apply.monthly(na.omit(YJUSDJPY)[k3][,4],mean))
+# result_nikkei <- lm(to.monthly(N225[k3])[,4] ~  to.monthly(SP5[k3])[,4] + to.monthly(YJUSDJPY[k3])[,4])
 result_nikkei$coefficients[2]*last(SP5)[,4]+result_nikkei$coefficients[3]*as.vector(last(YJUSDJPY)[,4])+result_nikkei$coefficients[1]
 # plot(merge(as.xts(predict(result_nikkei),index(residuals(result_nikkei))),to.monthly(N225[k3])[,4],residuals(result_nikkei)))
 

@@ -34,8 +34,11 @@ if(my_update_check(N225,Sys.Date()) == "D"){
 
 k3 <- paste("2007-01-01", index(last(SP5)),sep="::")
 
+
+
 df <- data.frame(
-  i=as.vector(to.monthly(N225[k3])[,4]),
+  i=as.vector(apply.monthly(na.omit(N225[k3]),mean)),
+  # i=as.vector(to.monthly(N225[k3])[,4]),
   g=as.vector(predict(result_nikkei)),
   r=as.vector(residuals(result_nikkei)[,1]),
   t=as.Date(index(residuals(result_nikkei)[,1]))
