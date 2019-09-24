@@ -47,7 +47,10 @@ watermark <- sort(delta,decreasing = T)[floor(length(na.omit(delta))/7)*seq(2,6,
 #
 # in the case of line graph, x-axis vector should continuous. thus, "t=index(w["1995::2018"])" is right.
 # don't put descrete data into x-axis.
-mi <- posconv(as.vector(idx[kikan]),range(as.vector(w[kikan]))[1],range(as.vector(w[kikan]))[2],range(as.vector(idx[kikan]))[1],range(as.vector(idx[kikan]))[2])
+# in order to avoid ZERO divide, 4th parameter is adjusted to decreased to 99% of the original
+# otherwise, when 1st param is equal to min, ZERO divide takes place.
+#
+mi <- posconv(as.vector(idx[kikan]),range(as.vector(w[kikan]))[1],range(as.vector(w[kikan]))[2],range(as.vector(idx[kikan]))[1]*0.99,range(as.vector(idx[kikan]))[2])
 
 df <- data.frame(i=mi,
   d=as.vector(w[kikan]),
