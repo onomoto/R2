@@ -34,7 +34,8 @@ p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",
 p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-01"),yend=log(3000),color='white',size=0.02,linetype=2)
 ~~~
 
-### 棒グラフに色をつけたい場合。
+### 棒グラフ&ヒストグラム
+#### 棒グラフに色をつけたい場合。
 
 この例ではfillとcolor(colour)双方をつかっている。詳細は`scale_color_brewer()`と`scale_fill_brewer()`で追加の設定を行う。
 ~~~r
@@ -48,10 +49,14 @@ legendlable <- c(paste("more than ",as.character(round(watermark,digits=2)),sep=
 p <- p +scale_fill_brewer(palette="Spectral",na.value = "grey50",name = "CLI Delta", labels = legendlable)
 ~~~
 
-### ヒストグラムの色々
+#### ヒストグラムの色々
 
 * 目的に応じて、"identity","stack","fill" それぞれのパラメータを指定する。
 * ヒストグラムのx軸に連続量を指定する場合、離散量を指定する場合で結果が全く異なるので注意すること。
+
+### 点グラフ
+
+点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
 
 ~~~r
 p <- p + geom_histogram(aes(fill=sign),position = "identity", alpha = 0.3,bins=120)
