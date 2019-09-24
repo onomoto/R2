@@ -54,15 +54,15 @@ p <- p +scale_fill_brewer(palette="Spectral",na.value = "grey50",name = "CLI Del
 * 目的に応じて、"identity","stack","fill" それぞれのパラメータを指定する。
 * ヒストグラムのx軸に連続量を指定する場合、離散量を指定する場合で結果が全く異なるので注意すること。
 
-### 点グラフ
-
-点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
-
 ~~~r
 p <- p + geom_histogram(aes(fill=sign),position = "identity", alpha = 0.3,bins=120)
 p <- p + geom_histogram(bins=50,position = "fill", alpha = 0.9)
 p <- p + geom_histogram(bins=80,position = "stack", alpha = 0.9)
 ~~~
+
+### 点グラフ
+
+点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
 
 ### X軸の間隔指定
 
