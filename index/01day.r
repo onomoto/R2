@@ -3,6 +3,7 @@
 
 source(paste(getwd(),"index/getsp5.r",sep='/'),echo=TRUE)
 source(paste(getwd(),"index/nikkei_gspc_jpy.r",sep='/'),echo=TRUE)
+COV <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
 if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.monthly(SP5))[,c(1,2,3,4,5)])){
     tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)] <- last(to.monthly(SP5))[,c(1,2,3,4,5)]
 }else{

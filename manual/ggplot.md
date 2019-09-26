@@ -102,6 +102,20 @@ p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-0
 p <- p + stat_smooth(aes(x=t,y=i),method="loess",color='white',size=0.3)
 ~~~
 
+## 任意の色を使う
+
+* データフレーム`df`を作成する際にxの値に応じて"g"または"r"を割り振って、カラム`sign`に入れる
+* `color=`にカラム`sign`を指定する。
+* `scale_colour_manual(values = c(g  = "green",r  = "red"))`で"g"に緑を"r"に赤を割り振る。
+
+~~~r
+func <- function(x){if(x > 0){return("g")}else{return("r")}}
+df <- data.frame(week=as.vector(w),t=index(w),sign=as.vector(apply(w,1,func)))
+p <- ggplot(df)
+p <- p + geom_bar(aes(y=week,x=t,color=sign),stat="identity")
+p <- p + scale_colour_manual(values = c(g  = "green",r  = "red"))
+~~~
+
 # テーマ
 x-y軸のタイトル消去
 ~~~r
@@ -120,6 +134,11 @@ p <- p + theme(panel.background = element_rect(fill = "grey88",
                                               colour = "lightblue"),
              panel.grid = element_blank())
 ~~~
+凡例の抑止
+~~~r
+p <- p + theme(legend.position = 'none')  # erase legend
+~~~
+
 
 # その他
 コメント入力
@@ -150,3 +169,4 @@ p <- p + theme(axis.text = element_text(colour = "red", size = rel(1.5)))
 * p <- p + scale_fill_brewer
 * p <- p + scale_x_date
 * p <- p + theme
+* p <- p + scale_colour_manual
