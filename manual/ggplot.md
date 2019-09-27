@@ -10,7 +10,7 @@ df <- data.frame(
   t=as.Date(index(cov)))
 ```
 
-# ggplot作成の第一歩
+# データの指定
 ## データフレームおよび基礎データの指定
 * データとして使用するデータフレームを指定する。
 * aes()でいろいろな見た目パラメータを指定する。ここではfillで塗りつぶし色を決定する基準を指定している。
@@ -34,8 +34,9 @@ p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",
 p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-01"),yend=log(3000),color='white',size=0.02,linetype=2)
 ~~~
 
-### 棒グラフ&ヒストグラム
-#### 棒グラフに色をつけたい場合。
+# グラフパラメータ色々
+## 棒グラフ&ヒストグラム
+### 棒グラフに色をつけたい場合。
 
 この例ではfillとcolor(colour)双方をつかっている。詳細は`scale_color_brewer()`と`scale_fill_brewer()`で追加の設定を行う。
 ~~~r
@@ -49,7 +50,7 @@ legendlable <- c(paste("more than ",as.character(round(watermark,digits=2)),sep=
 p <- p +scale_fill_brewer(palette="Spectral",na.value = "grey50",name = "CLI Delta", labels = legendlable)
 ~~~
 
-#### ヒストグラムの色々
+### ヒストグラムの色々
 
 * 目的に応じて、"identity","stack","fill" それぞれのパラメータを指定する。
 * ヒストグラムのx軸に連続量を指定する場合、離散量を指定する場合で結果が全く異なるので注意すること。
@@ -60,10 +61,11 @@ p <- p + geom_histogram(bins=50,position = "fill", alpha = 0.9)
 p <- p + geom_histogram(bins=80,position = "stack", alpha = 0.9)
 ~~~
 
-### 点グラフ
+## 点グラフ
 
 点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
 
+## その他
 ### X軸の間隔指定
 
 Date型のときに使用する。
@@ -75,7 +77,7 @@ p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 p <- p + scale_fill_date(low = "green3" , high = "darkgreen")
 ~~~
 
-## タイトルおよび凡例
+### タイトルおよび凡例
 
 全体タイトルとレジェンドのタイトルを指定する。共通なタイトルを指定するとレジェンドを一つに統合できる。
 ~~~r
@@ -84,7 +86,7 @@ p <- p + scale_color_brewer(palette="Spectral",na.value = "black",name = "CLI De
 p <- p + scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
 ~~~
 
-## 任意の線を引く
+### 任意の線を引く
 水平線を引く。
 ~~~r
 p <- p + geom_hline(yintercept = 250,size=0.5,linetype=1,colour="white",alpha=1)
@@ -102,7 +104,7 @@ p <- p + geom_segment(x=as.Date("1985-01-01"),y=log(168),xend=as.Date("2019-09-0
 p <- p + stat_smooth(aes(x=t,y=i),method="loess",color='white',size=0.3)
 ~~~
 
-## 任意の色を使う
+### 任意の色を使う
 
 * データフレーム`df`を作成する際にxの値に応じて"g"または"r"を割り振って、カラム`sign`に入れる
 * `color=`にカラム`sign`を指定する。
