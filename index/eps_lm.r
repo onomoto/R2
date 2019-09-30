@@ -46,6 +46,10 @@ func <- function(k="2000-01-01::2018-12-31" ,l=5){
 
   result.usa <<- lm(apply.quarterly(SP5[,4][k2k],mean) ~ eps_year_xts[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(CS[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(diff(cli_xts$usa,lag=lag_month)[k2k],mean))
 
+  PAq <- apply.quarterly(PA[k2k],mean)
+  UCq <- apply.quarterly(UC[k2k],mean)
+  CSq <- apply.quarterly(CS[k2k],mean)
+
   result.gpuc <<- lm(apply.quarterly(SP5[k2k],mean)[,1] ~ PAq[k2k] * UCq[k2k] * G[k2k]*CSq[k2k] - UCq[k2k] -G[k2k] - PAq[k2k]*G[k2k] - UCq[k2k]*G[k2k]*CSq[k2k])
 
   SP5.result <<- merge(residuals(result.gpuc),predict(result.gpuc),residuals(result.eps),predict(result.eps))
