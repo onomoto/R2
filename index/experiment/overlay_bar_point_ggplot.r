@@ -43,8 +43,12 @@ idx <- log(apply.monthly(SP5[,4],mean))/100
 #
 # use mapply shown in the sample when data.frame() is done.
 
-w <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
-delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(w[kikan])) - length(diff(cli_xts$oecd)[kikan])))
+w <- na.omit(apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)) 
+# w is not able to calculate at the beginning of the month, then append 'NA'. as sd() needs more than one iteration of data
+w <-  append(as.vector(w),rep(NA,length(index(idx[kikan])) - length(w[kikan])))
+# put index back for the process afterward.
+w <- as.xts(w,index(idx))
+delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(idx[kikan])) - length(diff(cli_xts$oecd)[kikan])))
 watermark <- sort(delta,decreasing = T)[floor(length(na.omit(delta))/7)*seq(2,6,1)]
 #
 # in the case of line graph, x-axis vector should continuous. thus, "t=index(w["1995::2018"])" is right.
@@ -52,7 +56,8 @@ watermark <- sort(delta,decreasing = T)[floor(length(na.omit(delta))/7)*seq(2,6,
 # in order to avoid ZERO divide, 4th parameter is adjusted to decreased to 99% of the original
 # otherwise, when 1st param is equal to min, ZERO divide takes place.
 #
-mi <- posconv(as.vector(idx[kikan]),range(as.vector(w[kikan]))[1],range(as.vector(w[kikan]))[2],range(as.vector(idx[kikan]))[1]*0.99,range(as.vector(idx[kikan]))[2])
+# add na.omit() to remove 'NA' in w
+mi <- posconv(as.vector(idx[kikan]),range(as.vector(na.omit(w[kikan])))[1],range(as.vector(na.omit(w[kikan])))[2],range(as.vector(idx[kikan]))[1]*0.99,range(as.vector(idx[kikan]))[2])
 
 df <- data.frame(i=mi,
   d=as.vector(w[kikan]),
@@ -102,7 +107,7 @@ plot(p)
 # remove unnecessary function.
 remove(posconv)
 remove(s)
-# remove(mi)
-# remove(w)
+remove(mi)
+remove(w)
 remove(idx)
 remove(df)
