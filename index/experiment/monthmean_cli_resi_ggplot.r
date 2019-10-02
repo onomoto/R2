@@ -9,12 +9,12 @@ func <- function(x){
 
 delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(cli_xts$oecd)[kikan])))
 #  [kikan]
-df <- data.frame(i=as.vector(tmp.predict[kikan][,4]),
-# df <- data.frame(i=as.vector(apply.monthly(SP5[,4][kikan],mean)),
+# df <- data.frame(i=as.vector(tmp.predict[kikan][,4]),
+df <- data.frame(i=as.vector(apply.monthly(SP5[,4][kikan],mean)),
 g=as.vector(tmp.predict[kikan][,6]),
 e=as.vector(tmp.predict[kikan][,7]),
-r=as.vector((tmp.predict[kikan][,4]/tmp.predict[kikan][,7])-1)*5000,
-r2=as.vector((tmp.predict[kikan][,4]/tmp.predict[kikan][,6])-1)*5000,
+r=as.vector((as.vector(apply.monthly(SP5[,4][kikan],mean))/tmp.predict[kikan][,7])-1)*5000,
+r2=as.vector((as.vector(apply.monthly(SP5[,4][kikan],mean))/tmp.predict[kikan][,6])-1)*5000,
 # c=as.vector(apply(diff(cli_xts$oecd)[kikan],1,func)),
 c=as.vector(apply(matrix(delta,ncol=1),1,func)),
 t=as.Date(index(tmp.predict[kikan])))
