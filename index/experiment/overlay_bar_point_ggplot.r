@@ -43,7 +43,7 @@ idx <- log(apply.monthly(SP5[,4],mean))/100
 #
 # use mapply shown in the sample when data.frame() is done.
 
-w <- na.omit(apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)) 
+w <- na.omit(apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean))
 # w is not able to calculate at the beginning of the month, then append 'NA'. as sd() needs more than one iteration of data
 w <-  append(as.vector(w),rep(NA,length(index(idx[kikan])) - length(w[kikan])))
 # put index back for the process afterward.
@@ -66,6 +66,9 @@ df <- data.frame(i=mi,
   sign=as.vector(mapply(func,delta,watermark[1],watermark[2],watermark[3],watermark[4],watermark[5])),
   t=as.Date(index(w[kikan])))
   # sign=as.vector(apply(diff(cli_xts$oecd)[kikan],1,func)))
+
+# standardize df$t so as to be the last day of each month.  
+df$t[length(df$t)] <-  (as.Date(as.yearmon(mondate(last(index(w[kikan])))+1,frac=1))-1)
 
 p <- ggplot(df,aes(x=t,y=d))
 #
