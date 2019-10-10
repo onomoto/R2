@@ -49,6 +49,9 @@ colnames(df)[2] <- 'g'
 colnames(df)[3] <- 'r'
 colnames(df)[4] <- 't'
 
+# standardize date in df$t to the last day of each month.
+df$t[length(df$t)] <-  (as.Date(as.yearmon(mondate(last(index(residuals(result_nikkei)[,1])))+1,frac=1))-1)
+
 output.label <- paste("N225 = ",round(result_nikkei$coefficients[2],digits=2)," * SPX + ",round(result_nikkei$coefficients[3],digits=2)," * USDJPY + ",round(result_nikkei$coefficients[1],digits=2),"\n R Squared is ",round(summary(result_nikkei)$r.squared,4)," \n","DF is ",round(summary(result_nikkei)$df[2],0),sep=' ')
 # addLegend(legend.loc = "topleft", legend.names = tmp.legend,col=3)
 
