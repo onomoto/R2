@@ -142,18 +142,19 @@ p <- p + theme(panel.background = element_rect(fill = "grey88",
                                               colour = "lightblue"),
              panel.grid = element_blank())
 ~~~
+
 凡例の抑止
 ~~~r
 p <- p + theme(legend.position = 'none')  # erase legend
 ~~~
 
-~~~
+
 凡例の一部抑止
 ~~~r
 p <- p + guides(shape = FALSE) # この例では「shape」に属する凡例だけが抑止される。
 ~~~
 
-~~~
+
 凡例の背景色
 ~~~r
 p <- p + theme(legend.key = element_rect(fill='black',colour='white'))
