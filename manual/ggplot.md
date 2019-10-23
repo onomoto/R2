@@ -92,6 +92,12 @@ p <- p + scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Del
 p <- p + scale_shape(label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  
 ~~~
 
+shape で使用するキャラクターをデフォルト以外に変更したいときはscale_shape_manual()を使用する。values以降に使用するキャラクターを指定する。以下は[使用できるキャラクターの一覧](http://www.sthda.com/english/wiki/ggplot2-point-shapes)である。また、コードサンプルでは0,1,2,10,11,12番目のキャラクターを指定している。
+
+~~~r
+p <- p + scale_shape_manual(values=c(0,1,2,10,11,12),label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  
+~~~
+
 ### 任意の線を引く
 水平線を引く。
 ~~~r
@@ -142,18 +148,19 @@ p <- p + theme(panel.background = element_rect(fill = "grey88",
                                               colour = "lightblue"),
              panel.grid = element_blank())
 ~~~
+
 凡例の抑止
 ~~~r
 p <- p + theme(legend.position = 'none')  # erase legend
 ~~~
 
-~~~
+
 凡例の一部抑止
 ~~~r
 p <- p + guides(shape = FALSE) # この例では「shape」に属する凡例だけが抑止される。
 ~~~
 
-~~~
+
 凡例の背景色
 ~~~r
 p <- p + theme(legend.key = element_rect(fill='black',colour='white'))
