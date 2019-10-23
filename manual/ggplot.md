@@ -63,7 +63,12 @@ p <- p + geom_histogram(bins=80,position = "stack", alpha = 0.9)
 
 ## 点グラフ
 
-点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
+* 点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
+* 色以外に点の形状を指定することができる。aes()の中でshape=を指定する。
+
+~~~r
+p <- p + geom_point(alpha=1,aes(color=monthlyreturn,shape=monthlyreturn))
+~~~
 
 ## その他
 ### X軸の間隔指定
@@ -79,11 +84,12 @@ p <- p + scale_fill_date(low = "green3" , high = "darkgreen")
 
 ### タイトルおよび凡例
 
-全体タイトルとレジェンドのタイトルを指定する。共通なタイトルを指定するとレジェンドを一つに統合できる。
+全体タイトルとレジェンドのタイトルを指定する。共通なタイトルを指定するとレジェンドを一つに統合できる。この例ではそれぞれ、'color'、'fill'、’shape’のレジェンドの要素名を指定している。
 ~~~r
 p <- p + labs(title = "SPX + Theory + Residual + CLI Delta",fill="CLI Delta",colour = "CLI Delta")
 p <- p + scale_color_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
 p <- p + scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
+p <- p + scale_shape(label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  
 ~~~
 
 ### 任意の線を引く
@@ -139,6 +145,18 @@ p <- p + theme(panel.background = element_rect(fill = "grey88",
 凡例の抑止
 ~~~r
 p <- p + theme(legend.position = 'none')  # erase legend
+~~~
+
+~~~
+凡例の一部抑止
+~~~r
+p <- p + guides(shape = FALSE) # この例では「shape」に属する凡例だけが抑止される。
+~~~
+
+~~~
+凡例の背景色
+~~~r
+p <- p + theme(legend.key = element_rect(fill='black',colour='white'))
 ~~~
 
 
