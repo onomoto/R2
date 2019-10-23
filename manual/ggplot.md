@@ -197,3 +197,5 @@ p <- p + theme(axis.text = element_text(colour = "red", size = rel(1.5)))
 * p <- p + scale_x_date
 * p <- p + theme
 * p <- p + scale_colour_manual
+* p <- p + scale_shape_manual
+* p <- p + scale_shape
