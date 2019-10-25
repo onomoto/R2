@@ -14,7 +14,7 @@ df <- data.frame(
 ## データフレームおよび基礎データの指定
 * データとして使用するデータフレームを指定する。
 * aes()でいろいろな見た目パラメータを指定する。ここではfillで塗りつぶし色を決定する基準を指定している。
-* 離散量で指定したいときはfactor()を使用する。
+* 離散量で指定したいときは`factor()`を使用する。
 * 連続量を使うときはnumericなどの型のデータをそのまま指定すれば良い。
 * y軸と違いx軸は大概の場合、常に共通なので、aes(x=<column name of data frame>) を使ってここで指定すると良い。
 * 以降はオブジェクト p に対して更新を行う。
@@ -24,7 +24,7 @@ p <- ggplot(df, aes(x=i,fill=factor(c)))
 
 ## グラフの種類およびyデータの指定
 * ぞれぞれ棒グラフの作成、分散図の作成、線グラフの作成する。
-* aes(y=<column name of data fram>,,,)の形でデータフレームのカラム名のうち適当なものをy軸のデータとして指定する。
+* aes(y=<column name of data frame>,,,)の形でデータフレームのカラム名のうち適当なものをy軸のデータとして指定する。
 * 色を付けたい場合はaes(fill=<column name of data frame>)などとする。
 * geom_segment()は任意の2つの座標の間に線分を引く
 ~~~r
@@ -64,7 +64,7 @@ p <- p + geom_histogram(bins=80,position = "stack", alpha = 0.9)
 ## 点グラフ
 
 * 点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
-* 色以外に点の形状を指定することができる。aes()の中でshape=を指定する。
+* 色以外に点の形状を指定することができる。`aes()`の中でshape=を指定する。
 
 ~~~r
 p <- p + geom_point(alpha=1,aes(color=monthlyreturn,shape=monthlyreturn))
@@ -92,7 +92,7 @@ p <- p + scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Del
 p <- p + scale_shape(label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  
 ~~~
 
-shape で使用するキャラクターをデフォルト以外に変更したいときはscale_shape_manual()を使用する。values以降に使用するキャラクターを指定する。以下は[使用できるキャラクターの一覧](http://www.sthda.com/english/wiki/ggplot2-point-shapes)である。また、コードサンプルでは0,1,2,10,11,12番目のキャラクターを指定している。
+shape で使用するキャラクターをデフォルト以外に変更したいときはscale_shape_manual()を使用する。values以降に使用するキャラクターを指定する。[これは使用できるキャラクターの一覧](http://www.sthda.com/english/wiki/ggplot2-point-shapes)である。また、下記コードサンプルでは一覧中の0,1,2,10,11,12番目のキャラクターを指定している。
 
 ~~~r
 p <- p + scale_shape_manual(values=c(0,1,2,10,11,12),label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  
