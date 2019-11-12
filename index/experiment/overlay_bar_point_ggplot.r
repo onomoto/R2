@@ -44,8 +44,9 @@ idx <- log(apply.monthly(SP5[,4],mean))/100
 # use mapply shown in the sample when data.frame() is done.
 
 w <- na.omit(apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean))
-# w is not able to calculate at the beginning of the month, then append 'NA'. as sd() needs more than one iteration of data
-w <-  append(as.vector(w),rep(NA,length(index(idx[kikan])) - length(w[kikan])))
+# w is not able to calculate at the beginning of the month, then append ZERO not NA. as sd() needs more than one iteration of data
+w <-  append(as.vector(w),rep(0,length(index(idx[kikan])) - length(w[kikan]))) # append ZERO when cov is not available. 
+
 # put index back for the process afterward.
 w <- as.xts(w,index(idx))
 delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(idx[kikan])) - length(diff(cli_xts$oecd)[kikan])))

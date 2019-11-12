@@ -65,9 +65,15 @@ p <- p + geom_histogram(bins=80,position = "stack", alpha = 0.9)
 
 * 点グラフの色指定はcolorのみ。fillは指定できないので注意すること。
 * 色以外に点の形状を指定することができる。`aes()`の中でshape=を指定する。
+* colorに連続量を指定することができる。その場合、色は`scale_color_gradient(low = <color_name1>, high = <color_name2>)`を使用する。
 
 ~~~r
 p <- p + geom_point(alpha=1,aes(color=monthlyreturn,shape=monthlyreturn))
+~~~
+
+~~~r
+p <- p + geom_point(alpha=1,aes(color=mon))
+p <- p + scale_color_gradient(low = "red", high = "green")
 ~~~
 
 ## その他
@@ -199,3 +205,4 @@ p <- p + theme(axis.text = element_text(colour = "red", size = rel(1.5)))
 * p <- p + scale_colour_manual
 * p <- p + scale_shape_manual
 * p <- p + scale_shape
+* p <- p + scale_color_gradient

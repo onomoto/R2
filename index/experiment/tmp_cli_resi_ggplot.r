@@ -1,4 +1,5 @@
-kikan <- "2000-01-01::"
+# kikan <- "1995-01-01::"
+kikan <- paste(as.Date(yearmon(index(head(tmp.predict,1)))),"::",sep="")
 func <- function(x){
   if(is.na(x)){return(NA)}
   if(x > 0.1){return("a")}
@@ -57,6 +58,11 @@ p <- p+theme( rect = element_rect(fill = "grey88",
               axis.title.x=element_blank(),
               axis.title.y=element_blank()
               )
+p <- p + geom_point(mapping=aes(y=i,colour=clidelta),stat="identity", position="identity",size=0.8)
+p <- p + geom_path(aes(y=i),stat="identity", position="identity",colour="black",linetype="dotted")
+p <- p + geom_path(aes(y=g),colour='red')
+p <- p + geom_path(aes(y=e),colour='blue')
+
 # p <- p + scale_fill_discrete(name="Experimental\nCondition")
 # p <- p +scale_colour_discrete(name  ="CLI Delta") + scale_shape_discrete(name  ="CLI Delta")
 
