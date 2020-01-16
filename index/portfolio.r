@@ -89,7 +89,7 @@ addTA(t,on=1,legend="",lty=2,order=10)
 plot(addLines(v=seq(1,length(index(weekly_pf)),26)))
 # plot(addLines(h=seq(2100000,2400000,100000),col=rgb(0.5,0,0)))
 
-plot(addLines(h=as.vector(head(weekly_pf,1)[,1])*1.2**seq(0,7,1),col=rgb(0,1,0)))
+plot(addLines(h=as.vector(head(weekly_pf,1)[,1])*1.2**seq(0,8,1),col=rgb(0,1,0)))
 # as.vector(head(weekly_pf,1)[,1])*1.2**seq(0,7,1)
 # plot(addLines(h=2100000,col=rgb(0.5,0,1)))
 # plot(addLines(h=2200000,col=rgb(0.5,0,1)))
