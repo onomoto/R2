@@ -47,8 +47,8 @@ p <- p + geom_bar(aes(y=r,fill=clidelta),stat = "identity",colour="black") # nee
 p <- p + geom_bar(aes(y=r2),stat = "identity",alpha=0.5) # need identity to draw value itself.
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
 p <- p + labs(title = "SPX + Theory + Residual% + CLI 1 month Delta",fill="CLI Delta",colour = "CLI Delta")
-p <- p +scale_color_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
-p <- p +scale_fill_brewer(palette="Spectral",na.value = "black",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
+p <- p +scale_color_brewer(palette="Spectral",na.value = "white",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
+p <- p +scale_fill_brewer(palette="Spectral",na.value = "white",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
 p <- p+theme( rect = element_rect(fill = "grey88",
                                   colour = "black",
                                   size = 0,
