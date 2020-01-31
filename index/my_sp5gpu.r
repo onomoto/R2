@@ -33,7 +33,7 @@
 
 
 
-my_sp5gpu <- function(k,g,p,u,d,m)
+my_sp5gpu <- function(k,g,p,u,d,i=5,cli=cli_xts$oecd)
 {
   # k = kikan
   # g = GDP
@@ -49,14 +49,14 @@ my_sp5gpu <- function(k,g,p,u,d,m)
   +PAq[k2k] * UCq[k2k]
   +PAq[k2k]  * G[k2k]
   +UCq[k2k]  * G[k2k]
-  +apply.quarterly(diff(d,lag=m)[k2k],mean)
+  +apply.quarterly(diff(cli,lag=i)[k2k],mean)
   - UCq[k2k]
   - PAq[k2k])
   summary(result.gpu)
   m_m <- result.gpu$coefficients
   print("m_m params! apply.quarter - UC w/ nominal GDP")
   # print(m_m[1]+y*m_m[2]+x*m_m[3]+y*z*m_m[4]+y*x*m_m[5]+z*x*m_m[6]+y*z*x*m_m[7])
-  print(m_m[1]+g*m_m[2]+ apply.quarterly(diff(d,lag=m)[k2k],mean)*m_m[3]+p*u*m_m[4]+p*g*m_m[5]+g*u*m_m[6])
+  print(m_m[1]+g*m_m[2]+ d*m_m[3]+p*u*m_m[4]+p*g*m_m[5]+g*u*m_m[6])
   cat("k = "); print(k)
 
   # print("from 1992 till 2016Q3")

@@ -1,4 +1,4 @@
-my_sp5xts <- function(k,e,p,u,c,o,i=5,cli=cli_xts$usa)
+my_sp5xts <- function(k,e,p,u,c,o,i=5,cli=cli_xts$oecd)
 {
   k2k <- k  # 0627 added to bug fix.
 
