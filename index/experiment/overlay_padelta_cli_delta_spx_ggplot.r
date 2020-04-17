@@ -37,7 +37,7 @@ posconv <- function(x,sl,sh,ml,mh){
   return(r)
 }
 
-kikan <- "1995::2019"
+kikan <- "1995::2020-03"
 # this should be here
 idx <- log(apply.monthly(SP5[,4],mean))/100
 
