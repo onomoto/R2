@@ -15,7 +15,10 @@ kikan <- paste("1992-01-01::",as.Date(as.yearmon((mondate(index(last(G)))+2)),fr
 k2k <- paste("2000-01-01::",as.Date(as.yearmon((mondate(index(last(G)))+2)),frac=1),sep="")
 
 getSymbols("PAYEMS",src="FRED",auto.assign=TRUE)
-PA <- PAYEMS
+
+# change to use PI instead of PAYEMS as data after 2020apr does not fit the model.
+getSymbols("PI",src="FRED",auto.assign=TRUE)
+PA <- PI
 m_PA <- as.xts(forecast(auto.arima(PA),h=len_mon)$mean[1:len_mon],as.Date(as.yearmon(mondate(index(last(PA)))+seq(1,len_mon,1)),frac=0))[as.Date(as.yearqtr(mondate(index(last(PA)))+seq(3,len_mon,3)),frac=0)]
 PAq <- apply.quarterly(PA[k2k],mean)
 length(PAq)
