@@ -47,6 +47,6 @@ df <- df.melt
 g <- ggplot(df, aes(x = t, y = value, fill = variable))
 g <- g + geom_bar(stat = "identity")
 
-png("04em.png", width = 1400, height = 600)
+png("~/Dropbox/R-script/covid/04em.png", width = 1400, height = 600)
 plot(g)
 dev.off()

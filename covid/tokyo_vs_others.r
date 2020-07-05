@@ -159,6 +159,6 @@ g <- g + geom_bar(stat = "identity")
 # p <- p + geom_path(aes(y=kr),colour='blue')
 # plot(g)
 
-png("01tokyo_vs_other.png", width = 1400, height = 600)
+png("~/Dropbox/R-script/covid/01tokyo_vs_other.png", width = 1400, height = 600)
 plot(g)
 dev.off()

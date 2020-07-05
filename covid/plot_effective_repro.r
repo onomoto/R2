@@ -80,6 +80,6 @@ p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), 
 p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
 # plot(p)
 
-png("02all.png", width = 800, height = 600)
+png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
 plot(p)
 dev.off()

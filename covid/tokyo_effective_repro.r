@@ -111,6 +111,6 @@ p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), 
 p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
 p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=5+2*multi,,colour='black')
 p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
-png("03tokyo.png", width = 800, height = 600)
+png("~/Dropbox/R-script/covid/03tokyo.png", width = 800, height = 600)
 plot(p)
 dev.off()
