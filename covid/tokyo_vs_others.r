@@ -10,7 +10,7 @@
 # D = 平均潜伏感染期間 = 9 あるいはL＋2。2は中国での実測値。
 # R = K^2*(L*D)+K*(L+D)+1
 
-length_graph <- 60　# グラフは過去length_graph日間が対象
+length_graph <- 90　# グラフは過去length_graph日間が対象
 l <- 4.76
 d <- l+2
 nod <- 7

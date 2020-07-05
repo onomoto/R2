@@ -19,7 +19,7 @@
 l <- 4.76
 d <- l+2
 nod <- 7
-length_graph <- 60　# グラフは過去60日間が対象
+length_graph <- 110　# グラフは過去60日間が対象
 remove(df)
 
 curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
@@ -48,7 +48,7 @@ for(i in seq(2*nod+1,len,1)) {
 }
 r <- k**2*(l*d) + k*(l+d) +1
 w <- merge(w,as.xts(r,last(index(w),length(r))))
-as.xts(as.vector(round(last((na.omit(filter(diff(w[,1]),rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
+# as.xts(as.vector(round(last((na.omit(filter(diff(w[,1]),rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
 
 colnames(w)[2] <- "effective_repro"
 last(w,len-11)
@@ -60,7 +60,7 @@ multi <- (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,2],
 df <- data.frame(p=last(diff(w[,1]),length_graph),
                  r=last(w[,2],length_graph)*multi,
                  t=as.Date(last(index(w),length_graph)),
-                 m=as.vector(round(last((na.omit(filter(diff(w[,1]),rep(1,7))/7)),length_graph),2)))
+                 m=as.vector(round(last((na.omit(filter(as.vector(diff(w[,1])),rep(1,7))/7)),length_graph),2)))
 
 colnames(df)[1] <- 'p'
 colnames(df)[2] <- 'r'

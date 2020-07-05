@@ -27,7 +27,8 @@ w <- apply.daily(as.xts(rep(1,length(w[,1])),as.Date(w[,5])),sum)
 last(w)
 
 # as.xts(15,Sys.Date())
-# w <- append(w,as.xts(3,Sys.Date()))
+  # w <- append(w,as.xts(50,Sys.Date()))
+# w <- append(w,as.xts(26,Sys.Date()))
 
 # w <- w[c(1,2,3,4,9,10,11,12,14,15)]
 # w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
@@ -63,8 +64,9 @@ last(w,len-11)
 # plot(last(w[,2],60))
 
 # R と新規感染者数を混在させるためスケール調整のために係数を計算する。
+length_graph <- 120　# グラフは過去45日間が対象
 multi <- (max(na.omit(last(w[,1],length_graph))) / max(na.omit(last(w[,2],length_graph))))
-length_graph <- 60　# グラフは過去45日間が対象
+# length_graph <- 120　# グラフは過去45日間が対象
 # merge(w,)
 
 # as.xts(as.vector(round(last((na.omit(filter(w[,1],rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
