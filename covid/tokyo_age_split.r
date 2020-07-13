@@ -8,20 +8,25 @@
 length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
 w <- read.csv("~/R/R2/covid/tokyo.csv")
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
-apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
+# apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
 
 # v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
 v <- as.xts(rep(1,length( seq(as.Date(w[1,5]),Sys.Date(),by='days') )), seq(as.Date(w[1,5]),Sys.Date(),by='days'))
 for(i in seq(10,80,10)){
-  v<- merge(v,  apply.daily(as.xts(rep(1,length(y[y[,1] == i])),as.Date(index(y[y[,1] == i]))),sum))
+  if(i < 80){
+    v<- merge(v,  apply.daily(as.xts(rep(1,length(y[y[,1] == i])),as.Date(index(y[y[,1] == i]))),sum))
+  }else{  # for the case the sample is more than 80 yrs old.
+    v<- merge(v,  apply.daily(as.xts(rep(1,length(y[y[,1] >= i])),as.Date(index(y[y[,1] >= i]))),sum))
+  }
 }
+# v<- merge(v,  apply.daily(as.xts(rep(1,length(y[y[,1] > 80 ])),as.Date(index(y[y[,1] >80]))),sum))
 v <- v[,-1]
 for(i in seq(1,8,1)){
   colnames(v)[i] <- as.character(i*10)
 }
 
-
+# replace NA with ZERO.
 for( i in seq(1,length(colnames(v)),1)) {
   for(j in seq(1,length(index(v)),1)) {
       if(is.na(v[j,i])){  v[j,i] <- 0}

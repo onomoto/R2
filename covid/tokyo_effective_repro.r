@@ -26,9 +26,7 @@ w <- read.csv("~/R/R2/covid/tokyo.csv")
 w <- apply.daily(as.xts(rep(1,length(w[,1])),as.Date(w[,5])),sum)
 last(w)
 
-# as.xts(15,Sys.Date())
-  # w <- append(w,as.xts(50,Sys.Date()))
-# w <- append(w,as.xts(26,Sys.Date()))
+# w <- append(w,as.xts(75,Sys.Date()))
 
 # w <- w[c(1,2,3,4,9,10,11,12,14,15)]
 # w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
@@ -64,7 +62,8 @@ last(w,len-11)
 # plot(last(w[,2],60))
 
 # R と新規感染者数を混在させるためスケール調整のために係数を計算する。
-length_graph <- 120　# グラフは過去45日間が対象
+# length_graph <- 120　# グラフは過去45日間が対象
+length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))  # 2020/3/20 start
 multi <- (max(na.omit(last(w[,1],length_graph))) / max(na.omit(last(w[,2],length_graph))))
 # length_graph <- 120　# グラフは過去45日間が対象
 # merge(w,)

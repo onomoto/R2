@@ -9,7 +9,6 @@
 # D = 平均潜伏感染期間 = 9 あるいはL＋2。2は中国での実測値。
 # R = K^2*(L*D)+K*(L+D)+1
 
-length_graph <- 60　# グラフは過去length_graph日間が対象
 l <- 4.76
 d <- l+2
 nod <- 7
@@ -23,12 +22,19 @@ w <- read.csv("~/R/R2/covid/pref.csv")
 # w <- as.xts(w[,c(5,6)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
 # とりあえずdata.frameを作って必要なデータを抜きす。
 df <- c()
+
 df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                 r=w[,5],
                 p=w[,6])
+#
+# for the case to push back start date
+# df <- df[df$t > as.Date('2020-04-01'),] # might work to throw away all rows before 2020/04/01.
+#
 #　データフレームから県名を抜き出し、unique(w[,5])で県名一覧を作る。
 #　行列を作成し、各県のデータを抜き出し、順次行列にbindしていく。
 #  使用するヒストリカルデータのサイズに合わせたmatrixを初期化する。diff()を取るので先頭はNAが入る。先頭日付は削除する。
+
+
 mtx <- matrix(nrow=length(unique(df$t)[-1]))
 # mtx <- matrix(diff(df$p[df$r == unique(w[,5])[1]]))
 for( i in seq(1,length(unique(w[,5])),1)){
