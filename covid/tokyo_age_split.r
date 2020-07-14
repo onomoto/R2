@@ -11,10 +11,11 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8){
   return(x1*0.02+x2*0.02+x3*0.02+x4*0.02+x5*0.04+x6*0.15+x7*0.56+x8*1)
 }
 
-length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
+# length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
 w <- read.csv("~/R/R2/covid/tokyo.csv")
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
+length_graph <- length(seq(as.Date("2020-03-20"),last(index(y)),by='days'))
 
 # v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
@@ -103,7 +104,7 @@ g <- g + geom_bar(data=df,aes(x = t, y = value, fill = variable),stat = "identit
 df <- data.frame(t=last(index(v),length_graph),
                 value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)
 )
-df <- df[-length(df[,1]),]  # cut off the last entry.
+# df <- df[-length(df[,1]),]  # cut off the last entry.
 # g <- ggplot(df, aes(x = t, y = value))
 g <- g+geom_line(data=df, aes(x = t, y = value))
 
