@@ -19,7 +19,7 @@ length_graph <- length(seq(as.Date("2020-03-20"),last(index(y)),by='days'))
 
 # v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
-v <- as.xts(rep(1,length( seq(as.Date(w[1,5]),Sys.Date(),by='days') )), seq(as.Date(w[1,5]),Sys.Date(),by='days'))
+v <- as.xts(rep(1,length( seq(as.Date(w[1,5]),last(index(y)),by='days') )), seq(as.Date(w[1,5]),last(index(y)),by='days'))
 for(i in seq(10,80,10)){
   if(i < 80){
     v<- merge(v,  apply.daily(as.xts(rep(1,length(y[y[,1] == i])),as.Date(index(y[y[,1] == i]))),sum))
