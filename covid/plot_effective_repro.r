@@ -23,13 +23,22 @@ nod <- 7
 length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days')) # 2020/3/20 start
 remove(df)
 
-curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
+# curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
+curl <- "https://www.mhlw.go.jp/content/pcr_positive_daily.csv"
 # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
-cdestfile <- "~/R/R2/covid/summary.csv"
+cdestfile <- "~/R/R2/covid/all_daily.csv"
 download.file(curl,cdestfile)
-w <- read.csv("~/R/R2/covid/summary.csv")
-w <- w[c(1,2,3,4,9,10,11,12,14,15)]
-w <- as.xts(w[,4],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
+w <- read.csv("~/R/R2/covid/all_daily.csv")
+w[,1] <- gsub("/","-",w[,1])
+w <- as.xts(w[,2],as.Date(w[,1]))
+j <- c()
+for(i in seq(1,length(w[,1]),1)){
+  j[i] <- sum(w[1:i,1])
+
+}
+w[,1] <- j
+# w <- w[c(1,2,3,4,9,10,11,12,14,15)]
+# w <- as.xts(w[,4],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
 # w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
 colnames(w)[1] <- "positive"
 # colnames(w)[2] <- "hospitalized"
@@ -52,7 +61,7 @@ w <- merge(w,as.xts(r,last(index(w),length(r))))
 # as.xts(as.vector(round(last((na.omit(filter(diff(w[,1]),rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
 
 colnames(w)[2] <- "effective_repro"
-last(w,len-11)
+# last(w,len-11)
 # plot(last(w[,8],60))
 
 # R と新規感染者数を混在させるためスケール調整のために係数を計算する。
