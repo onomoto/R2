@@ -4,18 +4,19 @@
 # 　   cdestfile <- "~/R/R2/covid/tokyo.csv"
 # 　   download.file(curl,cdestfile)
 # 最新のcsvをダウンロードしておくこと。
+# また、em_region_death.r を事前に実行すること。これは東京の死者数時系列データ tokyo_death を作るためである。
 
-# インデックスは、大体最終の死亡者の10倍になるように若い人は人数に0.02
-# 50代は 0.04 60代は 0.15, 70代は 0.56 それ以上は1 の係数をかけて加算。
-func <- function(x1,x2,x3,x4,x5,x6,x7,x8){
-  return(x1*0.02+x2*0.02+x3*0.02+x4*0.02+x5*0.04+x6*0.15+x7*0.56+x8*1)
-}
+
 
 # length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
 w <- read.csv("~/R/R2/covid/tokyo.csv")
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
 length_graph <- length(seq(as.Date("2020-03-20"),last(index(y)),by='days'))
+#
+# インデックスはhttps://www.mhlw.go.jp/content/000650160.pdf　のデータを使用
+#
+risk_parameter<-c(0,0,0.001,0.005,0.011,0.049,0.146,0.287)
 
 # v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
@@ -99,16 +100,54 @@ g <- ggplot(NULL)
 # g <- ggplot(df, aes(x = t, y = value, fill = variable))
 g <- g + scale_fill_brewer(palette="Spectral",na.value = "black",name = "age group", direction=-1,labels = c("=<19",">=20",">=30",">=40",">=50",">=60",">=70",">=80"))
 g <- g + geom_bar(data=df,aes(x = t, y = value, fill = variable),stat = "identity")
-
+# func <- function(x1,x2,x3,x4,x5,x6,x7,x8){
+#   return(x1*0.02+x2*0.02+x3*0.02+x4*0.02+x5*0.04+x6*0.15+x7*0.56+x8*1)
+# }
+func <- function(x1,x2,x3,x4,x5,x6,x7,x8){
+  return(x1*risk_parameter[1]+x2*risk_parameter[2]+x3*risk_parameter[3]+x4*risk_parameter[4]+x5*risk_parameter[5]+x6*risk_parameter[6]+x7*risk_parameter[7]+x8*risk_parameter[8])
+}
 # prepare the second layer.
 df <- data.frame(t=last(index(v),length_graph),
-                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)
+                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)*3
 )
 # df <- df[-length(df[,1]),]  # cut off the last entry.
 # g <- ggplot(df, aes(x = t, y = value))
 g <- g+geom_line(data=df, aes(x = t, y = value))
 
-# plot(g)
+df <- data.frame(
+  t=last(tokyo_death[,2],length_graph),
+  value=last(tokyo_death[,1],length_graph)
+)
+g <- g+geom_bar(data=df, aes(x = t, y = value,color='black'),stat = "identity",alpha=0.5)
+g <- g + scale_color_brewer(name = "death",labels = "# of death")
+plot(g)
 png("~/Dropbox/R-script/covid/05tokyo_age.png", width = 1200, height = 800)
+# plot(g)
+dev.off()
+
+g <- ggplot(NULL)
+# # g <- ggplot(df, aes(x = t, y = value, fill = variable))
+# g <- g + scale_fill_brewer(palette="Spectral",na.value = "black",name = "age group", direction=-1,labels = c("=<19",">=20",">=30",">=40",">=50",">=60",">=70",">=80"))
+# g <- g + geom_bar(data=df,aes(x = t, y = value, fill = variable),stat = "identity")
+
+
+
+df <- data.frame(
+  t=last(tokyo_death[,2],length_graph),
+  value=last(tokyo_death[,1],length_graph)
+)
+g <- g+geom_bar(data=df, aes(x = t, y = value),stat = "identity",alpha=0.5,colour="red",fill="red")
+# prepare the second layer.
+# func <- function(x1,x2,x3,x4,x5,x6,x7,x8){
+#   return(x1*0+x2*0+x3*0.001+x4*0.005+x5*0.011+x6*0.049+x7*0.146+x8*0.287)
+# }
+df <- data.frame(t=last(index(v),length_graph),
+                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)*1.5
+)
+# df <- df[-length(df[,1]),]  # cut off the last entry.
+# g <- ggplot(df, aes(x = t, y = value))
+g <- g+geom_line(data=df, aes(x = t, y = value))
+# plot(g)
+png("~/Dropbox/R-script/covid/08tokyo_severity_death.png", width = 1200, height = 800)
 plot(g)
 dev.off()
