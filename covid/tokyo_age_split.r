@@ -120,9 +120,9 @@ df <- data.frame(
 )
 g <- g+geom_bar(data=df, aes(x = t, y = value,color='black'),stat = "identity",alpha=0.5)
 g <- g + scale_color_brewer(name = "death",labels = "# of death")
-plot(g)
-png("~/Dropbox/R-script/covid/05tokyo_age.png", width = 1200, height = 800)
 # plot(g)
+png("~/Dropbox/R-script/covid/05tokyo_age.png", width = 1200, height = 800)
+plot(g)
 dev.off()
 
 g <- ggplot(NULL)
@@ -144,6 +144,7 @@ g <- g+geom_bar(data=df, aes(x = t, y = value),stat = "identity",alpha=0.5,colou
 df <- data.frame(t=last(index(v),length_graph),
                 value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)*1.5
 )
+tokyo_severity <- as.xts(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),index(v))
 # df <- df[-length(df[,1]),]  # cut off the last entry.
 # g <- ggplot(df, aes(x = t, y = value))
 g <- g+geom_line(data=df, aes(x = t, y = value))

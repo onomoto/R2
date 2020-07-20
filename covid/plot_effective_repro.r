@@ -26,70 +26,65 @@ remove(df)
 # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
 curl <- "https://www.mhlw.go.jp/content/pcr_positive_daily.csv"
 # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
-cdestfile <- "~/R/R2/covid/all_daily.csv"
+cdestfile <- "~/R/R2/covid/tmp.csv"
 download.file(curl,cdestfile)
-w <- read.csv("~/R/R2/covid/all_daily.csv")
-w[,1] <- gsub("/","-",w[,1])
-w <- as.xts(w[,2],as.Date(w[,1]))
-j <- c()
-for(i in seq(1,length(w[,1]),1)){
-  j[i] <- sum(w[1:i,1])
+if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout = T, ignore.stderr = T)){
+  print("****** found update at 全国新規陽性者数 ***********")
+  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv")
+  w <- read.csv("~/R/R2/covid/all_daily.csv")
+  w[,1] <- gsub("/","-",w[,1])
+  w <- as.xts(w[,2],as.Date(w[,1]))
+  j <- c()
+  for(i in seq(1,length(w[,1]),1)){
+    j[i] <- sum(w[1:i,1])
 
+  }
+  w[,1] <- j
+  # w <- w[c(1,2,3,4,9,10,11,12,14,15)]
+  # w <- as.xts(w[,4],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
+  # w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
+  colnames(w)[1] <- "positive"
+  last(w,12)
+  len <- length(w[,1])
+  # len-4
+  # len-5
+  # len-9
+  k <- c()
+  for(i in seq(2*nod+1,len,1)) {
+   k <- append(k,((log10(sum(diff(w[,1])[(i-nod+1):i]))) - log10(sum(diff(w[,1])[(i-2*nod+1):(i-nod)])))/nod)
+  }
+  r <- k**2*(l*d) + k*(l+d) +1
+  w <- merge(w,as.xts(r,last(index(w),length(r))))
+  # as.xts(as.vector(round(last((na.omit(filter(diff(w[,1]),rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
+
+  colnames(w)[2] <- "effective_repro"
+  # last(w,len-11)
+  # plot(last(w[,8],60))
+
+  # R と新規感染者数を混在させるためスケール調整のために係数を計算する。
+  multi <- (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,2],length_graph))))
+
+  df <- data.frame(p=last(diff(w[,1]),length_graph),
+                   r=last(w[,2],length_graph)*multi,
+                   t=as.Date(last(index(w),length_graph)),
+                   m=as.vector(round(last((na.omit(filter(as.vector(diff(w[,1])),rep(1,7))/7)),length_graph),2)))
+
+  colnames(df)[1] <- 'p'
+  colnames(df)[2] <- 'r'
+  p <- ggplot(df,aes(x=t))
+  p <- p + geom_bar(aes(y=p),stat="identity", colour="blue",fill="blue")
+  p <- p + geom_path(aes(y=r),colour='red')
+  p <- p + geom_path(aes(y=m),colour='green')
+  p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
+  p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=10+1*multi,colour='red')
+
+  p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=10+2*multi,colour='red')
+  # (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,8],length_graph)))),colour='red')
+  p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  # plot(p)
+
+  png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
+  plot(p)
+  dev.off()
 }
-w[,1] <- j
-# w <- w[c(1,2,3,4,9,10,11,12,14,15)]
-# w <- as.xts(w[,4],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
-# w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
-colnames(w)[1] <- "positive"
-# colnames(w)[2] <- "hospitalized"
-# colnames(w)[3] <- "asymptom"
-# colnames(w)[4] <- "discharged"
-# colnames(w)[5] <- "discharged-incheck"
-# colnames(w)[6] <- "deceased"
-# colnames(w)[7] <- "deceased-incheck"
-last(w,12)
-len <- length(w[,1])
-# len-4
-# len-5
-# len-9
-k <- c()
-for(i in seq(2*nod+1,len,1)) {
- k <- append(k,((log10(sum(diff(w[,1])[(i-nod+1):i]))) - log10(sum(diff(w[,1])[(i-2*nod+1):(i-nod)])))/nod)
-}
-r <- k**2*(l*d) + k*(l+d) +1
-w <- merge(w,as.xts(r,last(index(w),length(r))))
-# as.xts(as.vector(round(last((na.omit(filter(diff(w[,1]),rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
-
-colnames(w)[2] <- "effective_repro"
-# last(w,len-11)
-# plot(last(w[,8],60))
-
-# R と新規感染者数を混在させるためスケール調整のために係数を計算する。
-multi <- (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,2],length_graph))))
-
-df <- data.frame(p=last(diff(w[,1]),length_graph),
-                 r=last(w[,2],length_graph)*multi,
-                 t=as.Date(last(index(w),length_graph)),
-                 m=as.vector(round(last((na.omit(filter(as.vector(diff(w[,1])),rep(1,7))/7)),length_graph),2)))
-
-colnames(df)[1] <- 'p'
-colnames(df)[2] <- 'r'
-p <- ggplot(df,aes(x=t))
-p <- p + geom_bar(aes(y=p),stat="identity", colour="blue",fill="blue")
-p <- p + geom_path(aes(y=r),colour='red')
-p <- p + geom_path(aes(y=m),colour='green')
-p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
-p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=10+1*multi,colour='red')
-
-# (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,8],length_graph))))
-
-
-p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
-p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=10+2*multi,colour='red')
-# (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,8],length_graph)))),colour='red')
-p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
-# plot(p)
-
-png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
-plot(p)
-dev.off()

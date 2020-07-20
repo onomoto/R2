@@ -16,100 +16,83 @@ nod <- 7
 
 
 w <- c()
-# w <- read.csv("~/R/R2/covid/summary.csv")
-# https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv
+
+# curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
 curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-cdestfile <- "~/R/R2/covid/tokyo.csv"
+cdestfile <- "~/R/R2/covid/tmp.csv"
 download.file(curl,cdestfile)
-w <- read.csv("~/R/R2/covid/tokyo.csv")
+if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T, ignore.stderr = T)){
+  print("****** found update at 東京新規陽性者数 ***********")
+  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv")
 
-w <- apply.daily(as.xts(rep(1,length(w[,1])),as.Date(w[,5])),sum)
-last(w)
+  # w <- read.csv("~/R/R2/covid/summary.csv")
+  # https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv
+  # curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
+  # cdestfile <- "~/R/R2/covid/tokyo.csv"
+  # download.file(curl,cdestfile)
+  w <- read.csv("~/R/R2/covid/tokyo.csv")
 
-# w <- append(w,as.xts(75,Sys.Date()))
+  w <- apply.daily(as.xts(rep(1,length(w[,1])),as.Date(w[,5])),sum)
+  last(w)
 
-# w <- w[c(1,2,3,4,9,10,11,12,14,15)]
-# w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
-# colnames(w)[1] <- "positive"
-# colnames(w)[2] <- "hospitalized"
-# colnames(w)[3] <- "asymptom"
-# colnames(w)[4] <- "discharged"
-# colnames(w)[5] <- "discharged-incheck"
-# colnames(w)[6] <- "deceased"
-# colnames(w)[7] <- "deceased-incheck"
-# last(w,12)
-len <- length(w[,1])
-# len-4
-# len-5
-# len-9
-k <- c()
-for(i in seq(2*nod+1,len,1)) {
- k <- append(k,((log10(sum(w[,1][(i-nod+1):i]))) - log10(sum(w[,1][(i-2*nod+1):(i-nod)])))/nod)
- # cat(i)
- # cat(" 1: ")
- # cat((sum(diff(w[,1])[(i-nod+1):i])))
- # cat(" 2: ")
- # cat(sum(diff(w[,1])[(i-2*nod+1):(i-nod)]))
- # print(last(k))
+  len <- length(w[,1])
+  k <- c()
+  for(i in seq(2*nod+1,len,1)) {
+   k <- append(k,((log10(sum(w[,1][(i-nod+1):i]))) - log10(sum(w[,1][(i-2*nod+1):(i-nod)])))/nod)
+
+  }
+  r <- round(k**2*(l*d) + k*(l+d) +1,2)
+  w <- merge(w,as.xts(r,last(index(w),length(r))))
+  w
+
+
+  colnames(w)[2] <- "effective_repro"
+  last(w,len-11)
+  # plot(last(w[,2],60))
+
+  # R と新規感染者数を混在させるためスケール調整のために係数を計算する。
+  # length_graph <- 120　# グラフは過去45日間が対象
+  length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))  # 2020/3/20 start
+  multi <- (max(na.omit(last(w[,1],length_graph))) / max(na.omit(last(w[,2],length_graph))))
+  # length_graph <- 120　# グラフは過去45日間が対象
+  # merge(w,)
+
+  # as.xts(as.vector(round(last((na.omit(filter(w[,1],rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
+  w <- merge(w,as.xts(as.vector(round(last((na.omit(filter(w[,1],rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph))))
+  w[,2] <- w[,2]*multi
+  positive <- as.vector(last(w[,1],length_graph))
+  repro <- as.vector(round(last(w[,2],length_graph),2))
+  moving_a <- as.vector(last(w[,3],length_graph))
+  date <- as.Date(last(index(w),length_graph))
+
+
+  df <- data.frame(
+                  p=positive,
+                  r=repro,
+                  m=moving_a,
+                  # s=seq(1,45,1))
+                  t=date)
+
+  p <- ggplot(df,aes(x=t))
+
+  p <- p + geom_bar(aes(y=p),stat="identity", colour="limegreen",fill="limegreen")
+  # p <- p + scale_x_date(date_breaks = "1 month", date_labels = "%M")
+  p <- p + geom_path(aes(y=r),colour='red')
+  p <- p + geom_path(aes(y=m),colour='blue')
+  # p <- p + scale_x_date(date_breaks = "1 month", date_labels = "%M")
+
+
+  p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
+  p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=5+1*multi,colour='black')
+  p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=5+2*multi,,colour='black')
+  p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  png("~/Dropbox/R-script/covid/03tokyo.png", width = 800, height = 600)
+  plot(p)
+  dev.off()
+  # em_region.r should be run before tokyo_age_split as there is a dependency.
+  source("../../Dropbox/R-script/covid/em_region.r")
+  source("../../Dropbox/R-script/covid/tokyo_age_split.r")
+}else{
+  source("../../Dropbox/R-script/covid/em_region.r")
 }
-r <- round(k**2*(l*d) + k*(l+d) +1,2)
-w <- merge(w,as.xts(r,last(index(w),length(r))))
-w
-
-
-colnames(w)[2] <- "effective_repro"
-last(w,len-11)
-# plot(last(w[,2],60))
-
-# R と新規感染者数を混在させるためスケール調整のために係数を計算する。
-# length_graph <- 120　# グラフは過去45日間が対象
-length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))  # 2020/3/20 start
-multi <- (max(na.omit(last(w[,1],length_graph))) / max(na.omit(last(w[,2],length_graph))))
-# length_graph <- 120　# グラフは過去45日間が対象
-# merge(w,)
-
-# as.xts(as.vector(round(last((na.omit(filter(w[,1],rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph)))
-w <- merge(w,as.xts(as.vector(round(last((na.omit(filter(w[,1],rep(1,7))/7)),length_graph),2)),as.Date(last(index(w),length_graph))))
-w[,2] <- w[,2]*multi
-positive <- as.vector(last(w[,1],length_graph))
-repro <- as.vector(round(last(w[,2],length_graph),2))
-moving_a <- as.vector(last(w[,3],length_graph))
-date <- as.Date(last(index(w),length_graph))
-
-
-df <- data.frame(
-                p=positive,
-                r=repro,
-                m=moving_a,
-                # s=seq(1,45,1))
-                t=date)
-
-
-# df <- data.frame(p=as.vector(last(w[,1],length_graph)),
-#                  # r=as.vector(last(w[,2],length_graph)*multi),
-#                  r=as.vector(last(w[,2],length_graph)),
-#                  # m=as.vector(last(w[,3],length_graph)),
-#                  t=as.Date(last(index(w),length_graph)))
-#
-# colnames(df)[1] <- 'p'
-# colnames(df)[2] <- 'r'
-# colnames(df)[3] <- 'm'
-# colnames(df)[4] <- 't'
-
-p <- ggplot(df,aes(x=t))
-
-p <- p + geom_bar(aes(y=p),stat="identity", colour="limegreen",fill="limegreen")
-# p <- p + scale_x_date(date_breaks = "1 month", date_labels = "%M")
-p <- p + geom_path(aes(y=r),colour='red')
-p <- p + geom_path(aes(y=m),colour='blue')
-# p <- p + scale_x_date(date_breaks = "1 month", date_labels = "%M")
-
-
-p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
-p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=5+1*multi,colour='black')
-p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
-p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=5+2*multi,,colour='black')
-p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
-png("~/Dropbox/R-script/covid/03tokyo.png", width = 800, height = 600)
-plot(p)
-dev.off()
