@@ -21,7 +21,7 @@ d <- l+2
 nod <- 7
 # length_graph <- 110　# グラフは過去60日間が対象
 length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days')) # 2020/3/20 start
-remove(df)
+# remove(df)
 
 # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
 curl <- "https://www.mhlw.go.jp/content/pcr_positive_daily.csv"
@@ -71,20 +71,58 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout 
 
   colnames(df)[1] <- 'p'
   colnames(df)[2] <- 'r'
-  p <- ggplot(df,aes(x=t))
-  p <- p + geom_bar(aes(y=p),stat="identity", colour="blue",fill="blue")
-  p <- p + geom_path(aes(y=r),colour='red')
-  p <- p + geom_path(aes(y=m),colour='green')
-  p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
-  p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=10+1*multi,colour='red')
+  # p <- ggplot(df,aes(x=t))
+  # p <- p + geom_bar(aes(y=p),stat="identity", colour="blue",fill="blue")
+  # p <- p + geom_path(aes(y=r),colour='red')
+  # p <- p + geom_path(aes(y=m),colour='green')
+  # p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
+  # p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=10+1*multi,colour='red')
+  #
+  # p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  # p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=10+2*multi,colour='red')
+  # # (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,8],length_graph)))),colour='red')
+  # p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  # # plot(p)
 
-  p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
-  p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=10+2*multi,colour='red')
-  # (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,8],length_graph)))),colour='red')
-  p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  # png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
   # plot(p)
+  # dev.off()
+  curl <- "https://www.mhlw.go.jp/content/death_total.csv"
+  # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
+  cdestfile <- "~/R/R2/covid/tmp.csv"
+  download.file(curl,cdestfile)
+  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/death_total.csv")
+  w <- read.csv("~/R/R2/covid/death_total.csv")
+  w[,1] <- gsub("/","-",w[,1])
+  # w <- as.xts(diff(w[,2])[-1],as.Date(w[,1])[-1])
+  w <- as.xts(as.vector(w[,2]),as.Date(w[,1]))
+  # j <- c()
+  # for(i in seq(1,length(w[,1]),1)){
+  #   j[i] <- sum(w[1:i,1])
+  #
+  # }
+  # w[,1] <- j
+  # w <- w[c(1,2,3,4,9,10,11,12,14,15)]
+  # w <- as.xts(w[,4],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
+  # w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
+  colnames(w)[1] <- "death"
+  g <- ggplot(NULL)
+  g <- g+ geom_bar(data=df,aes(x = t,y=p),stat="identity", colour="blue",fill="blue")
+  g <- g + geom_path(data=df,aes(x = t,y=r),colour='red')
+  g <- g + geom_path(data=df,aes(x = t,y=m),colour='green')
+  g <- g+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=10+1*multi,colour='red')
 
+  g <- g + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  g <- g+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=10+2*multi,colour='red')
+  # (max(na.omit(last(diff(w[,1]),length_graph))) / max(na.omit(last(w[,8],length_graph)))),colour='red')
+  g <- g + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
+
+  df <- data.frame(d=last(diff(w[,1]),length_graph),
+                   t=as.Date(last(index(w),length_graph)))
+
+  g <- g+geom_bar(data=df, aes(y = death, x = t),stat = "identity",alpha=0.5,colour="yellow",fill="yellow")
+  # plot(g)
   png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
-  plot(p)
+  plot(g)
   dev.off()
 }

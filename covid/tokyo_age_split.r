@@ -142,7 +142,7 @@ g <- g+geom_bar(data=df, aes(x = t, y = value),stat = "identity",alpha=0.5,colou
 #   return(x1*0+x2*0+x3*0.001+x4*0.005+x5*0.011+x6*0.049+x7*0.146+x8*0.287)
 # }
 df <- data.frame(t=last(index(v),length_graph),
-                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)*1.5
+                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),length_graph)
 )
 tokyo_severity <- as.xts(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8]),index(v))
 # df <- df[-length(df[,1]),]  # cut off the last entry.

@@ -24,6 +24,7 @@ download.file(curl,cdestfile)
 if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T, ignore.stderr = T)){
   print("****** found update at 東京新規陽性者数 ***********")
   system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv")
+  source("../../Dropbox/R-script/covid/em_region.r")
 
   # w <- read.csv("~/R/R2/covid/summary.csv")
   # https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv
@@ -64,18 +65,20 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T,
   repro <- as.vector(round(last(w[,2],length_graph),2))
   moving_a <- as.vector(last(w[,3],length_graph))
   date <- as.Date(last(index(w),length_graph))
-
+  death <- as.vector(last(tokyo_death$Tokyo,length_graph))
 
   df <- data.frame(
                   p=positive,
                   r=repro,
                   m=moving_a,
+                  d=death,
                   # s=seq(1,45,1))
                   t=date)
 
   p <- ggplot(df,aes(x=t))
 
-  p <- p + geom_bar(aes(y=p),stat="identity", colour="limegreen",fill="limegreen")
+  p <- p + geom_bar(aes(y=p),stat="identity", colour="darkgreen",fill="darkgreen")
+  p <- p + geom_bar(aes(y=d),stat="identity", colour="yellow",fill="yellow",alpha=0.5)
   # p <- p + scale_x_date(date_breaks = "1 month", date_labels = "%M")
   p <- p + geom_path(aes(y=r),colour='red')
   p <- p + geom_path(aes(y=m),colour='blue')
@@ -91,7 +94,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T,
   plot(p)
   dev.off()
   # em_region.r should be run before tokyo_age_split as there is a dependency.
-  source("../../Dropbox/R-script/covid/em_region.r")
+
   source("../../Dropbox/R-script/covid/tokyo_age_split.r")
 }else{
   source("../../Dropbox/R-script/covid/em_region.r")
