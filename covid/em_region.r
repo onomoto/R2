@@ -96,7 +96,8 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, 
   dmdf <-transform(dmdf,t=unique(df$t)[-1]) # 差分を取るので先頭はNAが入る。先頭要素は削除する。
   #　データフレームの列名を県名一覧で変更する。
   colnames(dmdf)[1:(length(unique(w[,5])))] <- as.character(unique(w[,5]))
-  tokyo_death <- dmdf[,c(13,48)]  # pick up 13th column for tokyo.
+  # tokyo_death <- dmdf[,c(13,48)]  # pick up 13th column for tokyo.
+  tokyo_death <- as.xts(dmdf[,13],dmdf[,48]) # as.xts(tokyo_death[,1],tokyo_death[,2])
   # 積み上げヒストグラムに適合するようにmelt()を使用して変換する。
   df.melt <- melt(data=dmdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
   # head(df.melt)
