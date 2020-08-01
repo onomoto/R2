@@ -115,7 +115,7 @@ df <- data.frame(t=last(index(v),length_graph),
 g <- g+geom_line(data=df, aes(x = t, y = value))
 
 df <- data.frame(
-  t=last(tokyo_death[,2],length_graph),
+  t=last(index(tokyo_death),length_graph),
   value=last(tokyo_death[,1],length_graph)
 )
 g <- g+geom_bar(data=df, aes(x = t, y = value,color='black'),stat = "identity",alpha=0.5)
@@ -133,7 +133,7 @@ g <- ggplot(NULL)
 
 
 df <- data.frame(
-  t=last(tokyo_death[,2],length_graph),
+  t=last(index(tokyo_death),length_graph),
   value=last(tokyo_death[,1],length_graph)
 )
 g <- g+geom_bar(data=df, aes(x = t, y = value),stat = "identity",alpha=0.5,colour="red",fill="red")
