@@ -19,7 +19,9 @@ cdestfile <- "~/R/R2/covid/tmp.csv"
 download.file(curl,cdestfile)
 if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, ignore.stderr = T)){
   print("****** found update at 全都道府県新規陽性者数 ***********")
-  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv")
+  # system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv")
+  system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/pref.csv")
+  system(" awk 'NR>59' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/pref.csv")
   # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
   # cdestfile <- "~/R/R2/covid/pref.csv"
   # download.file(curl,cdestfile)
@@ -57,6 +59,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, 
   df <- df.melt
   g <- ggplot(df, aes(x = t, y = value, fill = variable))
   g <- g + geom_bar(stat = "identity")
+  g <- g + scale_fill_hue(name='regions')
 
   png("~/Dropbox/R-script/covid/04em.png", width = 1400, height = 600)
   plot(g)
@@ -97,13 +100,16 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, 
   #　データフレームの列名を県名一覧で変更する。
   colnames(dmdf)[1:(length(unique(w[,5])))] <- as.character(unique(w[,5]))
   # tokyo_death <- dmdf[,c(13,48)]  # pick up 13th column for tokyo.
-  tokyo_death <- as.xts(dmdf[,13],dmdf[,48]) # as.xts(tokyo_death[,1],tokyo_death[,2])
+  # tokyo_death <- as.xts(dmdf[,13],dmdf[,48]) # as.xts(tokyo_death[,1],tokyo_death[,2])
+  tokyo_death <- as.xts(dmdf[,colnames(dmdf) == "Tokyo"],dmdf$t)
   # 積み上げヒストグラムに適合するようにmelt()を使用して変換する。
   df.melt <- melt(data=dmdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
   # head(df.melt)
   df <- df.melt
   g <- ggplot(df, aes(x = t, y = value, fill = variable))
   g <- g + geom_bar(stat = "identity")
+  # g <- g + scale_fill_brewer(palette="Spectral",na.value = "black",name = "regions")
+  g <- g + scale_fill_hue(name='regions')
   # plot(g)
   png("~/Dropbox/R-script/covid/09em_death.png", width = 1400, height = 600)
   plot(g)
