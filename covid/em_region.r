@@ -17,11 +17,13 @@ w <- c()
 curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
 cdestfile <- "~/R/R2/covid/tmp.csv"
 download.file(curl,cdestfile)
-if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, ignore.stderr = T)){
+system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/tmp2.csv")
+system(" awk 'NR>59' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/tmp2.csv")
+if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, ignore.stderr = T)){
   print("****** found update at 全都道府県新規陽性者数 ***********")
-  # system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv")
-  system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/pref.csv")
-  system(" awk 'NR>59' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/pref.csv")
+  system("cp ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv")
+  # system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/pref.csv")
+  # system(" awk 'NR>59' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/pref.csv")
   # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
   # cdestfile <- "~/R/R2/covid/pref.csv"
   # download.file(curl,cdestfile)
