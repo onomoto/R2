@@ -18,7 +18,7 @@ curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefe
 cdestfile <- "~/R/R2/covid/tmp.csv"
 download.file(curl,cdestfile)
 system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/tmp2.csv")
-system(" awk 'NR>59' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/tmp2.csv")
+system(" awk 'NR>91' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/tmp2.csv")
 if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, ignore.stderr = T)){
   print("****** found update at 全都道府県新規陽性者数 ***********")
   system("cp ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv")
@@ -72,7 +72,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
 
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
-                  p=w[,9])
+                  p=w[,10])
   #
   # for the case to push back start date
   # df <- df[df$t > as.Date('2020-04-01'),] # might work to throw away all rows before 2020/04/01.
