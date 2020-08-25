@@ -73,6 +73,13 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
                   p=w[,10])
+  for(i in seq(1,length(df$p),1)){
+            # if()
+                if(df$p[i] == ""){
+                df$p[i] <- 0
+                }
+  }
+
   #
   # for the case to push back start date
   # df <- df[df$t > as.Date('2020-04-01'),] # might work to throw away all rows before 2020/04/01.
@@ -85,7 +92,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   mtx <- matrix(nrow=length(unique(df$t)[-1]))
   # mtx <- matrix(diff(df$p[df$r == unique(w[,5])[1]]))
   for( i in seq(1,length(unique(w[,5])),1)){
-    mtx <- cbind(mtx,diff(df$p[df$r == unique(w[,5])[i]]))
+    mtx <- cbind(mtx,diff(as.numeric(as.vector(df$p[df$r == unique(w[,5])[i]]))))
   }
   mtx <- mtx[,-1]　#　初期化時に使用した空の列を削除する。
   #　行列をデータフレームに変換し、そののち日付データを先のデータフレームから抜き出し付加する。
