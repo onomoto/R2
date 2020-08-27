@@ -72,7 +72,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
 
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
-                  p=w[,10])
+                  p=w[,11])
   df$p[index(df)[df$p == ""] ] <- 0             # input csv includes "" entry. replace them with ZERO
 
   #
@@ -91,11 +91,11 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   }
   mtx <- mtx[,-1]　#　初期化時に使用した空の列を削除する。
 
-  w <- as.vector(mtx)  # convert matrix into vector
+  mv <- as.vector(mtx)  # convert matrix into vector
   # w[index(w)[is.na(w)]]
-  w[index(w)[is.na(w)]] <- 0  # find "NA" entries and replace with ZERO
-  mtx <- matrix(w,ncol=dim(mtx)[2]) # put back into matrix.
-  
+  mv[index(mv)[is.na(mv)]] <- 0  # find "NA" entries and replace with ZERO
+  mtx <- matrix(mv,ncol=dim(mtx)[2]) # put back into matrix.
+
   dmdf <-as.data.frame(mtx)
   dmdf <-transform(dmdf,t=unique(df$t)[-1]) # 差分を取るので先頭はNAが入る。先頭要素は削除する。
   #　データフレームの列名を県名一覧で変更する。
