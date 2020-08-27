@@ -34,7 +34,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
 
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
-                  p=w[,6])
+                  p=w$testedPositive)
   #
   # for the case to push back start date
   # df <- df[df$t > as.Date('2020-04-01'),] # might work to throw away all rows before 2020/04/01.
@@ -72,7 +72,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
 
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
-                  p=w[,11])
+                  p=w$deaths)
   df$p[index(df)[df$p == ""] ] <- 0             # input csv includes "" entry. replace them with ZERO
 
   #
