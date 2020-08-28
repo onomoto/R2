@@ -43,8 +43,9 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   # 計算結果の行列に日付データを付加してdata.frameにする。
   # カラム名をつける。
   #
-  rowsize <- dim(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))[1]  # 行列のサイズを計算し、行数を格納しておく。
-  testmat <- matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[2:rowsize,] - matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[1:(rowsize-1),]　#　CSVから読み込んだデータを行列に格納し、差分を取る。
+  # rowsize <- dim(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))[1]  # 行列のサイズを計算し、行数を格納しておく。
+  # testmat <- matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[2:rowsize,] - matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[1:(rowsize-1),]　#　CSVから読み込んだデータを行列に格納し、差分を取る。
+  testmat <- diff(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))
   testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
   colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
   mdf <- testdf
@@ -74,8 +75,9 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   # 行列を作成し、差分を計算して日次新規陽性者数を計算する。2番目の要素から1番目、3番目の要素から2番目を引く。以下順次最後の要素まで計算する。
   # 計算結果の行列に日付データを付加してdata.frameにする。
   # カラム名をつける。
-  rowsize <- dim(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))[1]  # 行列のサイズを計算し、行数を格納しておく。
-  testmat <- matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[2:rowsize,] - matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[1:(rowsize-1),]　#　CSVから読み込んだデータを行列に格納し、差分を取る。
+  # rowsize <- dim(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))[1]  # 行列のサイズを計算し、行数を格納しておく。
+  # testmat <- matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[2:rowsize,] - matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[1:(rowsize-1),]　#　CSVから読み込んだデータを行列に格納し、差分を取る。
+  testmat <- diff(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))
   testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
   colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
   dmdf <- testdf
