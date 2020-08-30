@@ -17,9 +17,13 @@ w <- c()
 curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
 cdestfile <- "~/R/R2/covid/tmp.csv"
 download.file(curl,cdestfile)
-if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, ignore.stderr = T)){
+system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/tmp2.csv")
+system(" awk 'NR>91' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/tmp2.csv")
+if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, ignore.stderr = T)){
   print("****** found update at 全都道府県新規陽性者数 ***********")
-  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv")
+  system("cp ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv")
+  # system(" awk 'NR==1' ~/R/R2/covid/tmp.csv > ~/R/R2/covid/pref.csv")
+  # system(" awk 'NR>59' ~/R/R2/covid/tmp.csv >> ~/R/R2/covid/pref.csv")
   # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
   # cdestfile <- "~/R/R2/covid/pref.csv"
   # download.file(curl,cdestfile)
@@ -30,33 +34,28 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, 
 
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
-                  p=w[,6])
+                  p=w$testedPositive)
+  df$p[index(df)[df$p == ""] ] <- 0
+  df$p <- as.numeric(as.vector(df$p))
   #
-  # for the case to push back start date
-  # df <- df[df$t > as.Date('2020-04-01'),] # might work to throw away all rows before 2020/04/01.
+  # データフレームから県名を抜き出し、unique(w[,5])で県名一覧を作る。
+  # 行列を作成し、差分を計算して日次新規陽性者数を計算する。2番目の要素から1番目、3番目の要素から2番目を引く。以下順次最後の要素まで計算する。
+  # 計算結果の行列に日付データを付加してdata.frameにする。
+  # カラム名をつける。
   #
-  #　データフレームから県名を抜き出し、unique(w[,5])で県名一覧を作る。
-  #　行列を作成し、各県のデータを抜き出し、順次行列にbindしていく。
-  #  使用するヒストリカルデータのサイズに合わせたmatrixを初期化する。diff()を取るので先頭はNAが入る。先頭日付は削除する。
+  # rowsize <- dim(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))[1]  # 行列のサイズを計算し、行数を格納しておく。
+  # testmat <- matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[2:rowsize,] - matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[1:(rowsize-1),]　#　CSVから読み込んだデータを行列に格納し、差分を取る。
+  testmat <- diff(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))
+  testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
+  colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
+  mdf <- testdf
 
-
-  mtx <- matrix(nrow=length(unique(df$t)[-1]))
-  # mtx <- matrix(diff(df$p[df$r == unique(w[,5])[1]]))
-  for( i in seq(1,length(unique(w[,5])),1)){
-    mtx <- cbind(mtx,diff(df$p[df$r == unique(w[,5])[i]]))
-  }
-  mtx <- mtx[,-1]　#　初期化時に使用した空の列を削除する。
-  #　行列をデータフレームに変換し、そののち日付データを先のデータフレームから抜き出し付加する。
-  mdf <-as.data.frame(mtx)
-  mdf <-transform(mdf,t=unique(df$t)[-1]) # 差分を取るので先頭はNAが入る。先頭要素は削除する。
-  #　データフレームの列名を県名一覧で変更する。
-  colnames(mdf)[1:(length(unique(w[,5])))] <- as.character(unique(w[,5]))
-  # 積み上げヒストグラムに適合するようにmelt()を使用して変換する。
   df.melt <- melt(data=mdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
   head(df.melt)
   df <- df.melt
   g <- ggplot(df, aes(x = t, y = value, fill = variable))
   g <- g + geom_bar(stat = "identity")
+  g <- g + scale_fill_hue(name='regions')
 
   png("~/Dropbox/R-script/covid/04em.png", width = 1400, height = 600)
   plot(g)
@@ -67,43 +66,31 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/pref.csv", ignore.stdout = T, 
 
   df <- data.frame(t=as.Date(paste(w[,1],w[,2],w[,3],sep='-')),
                   r=w[,5],
-                  p=w[,9])
+                  p=w$deaths)
+  df$p[index(df)[df$p == ""] ] <- 0             # input csv includes "" entry. replace them with ZERO
+  df$p <- as.numeric(as.vector(df$p))
+
   #
-  # for the case to push back start date
-  # df <- df[df$t > as.Date('2020-04-01'),] # might work to throw away all rows before 2020/04/01.
-  #
-  #　データフレームから県名を抜き出し、unique(w[,5])で県名一覧を作る。
-  #　行列を作成し、各県のデータを抜き出し、順次行列にbindしていく。
-  #  使用するヒストリカルデータのサイズに合わせたmatrixを初期化する。diff()を取るので先頭はNAが入る。先頭日付は削除する。
+  # データフレームから県名を抜き出し、unique(w[,5])で県名一覧を作る。
+  # 行列を作成し、差分を計算して日次新規陽性者数を計算する。2番目の要素から1番目、3番目の要素から2番目を引く。以下順次最後の要素まで計算する。
+  # 計算結果の行列に日付データを付加してdata.frameにする。
+  # カラム名をつける。
+  # rowsize <- dim(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))[1]  # 行列のサイズを計算し、行数を格納しておく。
+  # testmat <- matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[2:rowsize,] - matrix(df$p,ncol=length(unique(w[,5])),byrow=T)[1:(rowsize-1),]　#　CSVから読み込んだデータを行列に格納し、差分を取る。
+  testmat <- diff(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))
+  testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
+  colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
+  dmdf <- testdf
 
-
-  mtx <- matrix(nrow=length(unique(df$t)[-1]))
-  # mtx <- matrix(diff(df$p[df$r == unique(w[,5])[1]]))
-  for( i in seq(1,length(unique(w[,5])),1)){
-    mtx <- cbind(mtx,diff(df$p[df$r == unique(w[,5])[i]]))
-  }
-  mtx <- mtx[,-1]　#　初期化時に使用した空の列を削除する。
-  #　行列をデータフレームに変換し、そののち日付データを先のデータフレームから抜き出し付加する。
-  for( i in seq(1,length(mtx[,1]),1)) {
-    for(j in seq(1,length(mtx[1,]),1)) {
-        if(is.na(mtx[i,j])){ mtx[i,j] <- 0}
-    }
-    # print(v[,i])
-  }
-
-
-  dmdf <-as.data.frame(mtx)
-  dmdf <-transform(dmdf,t=unique(df$t)[-1]) # 差分を取るので先頭はNAが入る。先頭要素は削除する。
-  #　データフレームの列名を県名一覧で変更する。
-  colnames(dmdf)[1:(length(unique(w[,5])))] <- as.character(unique(w[,5]))
-  # tokyo_death <- dmdf[,c(13,48)]  # pick up 13th column for tokyo.
-  tokyo_death <- as.xts(dmdf[,13],dmdf[,48]) # as.xts(tokyo_death[,1],tokyo_death[,2])
+  tokyo_death <- as.xts(dmdf[,colnames(dmdf) == "Tokyo"],dmdf$t)
   # 積み上げヒストグラムに適合するようにmelt()を使用して変換する。
   df.melt <- melt(data=dmdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
   # head(df.melt)
   df <- df.melt
   g <- ggplot(df, aes(x = t, y = value, fill = variable))
   g <- g + geom_bar(stat = "identity")
+  # g <- g + scale_fill_brewer(palette="Spectral",na.value = "black",name = "regions")
+  g <- g + scale_fill_hue(name='regions')
   # plot(g)
   png("~/Dropbox/R-script/covid/09em_death.png", width = 1400, height = 600)
   plot(g)

@@ -122,7 +122,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout 
 
   g <- g+geom_bar(data=df, aes(y = death, x = t),stat = "identity",alpha=0.5,colour="yellow",fill="yellow")
   # plot(g)
-  png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
+  png("~/Dropbox/R-script/covid/02all.png", width = 1600, height = 1200)
   plot(g)
   dev.off()
 }
