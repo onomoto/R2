@@ -36,6 +36,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
                   r=w[,5],
                   p=w$testedPositive)
   df$p[index(df)[df$p == ""] ] <- 0
+  df$p[index(df)[is.na(df$p)]] <- 0
   df$p <- as.numeric(as.vector(df$p))
   #
   # データフレームから県名を抜き出し、unique(w[,5])で県名一覧を作る。
@@ -68,6 +69,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
                   r=w[,5],
                   p=w$deaths)
   df$p[index(df)[df$p == ""] ] <- 0             # input csv includes "" entry. replace them with ZERO
+  df$p[index(df)[is.na(df$p)]] <- 0
   df$p <- as.numeric(as.vector(df$p))
 
   #
