@@ -1,5 +1,9 @@
 # kikan <- "1995-01-01::"
-kikan <- paste(as.Date(yearmon(index(head(tmp.predict,1)))),"::",sep="")
+# kikan <- paste(as.Date(yearmon(index(head(tmp.predict,1)))),"::",sep="")
+
+kikan <- paste(as.Date(yearmon(index(head(tmp.predict,1)))),as.Date(as.yearmon((mondate(index(last(tmp.predict))))),frac=1),sep="::")
+
+
 func <- function(x){
   if(is.na(x)){return(NA)}
   if(x > 0.1){return("a")}

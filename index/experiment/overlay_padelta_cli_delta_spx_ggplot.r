@@ -37,17 +37,19 @@ posconv <- function(x,sl,sh,ml,mh){
   return(r)
 }
 
-kikan <- "1995::2020-03"
+kikan <- "1995::2020-06"
 # this should be here
 idx <- log(apply.monthly(SP5[,4],mean))/100
 
 #
 # use mapply shown in the sample when data.frame() is done.
-# use NFP 1 mon. delta
+# use NFP 1 mon. delta <- obsoleted.
 #w <- na.omit(diff(PA)["1950::"])
 # use 6 mon moving average
-w <- na.omit(filter(diff(PA["1949-07-01::"]),rep(1,6))/6)
-w <- as.xts(as.vector(w),seq(as.Date("1950-01-01"),as.Date(index(last(PA))),by='months'))
+# PA is Personal Incomve which starts from "1959-01-01".
+w <- na.omit(filter(diff(PA["1959-01-01::"]),rep(1,6))/6)
+# adjust date sequence length
+w <- as.xts(as.vector(w),last(seq(as.Date("1959-01-01"),as.Date(index(last(PA))),by='months'),length(w)))
 # w is not able to calculate at the beginning of the month, then append ZERO not NA. as sd() needs more than one iteration of data
 w <-  append(as.vector(w[kikan]),rep(0,length(index(idx[kikan])) - length(index(w[kikan])))) # append ZERO when cov is not available.
 
