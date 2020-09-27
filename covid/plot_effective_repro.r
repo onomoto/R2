@@ -31,7 +31,7 @@ download.file(curl,cdestfile)
 if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout = T, ignore.stderr = T)){
   print("****** found update at 全国新規陽性者数 ***********")
   system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv")
-  w <- read.csv("~/R/R2/covid/all_daily.csv")
+  w <- read.csv("~/R/R2/covid/all_daily.csv",skip=1)
   w[,1] <- gsub("/","-",w[,1])
   w <- as.xts(w[,2],as.Date(w[,1]))
   j <- c()
@@ -40,6 +40,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout 
 
   }
   w[,1] <- j
+  w[,1] <- as.numeric(w[,1])
   # w <- w[c(1,2,3,4,9,10,11,12,14,15)]
   # w <- as.xts(w[,4],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
   # w <- as.xts(w[,c(4,5,6,7,8,9,10)],as.Date(paste(w[,1],w[,2],w[,3],sep='-')))
@@ -92,7 +93,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout 
   cdestfile <- "~/R/R2/covid/tmp.csv"
   download.file(curl,cdestfile)
   system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/death_total.csv")
-  w <- read.csv("~/R/R2/covid/death_total.csv")
+  w <- read.csv("~/R/R2/covid/death_total.csv",skip=1)
   w[,1] <- gsub("/","-",w[,1])
   # w <- as.xts(diff(w[,2])[-1],as.Date(w[,1])[-1])
   w <- as.xts(as.vector(w[,2]),as.Date(w[,1]))
