@@ -24,6 +24,11 @@ length_graph <- length(seq(as.Date("2020-03-20"),last(index(y)),by='days'))
 # https://www.kyoto.med.or.jp/covid19/pdf/08.pdf
 #  risk_parameter_v3 <- c(0,0,0,0.001,0.003,0.007,0.035,0.109,0.23)
 #
+# 新型コロナウイルス感染症 診療の手引き 2020 19-COVID 第4版 @ 2020/12/2
+#
+#  https://www.mhlw.go.jp/content/000702064.pdf
+#  risk_parameter_v3 <- c(0,0,0,0,0.001,0.004,0.017,0.057,0.14)
+#
 
 # v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
@@ -116,7 +121,11 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8,idx){
   if(idx < as.Date("2020-07-10")){
     risk_parameter <- c(0,0,0.001,0.005,0.011,0.049,0.146,0.287)
   }else{
-    risk_parameter <- c(0,0,0.001,0.003,0.007,0.035,0.109,0.23)
+    if(idx < as.Date("2020-09-02")){
+      risk_parameter <- c(0,0,0.001,0.003,0.007,0.035,0.109,0.23)
+    }else{
+        risk_parameter <- c(0,0,0,0.001,0.004,0.017,0.057,0.14)
+    }
   }
   return(x1*risk_parameter[1]+x2*risk_parameter[2]+x3*risk_parameter[3]+x4*risk_parameter[4]+x5*risk_parameter[5]+x6*risk_parameter[6]+x7*risk_parameter[7]+x8*risk_parameter[8])
 }
