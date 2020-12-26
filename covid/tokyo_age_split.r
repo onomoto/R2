@@ -12,7 +12,7 @@
 w <- read.csv("~/R/R2/covid/tokyo.csv")
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
-length_graph <- length(seq(as.Date("2020-03-20"),last(index(y)),by='days'))
+length_graph <- length(seq(as.Date("2020-03-20"),xts::last(index(y)),by='days'))
 #
 # 新型コロナウイルス感染症 診療の手引き 2020 19-COVID 第2.2版 @ 2020/7/10
 # インデックスはhttps://www.mhlw.go.jp/content/000650160.pdf　のデータを使用
@@ -54,57 +54,30 @@ for( i in seq(1,length(colnames(v)),1)) {
   # print(v[,i])
 }
 
-# for( i in length(colnames(v))){
-#  replace(v[,i], which(is.na(v[,i])), 0)
-# }
-
-# apply(v[,c(6,7,8)],1,sum)
-w <- merge(as.xts(apply(v[,c(1,2,3,4,5)],1,sum) ,index(v)),as.vector(apply(v[,c(6,7,8)],1,sum) ))
-
-colnames(w)[1] <- "lessthan60"
-colnames(w)[2] <- "over60"
-
-df <- data.frame(t=last(index(w),length_graph),
-                 # o=last(diff(all[,1]-all[,3],t=all[,3]),length_graph),
-                 o=last(w[,1],length_graph),
-                 k=last(w[,2],length_graph)
-                 # or=last(all[,2],length_graph)*multi,
-                 # kr=last(all[,2],length_graph)*multi
-               )
-# df.melt <- melt(data=df, id.vars="t", measure.vars=c("lessthan60", "over60"))
 
 
-df.melt <- melt(data=df, id.vars="t", measure.vars=c(colnames(w)[1],colnames(w)[2]))
-# head(df.melt)
-df <- df.melt
-               # g <- ggplot(x, aes(x = t, y = value, fill = variable))
-               # # g <- ggplot(x, aes(x = t, y = d))
-               # g <- g + geom_bar(stat = "identity")
-               # # g <- g + scale_fill_nejm()
-g <- ggplot(df, aes(x = t, y = value, fill = variable))
-g <- g + geom_bar(stat = "identity")
-# plot(g)
-
-df <- data.frame(t=last(index(v),length_graph),
-                 # o=last(diff(all[,1]-all[,3],t=all[,3]),length_graph),
-                 a=last(v[,1],length_graph),
-                 b=last(v[,2],length_graph),
-                 c=last(v[,3],length_graph),
-                 d=last(v[,4],length_graph),
-                 e=last(v[,5],length_graph),
-                 f=last(v[,6],length_graph),
-                 g=last(v[,7],length_graph),
-                 h=last(v[,8],length_graph)
-                 # or=last(all[,2],length_graph)*multi,
-                 # kr=last(all[,2],length_graph)*multi
+df <- data.frame(t=xts::last(index(v),length_graph),
+                 # o=xts::last(diff(all[,1]-all[,3],t=all[,3]),length_graph),
+                 a=xts::last(v[,1],length_graph),
+                 b=xts::last(v[,2],length_graph),
+                 c=xts::last(v[,3],length_graph),
+                 d=xts::last(v[,4],length_graph),
+                 e=xts::last(v[,5],length_graph),
+                 f=xts::last(v[,6],length_graph),
+                 g=xts::last(v[,7],length_graph),
+                 h=xts::last(v[,8],length_graph)
+                 # or=xts::last(all[,2],length_graph)*multi,
+                 # kr=xts::last(all[,2],length_graph)*multi
                )
 
 for(i in seq(1,8,1)){
                  colnames(df)[i+1] <- as.character(i*10)
 }
 
+df.melt <- df  %>% tidyr::gather(variable,value,c("10", "20", "30", "40", "50", "60", "70", "80"))
+
 # df.melt <- melt(data=df, id.vars="t", measure.vars=c("X10", "X20", "X30", "X40", "X50", "X60", "X70", "X80"))
-df.melt <- melt(data=df, id.vars="t", measure.vars=c("10", "20", "30", "40", "50", "60", "70", "80"))
+# df.melt <- melt(data=df, id.vars="t", measure.vars=c("10", "20", "30", "40", "50", "60", "70", "80"))
 # head(df.melt)
 df <- df.melt
 # in order to overlayer graph use ggplot(NULL) to create base object.
@@ -130,16 +103,16 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8,idx){
   return(x1*risk_parameter[1]+x2*risk_parameter[2]+x3*risk_parameter[3]+x4*risk_parameter[4]+x5*risk_parameter[5]+x6*risk_parameter[6]+x7*risk_parameter[7]+x8*risk_parameter[8])
 }
 # prepare the second layer.
-df <- data.frame(t=last(index(v),length_graph),
-                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),length_graph)*3
+df <- data.frame(t=xts::last(index(v),length_graph),
+                value=xts::last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),length_graph)*3
 )
-# df <- df[-length(df[,1]),]  # cut off the last entry.
+# df <- df[-length(df[,1]),]  # cut off the$1xts::last entry.
 # g <- ggplot(df, aes(x = t, y = value))
 g <- g+geom_line(data=df, aes(x = t, y = value))
 
 df <- data.frame(
-  t=last(index(tokyo_death),length_graph),
-  value=last(tokyo_death[,1],length_graph)
+  t=xts::last(index(tokyo_death),length_graph),
+  value=xts::last(tokyo_death[,1],length_graph)
 )
 g <- g+geom_bar(data=df, aes(x = t, y = value,color='black'),stat = "identity",alpha=0.5)
 g <- g + scale_color_brewer(name = "death",labels = "# of death")
@@ -156,14 +129,14 @@ g <- ggplot(NULL)
 
 
 df <- data.frame(
-  t=last(index(tokyo_death),length_graph),
-  value=last(tokyo_death[,1],length_graph)
+  t=xts::last(index(tokyo_death),length_graph),
+  value=xts::last(tokyo_death[,1],length_graph)
 )
 g <- g+geom_bar(data=df, aes(x = t, y = value),stat = "identity",alpha=0.5,colour="red",fill="red")
 # prepare the second layer.
 
-df <- data.frame(t=last(index(v),length_graph),
-                value=last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),length_graph)
+df <- data.frame(t=xts::last(index(v),length_graph),
+                value=xts::last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),length_graph)
 )
 tokyo_severity <- as.xts(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),index(v))
 # df <- df[-length(df[,1]),]  # cut off the last entry.

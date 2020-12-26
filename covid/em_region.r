@@ -51,13 +51,22 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
   colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
   mdf <- testdf
-
-  df.melt <- melt(data=mdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
+  # change colname to align region name from hokkaido to okinawa by putting seq.nonumber
+  # otherwise ggplot sort region name alphabetically
+  for(i in seq(1,47,1)){ colnames(mdf)[i] <-  (paste(sprintf("%02d",i),colnames(mdf)[i],sep=""))}
+## ongoing
+  # df.melt <- mdf  %>% tidyr::gather(key=variable,value=value,Hokkaido:Okinawa)
+  df.melt <- mdf  %>% tidyr::gather(variable,value,as.character(colnames(mdf)[-48]))
+## ongoing
+  # df.melt <- melt(data=mdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
   head(df.melt)
   df <- df.melt
   g <- ggplot(df, aes(x = t, y = value, fill = variable))
   g <- g + geom_bar(stat = "identity")
-  g <- g + scale_fill_hue(name='regions')
+  # add labels to print regions names properly in legend.
+  g <- g + scale_fill_hue(name='regions',labels= as.character(unique(w[,5])) )
+  # g <- g + scale_fill_manual(name='regions',values=rainbow(47))
+  g <- g + guides(fill = guide_legend(reverse = F,order = 2),label = TRUE)
 
   png("~/Dropbox/R-script/covid/04em.png", width = 1400, height = 600)
   plot(g)
@@ -85,16 +94,19 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
   colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
   dmdf <- testdf
-
+  # change colname to align region name from hokkaido to okinawa by putting seq.nonumber
+  # otherwise ggplot sort region name alphabetically
+  for(i in seq(1,47,1)){ colnames(dmdf)[i] <-  (paste(sprintf("%02d",i),colnames(dmdf)[i],sep=""))}
   tokyo_death <- as.xts(dmdf[,colnames(dmdf) == "Tokyo"],dmdf$t)
   # 積み上げヒストグラムに適合するようにmelt()を使用して変換する。
-  df.melt <- melt(data=dmdf, id.vars="t", measure.vars=as.character(unique(w[,5])))
+  df.melt <- dmdf  %>% tidyr::gather(variable,value,as.character(colnames(dmdf)[-48]))
   # head(df.melt)
   df <- df.melt
   g <- ggplot(df, aes(x = t, y = value, fill = variable))
   g <- g + geom_bar(stat = "identity")
   # g <- g + scale_fill_brewer(palette="Spectral",na.value = "black",name = "regions")
-  g <- g + scale_fill_hue(name='regions')
+  # add labels to print regions names properly in legend.
+  g <- g + scale_fill_hue(name='regions',labels= as.character(unique(w[,5])) )
   # plot(g)
   png("~/Dropbox/R-script/covid/09em_death.png", width = 1400, height = 600)
   plot(g)
