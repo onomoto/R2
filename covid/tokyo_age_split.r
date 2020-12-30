@@ -4,7 +4,6 @@
 # 　   cdestfile <- "~/R/R2/covid/tokyo.csv"
 # 　   download.file(curl,cdestfile)
 # 最新のcsvをダウンロードしておくこと。
-# また、em_region_death.r を事前に実行すること。これは東京の死者数時系列データ tokyo_death を作るためである。
 
 
 
@@ -14,6 +13,8 @@ y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
 length_graph <- length(seq(as.Date("2020-03-20"),xts::last(index(y)),by='days'))
 #
+tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
+
 # 新型コロナウイルス感染症 診療の手引き 2020 19-COVID 第2.2版 @ 2020/7/10
 # インデックスはhttps://www.mhlw.go.jp/content/000650160.pdf　のデータを使用
 #
@@ -30,7 +31,7 @@ length_graph <- length(seq(as.Date("2020-03-20"),xts::last(index(y)),by='days'))
 #  risk_parameter_v3 <- c(0,0,0,0,0.001,0.004,0.017,0.057,0.14)
 #
 
-# v <- c()
+v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
 v <- as.xts(rep(1,length( seq(as.Date(w[1,5]),last(index(y)),by='days') )), seq(as.Date(w[1,5]),last(index(y)),by='days'))
 for(i in seq(10,80,10)){
@@ -42,18 +43,10 @@ for(i in seq(10,80,10)){
 }
 # v<- merge(v,  apply.daily(as.xts(rep(1,length(y[y[,1] > 80 ])),as.Date(index(y[y[,1] >80]))),sum))
 v <- v[,-1]
-for(i in seq(1,8,1)){
-  colnames(v)[i] <- as.character(i*10)
-}
 
-# replace NA with ZERO.
-for( i in seq(1,length(colnames(v)),1)) {
-  for(j in seq(1,length(index(v)),1)) {
-      if(is.na(v[j,i])){  v[j,i] <- 0}
-  }
-  # print(v[,i])
-}
-
+func <- function(x){(x[index(x)[is.na(x)]] <-0);return(x)}
+colfunc <- function(x){colnames(x) <- seq(10,80,10);return(x)}
+v <- v %>% as.vector() %>%  func() %>% matrix(.,ncol=8) %>% as.xts(.,index(v)) %>% colfunc()
 
 
 df <- data.frame(t=xts::last(index(v),length_graph),

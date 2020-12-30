@@ -66,7 +66,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T,
   moving_a <- as.vector(last(w[,3],length_graph))
   date <- as.Date(last(index(w),length_graph))
   # death <- as.vector(last(tokyo_death$Tokyo,length_graph))
-  death <- as.vector(last(tokyo_death,length_graph))
+  death <- as.vector(last(as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t),length_graph))
 
   df <- data.frame(
                   p=positive,

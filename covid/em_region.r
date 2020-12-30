@@ -50,7 +50,7 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   testmat <- diff(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))
   testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
   colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
-  mdf <- testdf
+  mdf <<- testdf
   # change colname to align region name from hokkaido to okinawa by putting seq.nonumber
   # otherwise ggplot sort region name alphabetically
   for(i in seq(1,47,1)){ colnames(mdf)[i] <-  (paste(sprintf("%02d",i),colnames(mdf)[i],sep=""))}
@@ -93,11 +93,11 @@ if(system("diff ~/R/R2/covid/tmp2.csv ~/R/R2/covid/pref.csv", ignore.stdout = T,
   testmat <- diff(matrix(df$p,ncol=length(unique(w[,5])),byrow=T))
   testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
   colnames(testdf)[1:(length(unique(w[,5])))]  <- as.character(unique(w[,5]))
-  dmdf <- testdf
+  dmdf <<- testdf
   # change colname to align region name from hokkaido to okinawa by putting seq.nonumber
   # otherwise ggplot sort region name alphabetically
   for(i in seq(1,47,1)){ colnames(dmdf)[i] <-  (paste(sprintf("%02d",i),colnames(dmdf)[i],sep=""))}
-  tokyo_death <- as.xts(dmdf[,colnames(dmdf) == "Tokyo"],dmdf$t)
+  tokyo_death <- as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
   # 積み上げヒストグラムに適合するようにmelt()を使用して変換する。
   df.melt <- dmdf  %>% tidyr::gather(variable,value,as.character(colnames(dmdf)[-48]))
   # head(df.melt)

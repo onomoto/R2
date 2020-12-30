@@ -1,5 +1,5 @@
 #
-# No long don't use this file. functions are integrated in to em_region.r
+# No longer don't use this file. functions are integrated in to em_region.r
 #
 l <- 4.76
 d <- l+2
