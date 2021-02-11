@@ -23,8 +23,14 @@ colnames(w)[4] <- "region_daily"
 colnames(w)[5] <- "region_total"
 colnames(w)[6] <- "region_death"
 colnames(w)[7] <- "region_death_total"
+# start.time<-proc.time()
+# for(i in seq(1,length(pref_jp),1)){w[,3] <- gsub(pref_jp[i],pref_en[i],w[,3])}
 
-for(i in seq(1,length(pref_jp),1)){w[,3] <- gsub(pref_jp[i],pref_en[i],w[,3])}
+for(i in seq(1,length(pref_jp),1)){ w[,3][w[,3] == pref_jp[i]] <- pref_en[i]}
+# end.time<-proc.time()
+# end.time - start.time
+
+# w[,3][w[,3] == pref_jp[i]] <- pref_en[i]
 
 w[,1] <- gsub("/","-",w[,1])
 
