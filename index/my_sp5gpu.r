@@ -56,7 +56,8 @@ my_sp5gpu <- function(k,g,p,u,d,i=5,cli=cli_xts$oecd)
   m_m <- result.gpu$coefficients
   print("m_m params! apply.quarter - UC w/ nominal GDP")
   # print(m_m[1]+y*m_m[2]+x*m_m[3]+y*z*m_m[4]+y*x*m_m[5]+z*x*m_m[6]+y*z*x*m_m[7])
-  print(m_m[1]+g*m_m[2]+ d*m_m[3]+p*u*m_m[4]+p*g*m_m[5]+g*u*m_m[6])
+  # print(m_m[1]+g*m_m[2]+ d*m_m[3]+p*u*m_m[4]+p*g*m_m[5]+g*u*m_m[6])
+  return(m_m[1]+g*m_m[2]+ d*m_m[3]+p*u*m_m[4]+p*g*m_m[5]+g*u*m_m[6])
   cat("k = "); print(k)
 
   # print("from 1992 till 2016Q3")
