@@ -113,7 +113,7 @@ g <- g + scale_fill_hue(name='regions',labels=pref_jp)
 # g <- g + scale_fill_manual(name='regions',values=rainbow(47))
 g <- g + guides(fill = guide_legend(reverse = F,order = 2),label = TRUE)
 g <- g + theme_dark(base_family = "HiraKakuPro-W3")
-plot(g)
+# plot(g)
 plot(g)
 
 
