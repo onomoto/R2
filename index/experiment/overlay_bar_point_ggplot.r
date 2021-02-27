@@ -99,7 +99,7 @@ p <- p + geom_hline(yintercept = s,size=0.4,linetype=1,colour="white",alpha=0.4)
 # output lable of h-line
 for( i in seq(1,length(vlabel),1)){ p <- p+annotate("text",label=as.character(vlabel[i]),x=as.Date("1995-01-01"), y=s[i]+0.002,colour='white');print(vlabel[i])};
 # p <- p + geom_hline(yintercept = log(s+250),size=0.4,linetype=2,colour="white") #horizontal line
-p <- p + geom_vline(xintercept=seq(as.Date("1996-01-15"),as.Date("2019-01-15"),by='years'), colour="white",size=0.6,alpha=0.4)
+p <- p + geom_vline(xintercept=seq(as.Date("1996-01-15"),as.Date("2021-01-15"),by='years'), colour="white",size=0.6,alpha=0.4)
 p <- p + labs(title = "COV + SPX + CLI Delta",sign="",fill="")
 p <- p +scale_color_brewer(palette="Spectral",na.value = "grey10",name = "CLI Delta", labels = c(as.character(round(watermark,digits=2)),"Less than The Last","NA"))
 p <- p +scale_fill_brewer(palette="Spectral",na.value = "grey10",name = "CLI Delta", labels = c(as.character(round(watermark,digits=2)),"Less than The Last","NA"))
