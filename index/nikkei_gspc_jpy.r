@@ -27,7 +27,7 @@ if(my_update_check(YJUSDJPY,Sys.Date()) == "D"){
 # }
 if(my_update_check(N225,Sys.Date()) == "D"){
   print("DOWNLOAD")
-  getSymbols("NIKKEI225",src="FRED")
+  getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE)
   # don't use auto.assign here.
   # getSymbols("N225",auto.assign=TRUE,src="FRED")
 }
