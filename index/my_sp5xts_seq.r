@@ -29,7 +29,7 @@ my_sp5eps_seq <- function(k,e,p,u,c,o,t,i=5)
   # cat("\n")
 
   m_m <- summary(lm(apply.quarterly(SP5[,4][k2k],mean) ~ eps_year_xts[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(CS[k2k],mean)+apply.quarterly(diff(cli_xts$oecd,lag=i)[k2k],mean) + seq(1,length(apply.quarterly(SP5[,4][k2k],mean) )  ,1)))$coefficients
-  result.eps <- m_m
+  result.eps <<- m_m
 
   # print(summary(lm(apply.quarterly(SP5[,4][k2k],mean) ~ eps_year_xts[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(CS[k2k],mean)+apply.quarterly(diff(cli_xts$oecd,lag=i)[k2k],mean) + seq(1,length(apply.quarterly(SP5[,4][k2k],mean) )  ,1))))
 
