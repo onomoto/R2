@@ -6,6 +6,8 @@ pref_en <- c("01Hokkaido","02Aomori","03Iwate","04Miyagi","05Akita","06Yamagata"
 pref_jp <- c("北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県")
 pref_lab <- c("Hokkaido","Aomori","Iwate","Miyagi","Akita","Yamagata","Fukushima","Ibaraki","Tochigi","Gunma","Saitama","Chiba","Tokyo","Kanagawa","Niigata","Toyama","Ishikawa","Fukui","Yamanashi","Nagano","Gifu","Shizuoka","Aichi","Mie","Shiga","Kyoto","Osaka","Hyogo","Nara","Wakayama","Tottori","Shimane","Okayama","Hiroshima","Yamaguchi","Tokushima","Kagawa","Ehime","Kochi","Fukuoka","Saga","Nagasaki","Kumamoto","Oita","Miyazaki","Kagoshima","Okinawa")
 
+pref_pop <- data.frame(data=round(c(5381733,1308265,1279594,2333899,1023119,1123891,1914039,2916976,1974255,1973115,7266534,6222666,13515271,9126214,2304264,1066328,1154008,786740,834930,2098804,2031903,3700305,7483128,1815865,1412916,2610353,8839469,5534800,1364316,963579,573441,694352,1921525,2843990,1404729,755733,976263,1385262,728276,5101556,832832,1377187,1786170,1166338,1104069,1648177,1433566)/1000))
+
 w <- c()
 # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
 # https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv
@@ -61,7 +63,7 @@ df <- df.melt
 g <- ggplot(df, aes(x = t, y = value, fill = variable))
 g <- g + geom_bar(stat = "identity")
 # add labels to print regions names properly in legend.
-# g <- g + scale_fill_hue(name='regions',labels=as.character(unique(w[,3]))) 
+# g <- g + scale_fill_hue(name='regions',labels=as.character(unique(w[,3])))
 g <- g + scale_fill_hue(name='regions',labels=pref_jp)
 # g <- g + scale_fill_manual(name='regions',values=rainbow(47))
 g <- g + guides(fill = guide_legend(reverse = F,order = 2),label = TRUE)
@@ -120,8 +122,8 @@ plot(g)
 colnames(mdf) <- c(pref_jp,"t")
 colnames(dmdf) <- c(pref_jp,"t")
 
-apply(last(dmdf[,-48],45)[1:30,],2,sum) 
-apply(last(mdf[,-48],45)[1:30,],2,sum) 
+apply(last(dmdf[,-48],45)[1:30,],2,sum)
+apply(last(mdf[,-48],45)[1:30,],2,sum)
 round(sort((apply(last(dmdf[,-48],45)[1:30,],2,sum)  / apply(last(mdf[,-48],45)[1:30,],2,sum) )*100)[47:43],digits = 2)
 round(100*apply(last(dmdf[,-48],30),2,sum) / apply(last(mdf[,-48],45)[1:30,],2,sum),digits = 2)
 
@@ -129,14 +131,14 @@ as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / apply(last(
 as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)
 # cbind(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[order(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T),1],
 #       pref_jp[order(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T)])
-#   
-#   
+#
+#
 
 # cbind(pref_jp[order(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T)],
 #       as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[order(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T),1])
-#       
-# 
-#   
+#
+#
+#
 # cbind(pref_jp[order(as.data.frame(as.vector(round(100*apply(last(mdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T)],
 #       as.data.frame(as.vector(round(100*apply(last(mdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[order(as.data.frame(as.vector(round(100*apply(last(mdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T),1])
 
