@@ -35,6 +35,11 @@ tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
 #
 # risk_parameter_v41 <- c(0,0,0,0.001,0.003,0.014,0.048,0.12)
 #   　　　
+# 新型コロナウイルス感染症 診療の手引き 2020 19-COVID 第4.2版 @ 2021/3/1
+# https://www.kyoto.med.or.jp/covid19/pdf/2020ken2_517.pdf
+#
+# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003 0.014 0.048 0.125 )
+#
 
 v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
@@ -98,7 +103,11 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8,idx){
       if(idx < as.Date("2020-12-02")){
          risk_parameter <- c(0,0,0,0.001,0.004,0.017,0.057,0.14)
       }else{
-         risk_parameter <- c(0,0,0,0.001,0.003,0.014,0.048,0.12)
+          if(idx < as.Date("2021-03-01")){
+            risk_parameter <- c(0,0,0,0.001,0.003,0.014,0.048,0.12)
+          }else{
+            risk_parameter <- (0, 0, 0, 0, 0.001, 0.003 0.014 0.048 0.125 )
+          }
       }
     }
   }
