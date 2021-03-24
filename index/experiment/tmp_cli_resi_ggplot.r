@@ -3,6 +3,9 @@
 
 # kikan <- paste(as.Date(yearmon(index(head(tmp.predict,1)))),as.Date(as.yearmon((mondate(index(last(tmp.predict))))),frac=1),sep="::")
 
+# this expects date format as "YYYY-MM-DD". 
+# run  to address date format.
+index(tmp.predict) <- as.Date((index(tmp.predict)))
 kikan <- paste(as.Date(index(head(tmp.predict,1))),as.Date(as.yearmon((mondate(index(last(tmp.predict))))),frac=1),sep="::")
 
 func <- function(x){
