@@ -2,7 +2,7 @@
   {
     k2k <- k  # 0627 added to bug fix.
 
-    m_m <- summary(lm(apply.quarterly(NDX[,4][k2k],mean) ~ ndx_eps[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(CS[k2k],mean)))$coefficients
+    m_m <- summary(lm(apply.quarterly(NDX[,4][k2k],mean) ~ eps_year_xts[k2k]+apply.quarterly(PA[k2k],mean)+apply.quarterly(UC[k2k],mean)+apply.quarterly(CS[k2k],mean)))$coefficients
 
    #G[k]*apply.quarterly(CS[k],mean)[k] - apply.quarterly(UC[k],mean)[k] -G[k] - apply.quarterly(PA[k],mean)[k]*G[ka] - apply.quarterly(UC[k],mean)[k]*G[k]*apply.quarterly(CS[k],mean)[k]))$coefficients
     print("m_m params! apply.quarter - EPS,PA,UC,CS w/ CLI delta")
