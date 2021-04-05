@@ -11,5 +11,9 @@ pref_db <- cbind(as.data.frame(pref_lab),pref_en,read.csv("~/Downloads/c02.csv",
 colnames(pref_db)[c(3,4,5,6,7)] <- c("pref_jp","x2010","x2015","x2016","x2017")
 # otherwise use column name
 attributes(pref_db)$row.names  <- as.integer(seq(1,47,1))
+#
+# download from https://www.stat.go.jp/naruhodo/c1data/01_01_stt.html
+#
+pref_db <- cbind(pref_db,size=read.csv("~/Downloads/01-01.csv",header = F)[,c(3)])
 # update $row.names as [[3]] this works as equal to use $row.names.
 # attributes(pref_db)[[3]] <- as.integer(seq(1,47,1))
