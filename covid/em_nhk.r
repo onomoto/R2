@@ -7,9 +7,9 @@ pref_jp <- c("北海道","青森県","岩手県","宮城県","秋田県","山形
 pref_lab <- c("Hokkaido","Aomori","Iwate","Miyagi","Akita","Yamagata","Fukushima","Ibaraki","Tochigi","Gunma","Saitama","Chiba","Tokyo","Kanagawa","Niigata","Toyama","Ishikawa","Fukui","Yamanashi","Nagano","Gifu","Shizuoka","Aichi","Mie","Shiga","Kyoto","Osaka","Hyogo","Nara","Wakayama","Tottori","Shimane","Okayama","Hiroshima","Yamaguchi","Tokushima","Kagawa","Ehime","Kochi","Fukuoka","Saga","Nagasaki","Kumamoto","Oita","Miyazaki","Kagoshima","Okinawa")
 
 # pref_pop <- data.frame(data=round(c(5381733,1308265,1279594,2333899,1023119,1123891,1914039,2916976,1974255,1973115,7266534,6222666,13515271,9126214,2304264,1066328,1154008,786740,834930,2098804,2031903,3700305,7483128,1815865,1412916,2610353,8839469,5534800,1364316,963579,573441,694352,1921525,2843990,1404729,755733,976263,1385262,728276,5101556,832832,1377187,1786170,1166338,1104069,1648177,1433566)/1000))
-if(exists("pref_db")){ 
+if(exists("pref_db")){
     pref_pop <- pref_pop <- data.frame(data=as.vector(pref_db$x2017))
-}else{ 
+}else{
     pref_pop <- data.frame(data=round(c(5381733,1308265,1279594,2333899,1023119,1123891,1914039,2916976,1974255,1973115,7266534,6222666,13515271,9126214,2304264,1066328,1154008,786740,834930,2098804,2031903,3700305,7483128,1815865,1412916,2610353,8839469,5534800,1364316,963579,573441,694352,1921525,2843990,1404729,755733,976263,1385262,728276,5101556,832832,1377187,1786170,1166338,1104069,1648177,1433566)/1000))
 }
 
@@ -73,7 +73,10 @@ g <- g + scale_fill_hue(name='regions',labels=pref_jp)
 # g <- g + scale_fill_manual(name='regions',values=rainbow(47))
 g <- g + guides(fill = guide_legend(reverse = F,order = 2),label = TRUE)
 g <- g + theme_gray (base_family = "HiraKakuPro-W3")
+# plot(g)
+png("~/Dropbox/R-script/covid/04em.png", width = 1600, height = 800)
 plot(g)
+dev.off()
 
 # Sys.sleep(6)
 
@@ -109,7 +112,10 @@ g <- g + scale_fill_hue(name='regions',labels=pref_jp)
 # g <- g + scale_fill_manual(name='regions',values=rainbow(47))
 g <- g + guides(fill = guide_legend(reverse = F,order = 2),label = TRUE)
 g <- g + theme_dark(base_family = "HiraKakuPro-W3")
+# plot(g)
+png("~/Dropbox/R-script/covid/09em_death.png", width = 1600, height = 800)
 plot(g)
+dev.off()
 
 df <- df.melt
 g <- ggplot(df, aes(x = t, y = value, fill = variable))
@@ -121,7 +127,10 @@ g <- g + scale_fill_hue(name='regions',labels=pref_jp)
 g <- g + guides(fill = guide_legend(reverse = F,order = 2),label = TRUE)
 g <- g + theme_dark(base_family = "HiraKakuPro-W3")
 # plot(g)
+# plot(g)
+png("~/Dropbox/R-script/covid/10em_death_percentile.png", width = 1600, height = 800)
 plot(g)
+dev.off()
 
 
 colnames(mdf) <- c(pref_jp,"t")
