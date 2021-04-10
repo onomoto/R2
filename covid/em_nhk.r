@@ -151,6 +151,10 @@ data.frame(r=pref_jp[order(as.data.frame(as.vector(round(100*apply(last(mdf[,-48
 d=as.data.frame(as.vector(round(100*apply(last(mdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[order(as.data.frame(as.vector(round(100*apply(last(mdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T),1])
 
 
+data.frame(r=pref_jp[order(as.data.frame(as.vector(round(100*apply(last(mdf[,-48],7),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T)],
+           d=as.data.frame(as.vector(round(100*apply(last(mdf[,-48],7),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[order(as.data.frame(as.vector(round(100*apply(last(mdf[,-48],7),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T),1])
+
+
 data.frame(r=pref_jp[order(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T)],
 d=as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[order(as.data.frame(as.vector(round(100*apply(last(dmdf[,-48],30),2,sum) / pref_pop,digits = 2)),pref_jp,col.name=c(1,2),col.names=c("1","2"),optional = T)[,1],decreasing = T),1])
 
