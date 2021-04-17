@@ -68,17 +68,10 @@ colnames(df)[4] <- 'c'
 # df <- last(df,284)
 p <- ggplot(df,aes(x=a,y=r))
 p <- p + geom_point(alpha=1,aes(color=mon))
-# p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(diff(cli_xts$oecd)),1),last(diff(cli_xts$oecd),1))),size=0.5,linetype=2,colour="red",alpha=0.5)
-# p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),1),last(diff(diff(cli_xts$oecd)),1))),size=0.5,linetype=2,colour="red",alpha=0.9)
-# 
-# # p <- p + geom_vline(xintercept =as.vector(atan2(diff(cli_xts$oecd)["2020-02"],diff(diff(cli_xts$oecd))["2020-02"]) ),size=0.5,linetype=2,colour="green",alpha=0.9)
-# # p <- p + geom_vline(xintercept =as.vector(atan2(diff(cli_xts$oecd)["2020-03"],diff(diff(cli_xts$oecd))["2020-03"]) ),size=0.5,linetype=2,colour="blue",alpha=0.9)
-# 
-# 
-# p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),2)[1], last(diff(diff(cli_xts$oecd)),2)[1]) ),size=0.5,linetype=2,colour="green",alpha=0.9)
-# p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),3)[1], last(diff(diff(cli_xts$oecd)),3)[1]) ),size=0.5,linetype=2,colour="blue",alpha=0.9)
 
 p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),5), last(diff(diff(cli_xts$oecd)),5)) ),size=0.5,linetype=4,colour=rainbow(5)[5:1],alpha=0.9)
+p <- p + geom_hline(yintercept =as.vector(last(df$r,5)),size=0.5,linetype=4,colour=rainbow(5)[5:1],alpha=0.9)
+
 p <- p + geom_vline(xintercept =as.vector(seq(-0.9,0.9,0.1))*pi,size=0.5,linetype=2,colour="white",alpha=0.5)
 # p <- p + scale_color_brewer(palette="Spectral")
 p <- p + stat_smooth(aes(x=a,y=r),method="loess",color='white',size=0.3,se=T)
