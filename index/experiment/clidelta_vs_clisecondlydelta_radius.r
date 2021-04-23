@@ -2,9 +2,10 @@
 # 1)Y軸はCLI1ヶ月変化値、X軸はCLI二次微分値、同じく月間騰落率を色と形で表す。
 # 2)原点からの角度をX、月間騰落率をYに取ったグラフ。
 # 3)同じく、2)原点からの角度をX、COVをYに取ったグラフ。
-
+#
 k1970 <- paste("1970",substr(index(last(cli_xts$oecd)),1,7),sep="::")
-
+my_palette <- colorRampPalette(c("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF"))
+plot_col <- my_palette(5)[5:1]
 
 w <- (to.monthly(SP5)[,4]/to.monthly(SP5)[,1])[k1970] #2020
 c <- (apply.monthly(SP5[,4],sd) / apply.monthly(SP5[,4],mean) )[k1970] #2020
@@ -68,9 +69,15 @@ colnames(df)[4] <- 'c'
 # df <- last(df,284)
 p <- ggplot(df,aes(x=a,y=r))
 p <- p + geom_point(alpha=1,aes(color=mon))
+# p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),5), last(diff(diff(cli_xts$oecd)),5)) ),size=0.5,linetype=4,colour=RColorBrewer::brewer.pal(5,"Spectral")[5:1],alpha=0.9)
 
-p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),5), last(diff(diff(cli_xts$oecd)),5)) ),size=0.5,linetype=4,colour=rainbow(5)[5:1],alpha=0.9)
-p <- p + geom_hline(yintercept =as.vector(last(df$r,5)),size=0.5,linetype=4,colour=rainbow(5)[5:1],alpha=0.9)
+p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),5), last(diff(diff(cli_xts$oecd)),5)) ),size=0.5,linetype=4,colour=plot_col,alpha=0.9)
+
+# p <- p + geom_hline(yintercept =as.vector(last(df$r,5)),size=0.5,linetype=4,colour=RColorBrewer::brewer.pal(5,"Spectral")[5:1],alpha=0.9)
+
+p <- p + geom_hline(yintercept =as.vector(last(df$r,5)),size=0.5,linetype=4,colour=plot_col,alpha=0.9)
+
+
 
 p <- p + geom_vline(xintercept =as.vector(seq(-0.9,0.9,0.1))*pi,size=0.5,linetype=2,colour="white",alpha=0.5)
 # p <- p + scale_color_brewer(palette="Spectral")
@@ -84,7 +91,7 @@ plot(p)
 p <- ggplot(df,aes(x=a,y=c))
 p <- p + geom_point(alpha=1,aes(color=mon))
 
-p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),5), last(diff(diff(cli_xts$oecd)),5)) ),size=0.5,linetype=4,colour=rainbow(5)[5:1],alpha=0.9)
+p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),5), last(diff(diff(cli_xts$oecd)),5)) ),size=0.5,linetype=4,colour=plot_col,alpha=0.9)
 # p <- p + geom_vline(xintercept =as.vector(atan2(last(diff(cli_xts$oecd),1),last(diff(diff(cli_xts$oecd)),1))),size=0.5,linetype=2,colour="red",alpha=0.5)
 p <- p + geom_vline(xintercept =as.vector(seq(-0.9,0.9,0.1))*pi,size=0.5,linetype=2,colour="white",alpha=0.5)
 # p <- p + scale_color_brewer(palette="Spectral")
