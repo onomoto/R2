@@ -128,3 +128,79 @@ abline(v=-0.5*pi)
 abline(v=0.5*pi)
 abline(v=0*pi)
 abline(h=0.5)
+
+v <- atan2(diff(cli_xts$oecd),diff(diff(cli_xts$oecd))) %>% last(.,240)
+w <- monthlyReturn(GSPC)["::2021-04"] %>% last(.,240) # update if necessary.
+par(bg="grey",fg="white")
+plot.default(v,w,type='p')
+tmp <- par('usr')
+plot.new()
+plot.default(v,w,xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),type='p')
+abline(v=pi/2)
+abline(v=0)
+par(new=T)
+i <- 12
+plot.default(last(v,i),last(w,i),xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),type='b',pch='+',col='brown')
+for(k in seq(1,9,1)){
+  j <- k %% 8 + 1
+  par(new=T)
+  print(i)
+  print(j)
+  plot.default(last(v,i)[k],last(w,i)[k],xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),type='p',pch=as.character(k),col=j)
+}
+
+# 0) Dropbox/R-script/monthreturn_delta5month_delta1monthcolor.r 参照。
+# 1)Y軸はCLI1ヶ月変化値、X軸はCLI二次微分値、同じく月間騰落率を色と形で表す。
+# 2)原点からの角度をX、月間騰落率をYに取ったグラフ。
+# 3)同じく、2)原点からの角度をX、COVをYに取ったグラフ。
+#
+k1970 <- paste("1970",substr(index(last(cli_xts$oecd)),1,7),sep="::")
+my_palette <- colorRampPalette(c("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF"))
+plot_col <- my_palette(5)[5:1]
+
+w <- (to.monthly(SP5)[,4]/to.monthly(SP5)[,1])[k1970] #2020
+c <- (apply.monthly(SP5[,4],sd) / apply.monthly(SP5[,4],mean) )[k1970] #2020
+w <- w-1
+# w <- (apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean))["1970::2018"]
+d <- na.omit(diff(cli_xts$oecd,1))[k1970] #2020
+func <- function(x){
+  if(x > 0.1){return("a")}
+  if(x > 0.025){return("b")}
+  if(x > 0){return("c")}
+  if(x > -0.025){return("d")}
+  if(x > -0.05){return("e")}
+  if(x > -0.1){return("f")}
+  if(x < -0.1){return("g")}
+}
+# df <- data.frame(monthlyreturn=as.vector(w),delta=as.vector(d),sign=as.vector(apply(diff(cli_xts$oecd)["1970::2018"],1,func)))
+
+df <- data.frame(monthlyreturn=as.vector(apply(w,1,func)),
+                 delta=as.vector(d),sign=as.vector(diff(diff(cli_xts$oecd))[k1970])) #2020
+df <- df[seq(-603,-608,-1),] # remove 2020/3 and some months.
+# df <- df[seq(-1*(dim(df)[1]-13) , -1*(dim(df)[1]-8) ,-1),]
+# wdf <- df
+# df <- df[-1*seq(597,602,1),]
+# as.vector(w),delta=as.vector(d),sign=as.vector(apply(diff(cli_xts$oecd)["1970::2018"],1,func)))
+p <- ggplot(df, aes(x=delta,y=sign))
+p <- p + theme(panel.background = element_rect(fill = "black",
+                                               colour = "lightblue"),
+               legend.key = element_rect(fill='black',colour='white'))
+# legend.box.background=element_rect(fill='black',colour='lightblue'))
+
+p <- p + geom_point(alpha=1,aes(color=monthlyreturn,shape=monthlyreturn))
+p <- p + geom_vline(xintercept =as.vector(last(diff(cli_xts$oecd))),size=0.5,linetype=2,colour="white",alpha=0.5)
+p <- p + geom_hline(yintercept =as.vector(last(diff(diff(cli_xts$oecd)))),size=0.5,linetype=2,colour="white",alpha=0.5)
+p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
+# p <- p + geom_smooth(method = "auto")
+# p <- p + scale_shape_manual(values=c(0,1,2,10,11,12))
+# p <- p + scale_color_brewer(label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  #x-axis label
+p <- p + scale_color_brewer(palette="Spectral", label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.05","more than -0.1","less than -0.1"))  #x-axis label
+p <- p + scale_shape_manual(values=c(0,1,2,10,11,12,14),label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.05","more than -0.1","less than -0.1"))
+# p <- p + stat_smooth(aes(x=delta,y=sign),method="loess",color='white',size=0.3,se=FALSE)
+# p <- p + guides(shape = FALSE)
+plot(p)
+df %>% last(.,6)
+df %>% last(.,6) %>% dplyr::summarise(.,atan2(delta,sign))
+
+
+
