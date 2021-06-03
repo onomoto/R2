@@ -5,6 +5,10 @@ w <- read.csv(cdestfile)
 
 colnames(w)[2] <- 'start_per_capita'
 colnames(w)[3] <- 'last_per_capita'
+last(w[,1])
+apply(w[,c(2,3)],2,sum)
+apply(w[,c(2,3)],2,sum) %>% sum()
+apply(w[,c(2,3)],1,sum) %>% last(.,7)
 
 df <- w  %>% tidyr::gather(variable,value,2:3)
 df$date <- as.Date(df$date) # convert to date class
