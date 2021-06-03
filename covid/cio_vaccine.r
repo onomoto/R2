@@ -41,9 +41,7 @@ p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 p <- p + geom_bar(stat = "identity")
 # p <- p + scale_fill_brewer( name="回数",labels=c("2","1") ) #,palette="Spectral")
 p <- p+ scale_fill_manual(name="回数",labels=c("2回目","1回目"),values = c("darkblue", "cyan4")) 
-
+# p <- p + scale_x_discrete(label=substr(pref_jp,1,3))
 p <- p + scale_x_discrete(limits=unique(df$prefecture_name))
-p <- p + scale_x_discrete(label=substr(pref_jp,1,3))
-
 plot(p)
 
