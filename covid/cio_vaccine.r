@@ -8,7 +8,7 @@ w <- read.csv(cdestfile)
 last(w[,1])
 apply(w[,c(2,3)],2,sum)
 apply(w[,c(2,3)],2,sum) %>% sum()
-apply(w[,c(2,3)],1,sum) %>% last(.,7)
+apply(w[,c(2,3)],1,sum) %>% last(.,14)
 
 df <- w  %>% tidyr::gather(variable,value,2:3)
 df$variable <- factor(df$variable,levels=c("count_second_or_full_general","count_first_or_mid_general" )) # factoring variable to set seq.
@@ -84,3 +84,15 @@ p <- p + theme_dark (base_family = "HiraKakuPro-W3")
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 p <- p + scale_fill_hue( name="都道府県",labels=pref_jp)
 plot(p)
+
+df <- dplyr::group_by(js,date,prefecture) %>% dplyr::summarise(.,sum(count))
+colnames(df)[3] <- 'count'
+wdf$date <- as.Date(wdf$date)
+p <- ggplot(NULL)
+p <- p + geom_bar(data=wdf,aes(x = date, y = count, fill = prefecture),stat = "identity")
+p <- p + theme_dark (base_family = "HiraKakuPro-W3")
+p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p <- p + scale_fill_hue( name="都道府県",labels=pref_jp)
+
+plot(p)
+
