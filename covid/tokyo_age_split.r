@@ -11,7 +11,8 @@
 w <- read.csv("~/R/R2/covid/tokyo.csv")
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
-length_graph <- length(seq(as.Date("2020-03-20"),xts::last(index(y)),by='days'))
+start_date <- "2020-10-01"
+length_graph <- length(seq(as.Date(start_date),xts::last(index(y)),by='days'))
 #
 tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
 
@@ -38,8 +39,14 @@ tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
 # 新型コロナウイルス感染症 診療の手引き 2020 19-COVID 第4.2版 @ 2021/3/1
 # https://www.kyoto.med.or.jp/covid19/pdf/2020ken2_517.pdf
 #
-# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003 0.014 0.048 0.125 )
+# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.014, 0.048, 0.125 )
 #
+# 新型コロナウイルス感染症 診療の手引き 19-COVID 第5版 @ 2021/5/1
+# https://www.mhlw.go.jp/content/000785119.pdf
+#
+# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
+#
+
 
 v <- c()
 # seq(as.Date(w[1,5]),Sys.Date(),by='days')
@@ -106,27 +113,34 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8,idx){
           if(idx < as.Date("2021-03-01")){
             risk_parameter <- c(0,0,0,0.001,0.003,0.014,0.048,0.12)
           }else{
-            risk_parameter <- (0, 0, 0, 0, 0.001, 0.003 0.014 0.048 0.125 )
+            if(idx < as.Date("2021-05-01")){
+              risk_parameter <- c(0, 0, 0, 0, 0.001, 0.003, 0.014, 0.048, 0.125 )
+            }else{
+              risk_parameter <- c(0, 0, 0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
+            }
           }
       }
     }
   }
+
   return(x1*risk_parameter[1]+x2*risk_parameter[2]+x3*risk_parameter[3]+x4*risk_parameter[4]+x5*risk_parameter[5]+x6*risk_parameter[6]+x7*risk_parameter[7]+x8*risk_parameter[8])
 }
 # prepare the second layer.
 df <- data.frame(t=xts::last(index(v),length_graph),
-                value=xts::last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),length_graph)*3
+                value=xts::last(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v[,8],index(v)),length_graph)
 )
 # df <- df[-length(df[,1]),]  # cut off the$1xts::last entry.
 # g <- ggplot(df, aes(x = t, y = value))
-g <- g+geom_line(data=df, aes(x = t, y = value))
+g <- g+geom_line(data=df, aes(x = t, y = value*10))
 
 df <- data.frame(
   t=xts::last(index(tokyo_death),length_graph),
   value=xts::last(tokyo_death[,1],length_graph)
 )
-g <- g+geom_bar(data=df, aes(x = t, y = value,color='black'),stat = "identity",alpha=0.5)
+g <- g+geom_bar(data=df, aes(x = t, y = value*10,color='black'),stat = "identity",alpha=0.5)
 g <- g + scale_color_brewer(name = "death",labels = "# of death")
+g <- g + geom_hline(yintercept = seq(100,300,100),size=0.5,linetype=2,colour="black",alpha=1)
+g <- g + annotate("text",label=as.character(seq(10,30,10)),x=as.Date(start_date)-10, y= seq(100,300,100)+18,colour='black')
 # plot(g)
 png("~/Dropbox/R-script/covid/05tokyo_age.png", width = 1200, height = 800)
 plot(g)
