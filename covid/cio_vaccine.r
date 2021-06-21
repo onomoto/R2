@@ -42,13 +42,36 @@ df[,7] <- df[,7]/10 # convert to percentage.
 # p <- p + theme_gray (base_family = "HiraKakuPro-W3")
 p <- ggplot(df, aes(y = value, x = prefecture_name, fill = variable))
 p <- p + theme_gray (base_family = "HiraKakuPro-W3")
-p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p <- p + theme(axis.text.x = element_text(angle = 270, hjust = 1))
 p <- p + geom_bar(stat = "identity")
 # p <- p + scale_fill_brewer( name="回数",labels=c("2","1") ) #,palette="Spectral")
 p <- p+ scale_fill_manual(name="回数",labels=c("2回目","1回目"),values = c("darkblue", "cyan4")) 
 p <- p + scale_x_discrete(limits=unique(df$prefecture_name),label=substr(unique(df$prefecture_name),1,3))
 plot(p)
+remove(w)
+w <- data.frame(t=(df[1:47,7]+df[48:94,7]),r=pref_jp,p=pref_pop[,1])
+# w <- cbind(w,lm=predict(lm(w[,1] ~ log(pref_pop[,1]))),total=( df[1:47,4]+df[1:47,5] ))
+x1 <- w$p
+y1 <- w$t
 
+# w <- cbind(w,lm=predict(lm(w[,1] ~ log(pref_pop[,1]))),total=( df[1:47,4]+df[1:47,5] ))
+w <- cbind(w,lm=predict(nls(y1~a*x1^(1/4)+b,start=c(a=1,b=1),trace=TRUE)),total=( df[1:47,4]+df[1:47,5] ))
+# v <- apply(mdf[,-48],2,sum)/pref_pop
+# w <- cbind(w,ppc=v)
+
+w <- cbind(w,ppc=as.numeric((apply(mdf[,-48],2,sum)/pref_pop)[,1]))
+
+p <- ggplot(w)
+p <- p + geom_point(aes(x=p,y=t))
+p <- p + geom_point(aes(x=p,y=t,size=total,color=factor(ppc)))
+p <- p + geom_line(aes(x=p,y=lm))
+p <- p + annotate("text",label=w$r,x=w$p, y=w$t+0.25,colour='black',family = "HiraKakuProN-W3")
+p <- p + theme(text = element_text(size = 12))
+# P <- p + scale_color_gradient( low = "#0000FF",high = "#FF0000")
+# p <- p + theme(legend.position = 'none')
+p <- p +  guides(color=FALSE)
+# p + scale_color_discrete(guide=FALSE)
+plot(p)
 
 curl <- "https://vrs-data.cio.go.jp/vaccination/opendata/latest/prefecture.ndjson"
 cdestfile <- "~/R/R2/covid/prefecture.ndjson"
