@@ -62,14 +62,20 @@ w <- cbind(w,lm=predict(nls(y1~a*x1^(1/4)+b,start=c(a=1,b=1),trace=TRUE)),total=
 w <- cbind(w,ppc=as.numeric((apply(mdf[,-48],2,sum)/pref_pop)[,1]))
 
 p <- ggplot(w)
+
 p <- p + geom_point(aes(x=p,y=t))
-p <- p + geom_point(aes(x=p,y=t,size=total,color=factor(ppc)))
+p <- p + geom_point(aes(x=p,y=t,size=total,color=ppc))
+# p <- p + geom_point(aes(x=p,y=t,size=total,color=factor(ppc)))
 p <- p + geom_line(aes(x=p,y=lm))
-p <- p + annotate("text",label=w$r,x=w$p, y=w$t+0.25,colour='black',family = "HiraKakuProN-W3")
+p <- p + annotate("text",label=w$r,x=w$p, y=w$t+0.25,colour='black',family = "HiraKakuProN-W3",size=3)
 p <- p + theme(text = element_text(size = 12))
-# P <- p + scale_color_gradient( low = "#0000FF",high = "#FF0000")
+p <- p + theme_gray (base_family = "HiraKakuPro-W3")
+p <- p + guides(size = guide_legend(title="接種総数"))
+p <- p + guides(color = guide_legend(title="人口当り\n感染者数"))
+p  <- p + scale_color_gradient( low = "#00FF00",high = "#FF0000")
+p <- p + xlab("人口") + ylab("人口あたり接種数")
 # p <- p + theme(legend.position = 'none')
-p <- p +  guides(color=FALSE)
+# p <- p +  guides(color=FALSE)
 # p + scale_color_discrete(guide=FALSE)
 plot(p)
 
@@ -108,14 +114,14 @@ p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 p <- p + scale_fill_hue( name="都道府県",labels=pref_jp)
 plot(p)
 
-df <- dplyr::group_by(js,date,prefecture) %>% dplyr::summarise(.,sum(count))
-colnames(df)[3] <- 'count'
-wdf$date <- as.Date(wdf$date)
-p <- ggplot(NULL)
-p <- p + geom_bar(data=wdf,aes(x = date, y = count, fill = prefecture),stat = "identity")
-p <- p + theme_dark (base_family = "HiraKakuPro-W3")
-p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-p <- p + scale_fill_hue( name="都道府県",labels=pref_jp)
-
-plot(p)
+# df <- dplyr::group_by(js,date,prefecture) %>% dplyr::summarise(.,sum(count))
+# colnames(df)[3] <- 'count'
+# wdf$date <- as.Date(wdf$date)
+# p <- ggplot(NULL)
+# p <- p + geom_bar(data=wdf,aes(x = date, y = count, fill = prefecture),stat = "identity")
+# p <- p + theme_dark (base_family = "HiraKakuPro-W3")
+# p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# p <- p + scale_fill_hue( name="都道府県",labels=pref_jp)
+# 
+# plot(p)
 
