@@ -46,6 +46,11 @@ tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
 #
 # risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
 #
+# 新型コロナウイルス感染症 診療の手引き 19-COVID 第5版 @ 2021/6/29
+# https://www.mhlw.go.jp/content/000801626.pdf
+#
+# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.014, 0.05, 0.137 )
+#
 
 
 v <- c()
@@ -116,9 +121,13 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8,idx){
             if(idx < as.Date("2021-05-01")){
               risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.014, 0.048, 0.125 )
             }else{
-              risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
-            }
+              if(idx < as.Date("2021-06-29")){
+                risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
+              }else{
+                risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.014, 0.05, 0.137 )
+             }
           }
+        }
       }
     }
   }
@@ -137,7 +146,7 @@ df <- data.frame(
   t=xts::last(index(tokyo_death),length_graph),
   value=xts::last(tokyo_death[,1],length_graph)
 )
-g <- g+geom_bar(data=df, aes(x = t, y = value*10,color='black'),stat = "identity",alpha=0.5)
+g <- g+geom_bar(data=df, aes(x = t, y = value*10,color='black'),stat = "identity",alpha=0.1)
 g <- g + scale_color_brewer(name = "death",labels = "# of death")
 g <- g + geom_hline(yintercept = seq(100,300,100),size=0.5,linetype=2,colour="black",alpha=1)
 g <- g + annotate("text",label=as.character(seq(10,30,10)),x=as.Date(start_date)-10, y= seq(100,300,100)+18,colour='black')
