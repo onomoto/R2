@@ -46,7 +46,7 @@ tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
 #
 # risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
 #
-# 新型コロナウイルス感染症 診療の手引き 19-COVID 第5版 @ 2021/6/29
+# 新型コロナウイルス感染症 診療の手引き 19-COVID 第5.1版 @ 2021/6/29
 # https://www.mhlw.go.jp/content/000801626.pdf
 #
 # risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.014, 0.05, 0.137 )
