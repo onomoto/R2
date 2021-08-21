@@ -1,11 +1,8 @@
 # 東京の感染者数ヒストリカルデータから日次の年齢別ヒストグラムを作る。事前に
 # source("../../Dropbox/R-script/covid/tokyo_effective_repro.r") を実行し、
-# 　   curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-# 　   cdestfile <- "~/R/R2/covid/tokyo.csv"
-# 　   download.file(curl,cdestfile)
-# 最新のcsvをダウンロードしておくこと。
-
-
+curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
+cdestfile <- "~/R/R2/covid/tokyo.csv"
+download.file(curl,cdestfile)
 
 # length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
 w <- read.csv("~/R/R2/covid/tokyo.csv")
@@ -44,12 +41,17 @@ tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
 # 新型コロナウイルス感染症 診療の手引き 19-COVID 第5版 @ 2021/5/1
 # https://www.mhlw.go.jp/content/000785119.pdf
 #
-# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
+# risk_parameter_v5 <- (0, 0, 0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
 #
 # 新型コロナウイルス感染症 診療の手引き 19-COVID 第5.1版 @ 2021/6/29
 # https://www.mhlw.go.jp/content/000801626.pdf
 #
-# risk_parameter_v42 <- (0, 0, 0, 0, 0.001, 0.003, 0.014, 0.05, 0.137 )
+# risk_parameter_v51 <- (0, 0, 0, 0, 0.001, 0.003, 0.014, 0.05, 0.137 )
+# 
+# 新型コロナウイルス感染症 診療の手引き 19-COVID 第5.2版 @ 2021/7/29
+# https://www.mhlw.go.jp/content/000815065.pdf
+#
+# risk_parameter_v52 <- (0, 0, 0, 0, 0.001, 0.003, 0.014, 0.051,0.142)
 #
 
 
@@ -124,7 +126,11 @@ func <- function(x1,x2,x3,x4,x5,x6,x7,x8,idx){
               if(idx < as.Date("2021-06-29")){
                 risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.013, 0.048, 0.132 )
               }else{
+                if(idx < as.Date("2021-07-29")){
                 risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.014, 0.05, 0.137 )
+                }else{
+                  risk_parameter <- c(0,0, 0, 0.001, 0.003, 0.014, 0.051, 0.142 )
+                }
              }
           }
         }

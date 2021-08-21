@@ -22,23 +22,25 @@ nod <- 7
 # length_graph <- 110　# グラフは過去60日間が対象
 length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days')) # 2020/3/20 start
 # remove(df)
-
+print("****** run em_nhk.r befor this file ***********")
 # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
-curl <- "https://www.mhlw.go.jp/content/pcr_positive_daily.csv"
+# curl <- "https://www.mhlw.go.jp/content/pcr_positive_daily.csv"
 # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
-cdestfile <- "~/R/R2/covid/tmp.csv"
-download.file(curl,cdestfile)
-if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout = T, ignore.stderr = T)){
-  print("****** found update at 全国新規陽性者数 ***********")
-  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv")
-  w <- read.csv("~/R/R2/covid/all_daily.csv",skip=1)
-  w[,1] <- gsub("/","-",w[,1])
-  w <- as.xts(w[,2],as.Date(w[,1]))
-  j <- c()
-  for(i in seq(1,length(w[,1]),1)){
-    j[i] <- sum(w[1:i,1])
-
-  }
+# cdestfile <- "~/R/R2/covid/tmp.csv"
+# download.file(curl,cdestfile)
+# if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout = T, ignore.stderr = T)){
+#   print("****** found update at 全国新規陽性者数 ***********")
+#   system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv")
+#   w <- read.csv("~/R/R2/covid/all_daily.csv",skip=1)
+#   
+#   w[,1] <- gsub("/","-",w[,1])
+#   w <- as.xts(w[,2],as.Date(w[,1]))
+  w <- mdf[,-48] %>% apply(.,1,sum) %>% as.xts(.,mdf$t)
+  j <- cumsum(w)
+  # for(i in seq(1,length(w[,1]),1)){
+  #   j[i] <- sum(w[1:i,1])
+  # 
+  # }
   w[,1] <- j
   w[,1] <- as.numeric(w[,1])
   # w <- w[c(1,2,3,4,9,10,11,12,14,15)]
@@ -88,15 +90,18 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout 
   # png("~/Dropbox/R-script/covid/02all.png", width = 800, height = 600)
   # plot(p)
   # dev.off()
-  curl <- "https://www.mhlw.go.jp/content/death_total.csv"
-  # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
-  cdestfile <- "~/R/R2/covid/tmp.csv"
-  download.file(curl,cdestfile)
-  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/death_total.csv")
-  w <- read.csv("~/R/R2/covid/death_total.csv",skip=1)
-  w[,1] <- gsub("/","-",w[,1])
-  # w <- as.xts(diff(w[,2])[-1],as.Date(w[,1])[-1])
-  w <- as.xts(as.vector(w[,2]),as.Date(w[,1]))
+  # curl <- "https://www.mhlw.go.jp/content/death_total.csv"
+  # # curl <- "https://github.com/kaz-ogiwara/covid19/blob/master/data/summary.csv"
+  # cdestfile <- "~/R/R2/covid/tmp.csv"
+  # download.file(curl,cdestfile)
+  # system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/death_total.csv")
+  # w <- read.csv("~/R/R2/covid/death_total.csv",skip=1)
+  # w[,1] <- gsub("/","-",w[,1])
+  # # w <- as.xts(diff(w[,2])[-1],as.Date(w[,1])[-1])
+  # w <- as.xts(as.vector(w[,2]),as.Date(w[,1]))
+  w <- dmdf[,-48] %>% apply(.,1,sum) %>% as.xts(.,mdf$t)
+  w <- w *10
+  w <- cumsum(w)
   # j <- c()
   # for(i in seq(1,length(w[,1]),1)){
   #   j[i] <- sum(w[1:i,1])
@@ -122,8 +127,11 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/all_daily.csv", ignore.stdout 
                    t=as.Date(last(index(w),length_graph)))
 
   g <- g+geom_bar(data=df, aes(y = death, x = t),stat = "identity",alpha=0.5,colour="yellow",fill="yellow")
+  g <- g + geom_hline(yintercept = seq(1000,2000,1000),size=0.5,linetype=2,colour="black",alpha=1)
+  g <- g + annotate("text",label=as.character(seq(100,200,100)),x=last(dmdf$t), y= seq(1000,2000,1000)+18,colour='yellow')
+
   # plot(g)
   png("~/Dropbox/R-script/covid/02all.png", width = 1600, height = 1200)
   plot(g)
   dev.off()
-}
+# }

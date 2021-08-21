@@ -17,23 +17,24 @@ nod <- 7
 
 w <- c()
 
-# curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
-curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-cdestfile <- "~/R/R2/covid/tmp.csv"
-download.file(curl,cdestfile)
-if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T, ignore.stderr = T)){
-  print("****** found update at 東京新規陽性者数 ***********")
-  system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv")
-  source("../../Dropbox/R-script/covid/em_region.r")
-
-  # w <- read.csv("~/R/R2/covid/summary.csv")
-  # https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv
-  # curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-  # cdestfile <- "~/R/R2/covid/tokyo.csv"
-  # download.file(curl,cdestfile)
-  w <- read.csv("~/R/R2/covid/tokyo.csv")
-
-  w <- apply.daily(as.xts(rep(1,length(w[,1])),as.Date(w[,5])),sum)
+# # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
+# curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
+# cdestfile <- "~/R/R2/covid/tmp.csv"
+# download.file(curl,cdestfile)
+# if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T, ignore.stderr = T)){
+#   print("****** found update at 東京新規陽性者数 ***********")
+#   system("cp ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv")
+#   # source("../../Dropbox/R-script/covid/em_region.r")
+# 
+#   # w <- read.csv("~/R/R2/covid/summary.csv")
+#   # https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv
+#   # curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
+#   # cdestfile <- "~/R/R2/covid/tokyo.csv"
+#   # download.file(curl,cdestfile)
+#   w <- read.csv("~/R/R2/covid/tokyo.csv")
+# 
+#   w <- apply.daily(as.xts(rep(1,length(w[,1])),as.Date(w[,5])),sum)
+  w <-   as.xts(mdf[,13],mdf$t)
   last(w)
 
   len <- length(w[,1])
@@ -44,11 +45,11 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T,
   }
   r <- round(k**2*(l*d) + k*(l+d) +1,2)
   w <- merge(w,as.xts(r,last(index(w),length(r))))
-  w
+  # w
 
 
   colnames(w)[2] <- "effective_repro"
-  last(w,len-11)
+  # last(w,len-11)
   # plot(last(w[,2],60))
 
   # R と新規感染者数を混在させるためスケール調整のために係数を計算する。
@@ -96,7 +97,7 @@ if(system("diff ~/R/R2/covid/tmp.csv ~/R/R2/covid/tokyo.csv", ignore.stdout = T,
   dev.off()
   # em_region.r should be run before tokyo_age_split as there is a dependency.
 
-  source("../../Dropbox/R-script/covid/tokyo_age_split.r")
-}else{
-  source("../../Dropbox/R-script/covid/em_region.r")
-}
+#   source("../../Dropbox/R-script/covid/tokyo_age_split.r")
+# }else{
+#   source("../../Dropbox/R-script/covid/em_region.r")
+# }
