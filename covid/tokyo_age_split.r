@@ -186,3 +186,32 @@ g <- g+geom_line(data=df, aes(x = t, y = value))
 png("~/Dropbox/R-script/covid/08tokyo_severity_death.png", width = 1200, height = 800)
 plot(g)
 dev.off()
+
+gap <- 20   # shift between positive and death. as new death only comes out after certain number of days of positive.
+start <- 500 # day of start should be less than length(mdf$t) - gap 500 means "2021-05-30"
+end <- 0 # day to end. 0 means the end of record.
+dmdf$t[start]
+if(end == 0){
+  end <- length(mdf[,13])
+}
+
+d <- dmdf[,13][(gap+start):(end)] %>% cumsum()
+p <- mdf[,13][start:(end-gap)] %>% cumsum()
+df <- data.frame(death=d,positive=p)
+# p <- ggplot(df, aes(x = positive, y = death))
+# p <- p + geom_point(stat="identity", position="identity")
+df <- cbind(df,twopercent=df$positive * 0.02)
+df <- cbind(df,onepointfive=df$positive * 0.015)
+df <- cbind(df,onepercent=df$positive * 0.01)
+df <- cbind(df,halfpercent=df$positive * 0.005)
+df <- cbind(df,qpercent=df$positive * 0.0025)
+p <- ggplot(df, aes(x = positive, y = death))
+p <- p + geom_point(stat="identity", position="identity")
+p <- p + geom_path(aes(y=twopercent))
+p <- p + geom_path(aes(y=onepointfive))
+p <- p + geom_path(aes(y=onepercent))
+p <- p + geom_path(aes(y=halfpercent))
+p <- p + geom_path(aes(y=qpercent))
+
+
+plot(p)
