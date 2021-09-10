@@ -72,7 +72,7 @@ p <- p+annotate("text",label=output.label,x=as.Date("2010-01-01"), y=max(as.vect
 plot(p)
 # remove unnecessary function.
 output.label
-paste("nikkei theretical is ",round(last(df$g),2))
+paste("nikkei theoretical is ",round(last(df$g),2))
 remove(output.label)
 remove(df)
 
