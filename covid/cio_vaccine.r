@@ -81,6 +81,7 @@ plot(p)
 
 curl <- "https://vrs-data.cio.go.jp/vaccination/opendata/latest/prefecture.ndjson"
 cdestfile <- "~/R/R2/covid/prefecture.ndjson"
+download.file(curl,cdestfile)
 js <- jsonlite::stream_in(gzfile(cdestfile) )
 last(js)
 
