@@ -52,7 +52,7 @@ colnames(df)[4] <- 't'
 # standardize date in df$t to the last day of each month.
 df$t[length(df$t)] <-  (as.Date(as.yearmon(mondate(last(index(residuals(result_nikkei)[,1])))+1,frac=1))-1)
 
-output.label <- paste("N225 = ",round(result_nikkei$coefficients[2],digits=2)," * SPX + ",round(result_nikkei$coefficients[3],digits=2)," * USDJPY + ",round(result_nikkei$coefficients[1],digits=2),"\n R Squared is ",round(summary(result_nikkei)$r.squared,4)," \n","DF is ",round(summary(result_nikkei)$df[2],0),sep=' ')
+output.label <- paste("N225 = ",round(result_nikkei$coefficients[2],digits=2)," * SPX + ",round(result_nikkei$coefficients[3],digits=2)," * USDJPY + ",round(result_nikkei$coefficients[1],digits=2),"\nR Squared is ",round(summary(result_nikkei)$r.squared,4)," \nDF is ",round(summary(result_nikkei)$df[2],0),sep=' ')
 # addLegend(legend.loc = "topleft", legend.names = tmp.legend,col=3)
 
 p <- ggplot(df,aes(x=t))
@@ -67,7 +67,12 @@ p <- p + scale_x_date(date_breaks = "1 year", date_labels = "%Y")
 p <- p + geom_path(aes(y=g),colour='red')
 # p <- p + geom_path(aes(y=e),colour='blue')
 # p <- p+annotate("text",x=-Inf,y=Inf,label=output.label,hjust=-.2,vjust=2)
-p <- p+annotate("text",label=output.label,x=as.Date("2010-01-01"), y=max(as.vector(to.monthly(N225[k3])[,4]))*0.9)
+p <- p + xlab("") + ylab("")
+# p <- p + geom_point(aes(y=case_per_capita,size=sign,color=r),alpha=1)
+# p <- p+annotate("text",label=pref_db[,1],x=df[,2], y=df[,1]+0.1,colour='black',family = "HiraKakuProN-W3",size=3)
+p <- p + theme_gray (base_family = "HiraKakuPro-W3")
+p <- p+annotate("text",label=output.label,x=as.Date("2007-01-01"), y=max(as.vector(to.monthly(N225[k3])[,4]))*0.9,hjust = 0)
+
 
 plot(p)
 # remove unnecessary function.
