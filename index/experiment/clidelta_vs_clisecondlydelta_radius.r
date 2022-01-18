@@ -130,13 +130,15 @@ abline(v=0*pi)
 abline(h=0.5)
 
 v <- atan2(diff(cli_xts$oecd),diff(diff(cli_xts$oecd))) %>% last(.,240)
-w <- monthlyReturn(GSPC)["::2021-04"] %>% last(.,240) # update if necessary.
+w <- monthlyReturn(GSPC)[paste0("::",substr(index(last(cli_xts$oecd)),1,7))] %>% last(.,240) # update if necessary.
 par(bg="grey",fg="white")
 plot.default(v,w,type='p')
 tmp <- par('usr')
 plot.new()
 plot.default(v,w,xlim=c( tmp[1],tmp[2]), ylim=c(tmp[3], tmp[4]),type='p')
 abline(v=pi/2)
+abline(v=-pi/2)
+abline(h=0)
 abline(v=0)
 par(new=T)
 i <- 12
