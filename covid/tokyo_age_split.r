@@ -8,10 +8,11 @@ download.file(curl,cdestfile)
 w <- read.csv("~/R/R2/covid/tokyo.csv")
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
-start_date <- "2020-10-01"
+start_date <- "2021-01-01"
 length_graph <- length(seq(as.Date(start_date),xts::last(index(y)),by='days'))
 #
 tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
+tokyo_death <- tokyo_death[paste0(start_date,"::")]
 
 # 新型コロナウイルス感染症 診療の手引き 2020 19-COVID 第2.2版 @ 2020/7/10
 # インデックスはhttps://www.mhlw.go.jp/content/000650160.pdf　のデータを使用
