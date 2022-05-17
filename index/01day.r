@@ -12,6 +12,7 @@ getSymbols("^DJI",src="yahoo",auto.assign=TRUE)
 # plot(merge(tmp.predict[,c(4,6,7)],rep(as.vector(rep(last(SP5[,4]),length(index(tmp.predict))))))[,c(1,2,3)],type='p',pch='+')
 # lines(merge(tmp.predict[,c(4,6,7)],rep(as.vector(rep(last(SP5[,4]),length(index(tmp.predict))))))[,4],col=4)
 GSPC <- append(GSPC,cbind(SP5["::2006"][,-4],SP5["::2006"][,4]))
+getSymbols("^VIX",src="yahoo",auto.assign=TRUE)
 getSymbols("BTC-USD",src="yahoo",auto.assign=TRUE)
 BTC <- `BTC-USD`
 
