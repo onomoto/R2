@@ -67,7 +67,7 @@ w <- c()
   moving_a <- as.vector(last(w[,3],length_graph))
   date <- as.Date(last(index(w),length_graph))
   # death <- as.vector(last(tokyo_death$Tokyo,length_graph))
-  death <- as.vector(last(as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t),length_graph))
+  death <- as.vector(last(as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t),length_graph))*30
 
   df <- data.frame(
                   p=positive,
@@ -90,8 +90,10 @@ w <- c()
   p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
   p <- p+annotate("text",label=as.character("1.0"),x=as.Date(df$t[length_graph]), y=5+1*multi,colour='black')
   p <- p + geom_hline(yintercept = 1*multi,size=0.5,linetype=2,colour="red",alpha=1)
-  p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=5+2*multi,,colour='black')
+  p <- p+annotate("text",label=as.character("2.0"),x=as.Date(df$t[length_graph]), y=5+2*multi,colour='black')
   p <- p + geom_hline(yintercept = 2*multi,size=0.5,linetype=2,colour="red",alpha=1)
+  p <- p + geom_hline(yintercept = seq(300,900,300),size=0.5,linetype=2,colour="black",alpha=1)
+  p <- p + annotate("text",label=as.character(seq(10,30,10)),x=last(dmdf$t), y= seq(300,900,300)+18,colour='yellow')
   png("~/Dropbox/R-script/covid/03tokyo.png", width = 1600, height = 1200)
   plot(p)
   dev.off()

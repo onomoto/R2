@@ -15,6 +15,7 @@ GSPC <- append(GSPC,cbind(SP5["::2006"][,-4],SP5["::2006"][,4]))
 getSymbols("^VIX",src="yahoo",auto.assign=TRUE)
 getSymbols("BTC-USD",src="yahoo",auto.assign=TRUE)
 BTC <- `BTC-USD`
+getSymbols("DX-Y.NYB",src="yahoo",auto.assign=TRUE); DXY <- `DX-Y.NYB`; DXY <- DXY[!is.na(DXY[,4]),] # dollar index
 
 if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.monthly(SP5))[,c(1,2,3,4,5)])){
   tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)] <- last(to.monthly(SP5))[,c(1,2,3,4,5)]

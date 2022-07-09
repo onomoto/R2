@@ -1,11 +1,20 @@
 # 東京の感染者数ヒストリカルデータから日次の年齢別ヒストグラムを作る。事前に
 # source("../../Dropbox/R-script/covid/tokyo_effective_repro.r") を実行し、
-curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-cdestfile <- "~/R/R2/covid/tokyo.csv"
+# curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
+curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients_2022-1.csv"
+cdestfile <- "~/R/R2/covid/tokyo_2022_2.csv"
 download.file(curl,cdestfile)
+
+system("cp  ~/R/R2/covid/tokyo_2022_2.csv   ~/R/R2/covid/w.csv")
+system("sed 1d  ~/R/R2/covid/w.csv >  ~/R/R2/covid/tokyo_2022_2.csv ")
+
+system("cat ~/R/R2/covid/130001_tokyo_covid19_patients_2021.csv ~/R/R2/covid/tokyo_2022_1.csv > ~/R/R2/covid/w.csv")
+system("cat ~/R/R2/covid/w.csv ~/R/R2/covid/tokyo_2022_2.csv > ~/R/R2/covid/tokyo.csv")
 
 # length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
 w <- read.csv("~/R/R2/covid/tokyo.csv")
+
+
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
 start_date <- "2021-01-01"
@@ -189,7 +198,7 @@ plot(g)
 dev.off()
 
 gap <- 20   # shift between positive and death. as new death only comes out after certain number of days of positive.
-start <- 500 # day of start should be less than length(mdf$t) - gap 500 means "2021-05-30"
+start <- 716 # day of start should be less than length(mdf$t) - gap 500 means "2021-05-30"
 end <- 0 # day to end. 0 means the end of record.
 dmdf$t[start]
 if(end == 0){
