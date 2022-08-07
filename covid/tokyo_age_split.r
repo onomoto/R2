@@ -182,6 +182,7 @@ df <- data.frame(
   t=xts::last(index(tokyo_death),length_graph),
   value=xts::last(tokyo_death[,1],length_graph)
 )
+g <- g + geom_hline(yintercept = seq(0,300,10),size=0.5,linetype=2,alpha=1,color='white')
 g <- g+geom_bar(data=df, aes(x = t, y = value),stat = "identity",alpha=0.5,colour="red",fill="red")
 # prepare the second layer.
 
@@ -192,6 +193,7 @@ tokyo_severity <- as.xts(mapply(func,v[,1],v[,2],v[,3],v[,4],v[,5],v[,6],v[,7],v
 # df <- df[-length(df[,1]),]  # cut off the last entry.
 # g <- ggplot(df, aes(x = t, y = value))
 g <- g+geom_line(data=df, aes(x = t, y = value))
+
 # plot(g)
 png("~/Dropbox/R-script/covid/08tokyo_severity_death.png", width = 1200, height = 800)
 plot(g)
