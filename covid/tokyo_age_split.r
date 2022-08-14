@@ -1,23 +1,28 @@
 # 東京の感染者数ヒストリカルデータから日次の年齢別ヒストグラムを作る。事前に
 # source("../../Dropbox/R-script/covid/tokyo_effective_repro.r") を実行し、
-# curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients_2022-1.csv"
-cdestfile <- "~/R/R2/covid/tokyo_2022_2.csv"
+curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
+# curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients_2022-1.csv"
+cdestfile <- "~/R/R2/covid/tokyo_all.csv"
 download.file(curl,cdestfile)
 
-system("cp  ~/R/R2/covid/tokyo_2022_2.csv   ~/R/R2/covid/w.csv")
-system("sed 1d  ~/R/R2/covid/w.csv >  ~/R/R2/covid/tokyo_2022_2.csv ")
+# curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients_2022-2.csv"
+# cdestfile <- "~/R/R2/covid/tokyo_2022_2.csv"
+# download.file(curl,cdestfile)
 
-system("cat ~/R/R2/covid/130001_tokyo_covid19_patients_2021.csv ~/R/R2/covid/tokyo_2022_1.csv > ~/R/R2/covid/w.csv")
-system("cat ~/R/R2/covid/w.csv ~/R/R2/covid/tokyo_2022_2.csv > ~/R/R2/covid/tokyo.csv")
 
-# length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days'))
-w <- read.csv("~/R/R2/covid/tokyo.csv")
+# system("cp  ~/R/R2/covid/tokyo_2022_2.csv   ~/R/R2/covid/w.csv")
+# system("sed 1d  ~/R/R2/covid/w.csv >  ~/R/R2/covid/tokyo_2022_2.csv ")
+# 
+# system("cat ~/R/R2/covid/130001_tokyo_covid19_patients_2021.csv ~/R/R2/covid/tokyo_2022_1.csv > ~/R/R2/covid/w.csv")
+# system("cat ~/R/R2/covid/tokyo_all.csv ~/R/R2/covid/tokyo_2022_2.csv > ~/R/R2/covid/tokyo.csv")
 
+# length_graph <- length(seq(as.Date("2022-01-01"),Sys.Date(),by='days'))
+# w <- read.csv("~/R/R2/covid/tokyo.csv")
+w <- read.csv("~/R/R2/covid/tokyo_all.csv")
 
 y <- as.xts(as.numeric(substr(w[,9],1,2)),as.Date(w[,5]))
 # apply.daily(as.xts(rep(1,length(y[y[,1] == 10])),as.Date(index(y[y[,1] == 10]))),sum)
-start_date <- "2021-01-01"
+start_date <- "2022-01-01"
 length_graph <- length(seq(as.Date(start_date),xts::last(index(y)),by='days'))
 #
 tokyo_death <-   as.xts(dmdf[,colnames(dmdf) == "13Tokyo"],dmdf$t)
