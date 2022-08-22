@@ -13,7 +13,7 @@
 l <- 4.76
 d <- l+2
 nod <- 7
-
+start_date <- '2022-01-01'
 
 w <- c()
 
@@ -76,7 +76,10 @@ w <- c()
                   d=death,
                   # s=seq(1,45,1))
                   t=date)
+  df <- dplyr::filter(df,df$t >= start_date)
 
+  
+  
   p <- ggplot(df,aes(x=t))
 
   p <- p + geom_bar(aes(y=p),stat="identity", colour="darkgreen",fill="darkgreen")

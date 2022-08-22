@@ -20,7 +20,7 @@ l <- 4.76
 d <- l+2
 nod <- 7
 # length_graph <- 110　# グラフは過去60日間が対象
-length_graph <- length(seq(as.Date("2020-03-20"),Sys.Date(),by='days')) # 2020/3/20 start
+length_graph <- length(seq(as.Date("2022-01-01"),Sys.Date(),by='days')) # set start date
 # remove(df)
 print("****** run em_nhk.r befor this file ***********")
 # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/summary.csv"
