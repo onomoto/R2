@@ -1,7 +1,7 @@
 # 東京の感染者数ヒストリカルデータから日次の年齢別ヒストグラムを作る。事前に
 # source("../../Dropbox/R-script/covid/tokyo_effective_repro.r") を実行し、
 # curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
-curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients_9e4b6290e76826a41c5e34ac575ec04f.csv"
+curl <- "https://data.stopcovid19.metro.tokyo.lg.jp/130001_tokyo_covid19_patients_9e4b6290e76826a41c5e34ac575ec04f.csv"
 # curl <- "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients_2022-1.csv"
 cdestfile <- "~/R/R2/covid/tokyo_all.csv"
 download.file(curl,cdestfile)
