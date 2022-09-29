@@ -18,11 +18,9 @@ w <- c()
 # curl <- "https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/prefectures.csv"
 # https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv
 
-curl <- "https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv"
+# curl <- "https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv"
 cdestfile <- "~/R/R2/covid/nhk.csv"
-download.file(curl,cdestfile)
-
-# w <- read.csv("~/Downloads/nhk.csv")
+# download.file(curl,cdestfile)
 w <- read.csv(cdestfile)
 colnames(w)[1] <- "date"
 colnames(w)[2] <- "code"
@@ -55,6 +53,47 @@ testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
 colnames(testdf)[1:(length(unique(w[,3])))]  <- as.character(unique(w[,3]))
 
 mdf <<- testdf
+
+curl <- "https://covid19.mhlw.go.jp/public/opendata/newly_confirmed_cases_daily.csv"
+cdestfile <- "~/R/R2/covid/mhlw.csv"
+download.file(curl,cdestfile)
+y <- read.csv(cdestfile)
+y <- dplyr::filter(y,X.Date > as.Date('2022-09-27'))[,c(-2)][,c(seq(2,48,1),1)]
+colnames(y) <- colnames(mdf)
+mdf <- rbind(mdf,y)
+
+
+
+# Sys.sleep(6)
+
+df <- data.frame(t=as.Date(w[,1]),
+                 r=w[,3],
+                 p=w$region_death_total)
+# df$p[index(df)[df$p == ""] ] <- 0
+df$p[index(df)[df$p == "-" | df$p == ""] ] <- 0
+df$p[index(df)[is.na(df$p)]] <- 0
+df$p <- as.numeric(as.vector(df$p))
+
+testmat <- diff(matrix(df$p,nrow=length(unique(df$t))))
+testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
+colnames(testdf)[1:(length(unique(w[,3])))]  <- as.character(unique(w[,3]))
+
+
+dmdf <<- testdf
+
+curl <- "https://covid19.mhlw.go.jp/public/opendata/deaths_cumulative_daily.csv"
+cdestfile <- "~/R/R2/covid/mhlw.csv"
+download.file(curl,cdestfile)
+d <- read.csv(cdestfile)
+d <- dplyr::filter(d,X.Date > as.Date('2022-09-26'))[,c(-2)][,c(seq(2,48,1),1)]
+d <- as.matrix(d[,-48] ) %>% diff()
+d <- as.data.frame(d)
+colnames(d) <- colnames(dmdf)[-48]
+d <- cbind(d,t=last(dmdf$t)+seq(1,dim(d)[1],1))
+dmdf <- rbind(dmdf,d)
+
+
+
 # change colname to align region name from hokkaido to okinawa by putting seq.nonumber
 # otherwise ggplot sort region name alphabetically
 # for(i in seq(1,47,1)){ colnames(mdf)[i] <-  (paste(sprintf("%02d",i),colnames(mdf)[i],sep=""))}
@@ -82,21 +121,8 @@ png("~/Dropbox/R-script/covid/04em.png", width = 1600, height = 800)
 plot(g)
 dev.off()
 
-# Sys.sleep(6)
 
-df <- data.frame(t=as.Date(w[,1]),
-                 r=w[,3],
-                 p=w$region_death_total)
-# df$p[index(df)[df$p == ""] ] <- 0
-df$p[index(df)[df$p == "-" | df$p == ""] ] <- 0
-df$p[index(df)[is.na(df$p)]] <- 0
-df$p <- as.numeric(as.vector(df$p))
 
-testmat <- diff(matrix(df$p,nrow=length(unique(df$t))))
-testdf <- transform(as.data.frame(testmat),t=unique(df$t)[-1])
-colnames(testdf)[1:(length(unique(w[,3])))]  <- as.character(unique(w[,3]))
-
-dmdf <<- testdf
 # change colname to align region name from hokkaido to okinawa by putting seq.nonumber
 # otherwise ggplot sort region name alphabetically
 # for(i in seq(1,47,1)){ colnames(mdf)[i] <-  (paste(sprintf("%02d",i),colnames(mdf)[i],sep=""))}
