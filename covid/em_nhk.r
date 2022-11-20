@@ -85,7 +85,7 @@ curl <- "https://covid19.mhlw.go.jp/public/opendata/deaths_cumulative_daily.csv"
 cdestfile <- "~/R/R2/covid/mhlw.csv"
 download.file(curl,cdestfile)
 d <- read.csv(cdestfile)
-d <- dplyr::filter(d,X.Date > as.Date('2022-09-26'))[,c(-2)][,c(seq(2,48,1),1)]
+d <- dplyr::filter(d,Date > as.Date('2022-09-26'))[,c(-2)][,c(seq(2,48,1),1)]
 d <- as.matrix(d[,-48] ) %>% diff()
 d <- as.data.frame(d)
 colnames(d) <- colnames(dmdf)[-48]
@@ -205,4 +205,4 @@ source("../../Dropbox/R-script/covid/tokyo_effective_repro.r")
 # source("../../Dropbox/R-script/covid/em_region.r")
 # source("../../Dropbox/R-script/covid/tokyo_age_split.r")
 source("../../Dropbox/R-script/covid/plot_effective_repro.r")
-source("../../Dropbox/R-script/covid/tokyo_age_split.r")
+# source("../../Dropbox/R-script/covid/tokyo_age_split.r")

@@ -13,7 +13,7 @@ apply(w[,c(2,3)],2,sum)
 apply(w[,c(2,3)],2,sum) %>% sum()
 apply(w[,c(2,3)],1,sum) %>% last(.,14)
 
-df <- w  %>% tidyr::gather(.,variable,value,2:5)
+df <- w  %>% tidyr::gather(.,variable,value,2:6)
 df$variable2 <- factor(df$variable,levels=  unique(df$variable)[length(unique(df$variable)):1])
 
 df$date <- as.Date(df$date) # convert to date class
@@ -21,7 +21,7 @@ p <- ggplot()
 p <- p + geom_bar(data=df, aes(x = date, y = value,fill = variable2),stat = "identity",alpha=0.95)
 p <- p + theme_gray (base_family = "HiraKakuPro-W3")
 # p <- p + scale_fill_brewer(name="回数",labels=c("1回目","２回目"),palette="Accent")
-p <- p+ scale_fill_brewer(name="回数",labels=c("4回目","3回目","2回目","1回目")) #,values = c("darkblue", "cyan4")) 
+p <- p+ scale_fill_brewer(name="回数",labels=c("5回目","4回目","3回目","2回目","1回目"),palette="Accent") #,values = c("darkblue", "cyan4")) 
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 plot(p)
 
@@ -34,13 +34,14 @@ curl <- "https://data.vrs.digital.go.jp/vaccination/opendata/latest/summary_by_p
 cdestfile <- "~/R/R2/covid/summary_by_region.csv"
 download.file(curl,cdestfile)
 w <- read.csv(cdestfile,fileEncoding ='shift-jis')
-df <- data.frame(w,w[,4]/pref_pop,w[,5]/pref_pop,w[,6]/pref_pop,w[,7]/pref_pop)
-colnames(df)[8] <-  "first"
-colnames(df)[9] <-  "second"
-colnames(df)[10] <-  "third"
-colnames(df)[11] <-  "fourth"
+df <- data.frame(w,w[,4]/pref_pop,w[,5]/pref_pop,w[,6]/pref_pop,w[,7]/pref_pop,w[,8]/pref_pop)
+colnames(df)[9] <-  "first"
+colnames(df)[10] <-  "second"
+colnames(df)[11] <-  "third"
+colnames(df)[12] <-  "fourth"
+colnames(df)[13] <-  "fifth"
 
-wdf <- df %>% tidyr::gather(variable,value,8:11)
+wdf <- df %>% tidyr::gather(variable,value,9:13)
 # 
 # > unique(wdf$variable)
 # [1] "first"  "second" "third"  "fourth"
@@ -48,7 +49,7 @@ wdf <- df %>% tidyr::gather(variable,value,8:11)
 wdf$variable <- factor(wdf$variable,levels=unique(wdf$variable)[length(unique(wdf$variable)):1])
 #                         
 # wdf[,6] <- wdf[,2]
-wdf[,2] <- rep(pref_en,2)
+wdf[,2] <- rep(pref_en,5)
 df <- wdf 
 df[,9] <- df[,9]/10 # convert to percentage.
 
@@ -59,7 +60,7 @@ p <- p + theme_gray (base_family = "HiraKakuPro-W3")
 p <- p + theme(axis.text.x = element_text(angle = 270, hjust = 1))
 p <- p + geom_bar(stat = "identity")
 # p <- p + scale_fill_brewer( name="回数",labels=c("2","1") ) #,palette="Spectral")
-p <- p+ scale_fill_brewer(name="回数",labels=c("4回目","3回目","2回目","1回目"),palette = 'Spectral')
+p <- p+ scale_fill_brewer(name="回数",labels=c("5回目","4回目","3回目","2回目","1回目"),palette = 'Spectral')
 p <- p + scale_x_discrete(limits=unique(df$prefecture_name),label=substr(unique(df$prefecture_name),1,3))
 plot(p)
 
