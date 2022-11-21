@@ -111,15 +111,15 @@ download.file(curl,cdestfile)
 js <- jsonlite::stream_in(gzfile(cdestfile) )
 last(js)
 
-df <- cbind(js,cat=paste(js[,6],js[,3],js[,4],sep='-'))
+df <- cbind(js,cat=paste(js[,7],js[,3],js[,4],sep='-'))
 # df$cat2 <- factor(df$cat,levels=c("2-F--64", "2-F-65-", "2-M--64", "2-M-65-", "2-U--64", "2-U-65-", "2-U-UNK","1-F--64", "1-F-65-", "1-M--64", "1-M-65-", "1-M-UNK", "1-U--64", "1-U-65-", "1-U-UNK"))  # factoring cat to set seq.
 df$cat2 <- factor(df$cat,levels=( unique(df$cat) %>% sort(.,decreasing = T) ))
 df$date <- as.Date(df$date)
 
 p <- ggplot(df, aes(y = count, x = prefecture, fill = cat2))
-p <- p + theme_dark (base_family = "HiraKakuPro-W3")
+p <- p + theme_light (base_family = "HiraKakuPro-W3")
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-p <- p + theme(panel.background = element_rect(fill = "grey",
+p <- p + theme(panel.background = element_rect(fill = "white",
                                                colour = "lightblue"),
                legend.key = element_rect(fill='black',colour='white'))
 # 
@@ -127,11 +127,12 @@ p <- p + theme(panel.background = element_rect(fill = "grey",
 #                            label=c("2回目女性64歳以下","2回目女性65歳以上","2回目男性64歳以下","2回目男性65歳以上","2回目性別不明64歳以下","2回目性別不明65歳以上","2回目性別不明年齢不明",
 #                                    "1回目女性64歳以下","1回目女性65歳以上","1回目男性64歳以下","1回目男性65歳以上","1回目男性年齢不明","1回目性別不明64歳以下","1回目性別不明65歳以上","1回目性別不明年齢不明"))
 
- p <- p + scale_fill_manual(name="分類",values=colorspace::rainbow_hcl(50),
- label=c("4回目性別不明年齢不明","4回目性別不明65才以上","4回目男64才以下","4回目男65歳以上","4回目男64才以下","4回目女不明","4回目女65才以上","4回目女64才以下","3回目性別不明年齢不明",
- "3回目性別不明65才以上","3回目性別不明64才以下","3回目男年齢不明","3回目男65才以上","3回目男64才以下","3回目女年齢不明","3回目女65才以上","3回目女64才以下","2回目性別不明年齢不明","2回目性別不明65才以上",
-"2回目性別不明64才以下","2回目男年齢不明","2回目男65才以上","2回目男64才以下","2回目女年齢不明","2回目女65才以上","2回目女64才以下","1回目性別不明年齢不明","1回目性別不明65才以上","1回目性別不明64才以下",
-"1回目男年齢不明","1回目男65才以上","1回目男64才以下","1回目女年齢不明","1回目女65才以上","1回目女64才以下" ))
+ p <- p + scale_fill_manual(name="分類",values=colorspace::rainbow_hcl(90),
+ label=c("5回目性別不明年齢不明","5回目性別不明65才以上","5回目性別不明64才以下","5回目男年齢不明","5回目男65歳以上","5回目男64才以下","5回目女年齢不明","5回目女65才以上","5回目女64才以下",
+         "4回目性別不明年齢不明","4回目性別不明65才以上","4回目性別不明64才以下","4回目男年齢不明","4回目男65歳以上","4回目男64才以下","4回目女年齢不明","4回目女65才以上","4回目女64才以下",
+         "3回目性別不明年齢不明","3回目性別不明65才以上","3回目性別不明64才以下","3回目男年齢不明","3回目男65才以上","3回目男64才以下","3回目女年齢不明","3回目女65才以上","3回目女64才以下",
+         "2回目性別不明年齢不明","2回目性別不明65才以上","2回目性別不明64才以下","2回目男年齢不明","2回目男65才以上","2回目男64才以下","2回目女年齢不明","2回目女65才以上","2回目女64才以下",
+         "1回目性別不明年齢不明","1回目性別不明65才以上","1回目性別不明64才以下","1回目男年齢不明","1回目男65才以上","1回目男64才以下","1回目女年齢不明","1回目女65才以上","1回目女64才以下" ))
 
 p <- p + geom_bar(stat = "identity")
 # p <- p + theme(legend.position = 'none')
