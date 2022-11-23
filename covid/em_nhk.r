@@ -58,6 +58,7 @@ curl <- "https://covid19.mhlw.go.jp/public/opendata/newly_confirmed_cases_daily.
 cdestfile <- "~/R/R2/covid/mhlw.csv"
 download.file(curl,cdestfile)
 y <- read.csv(cdestfile)
+colnames(y)[1] <- 'Date'
 y <- dplyr::filter(y,Date > as.Date('2022-09-27'))[,c(-2)][,c(seq(2,48,1),1)]
 colnames(y) <- colnames(mdf)
 mdf <- rbind(mdf,y)
@@ -85,6 +86,7 @@ curl <- "https://covid19.mhlw.go.jp/public/opendata/deaths_cumulative_daily.csv"
 cdestfile <- "~/R/R2/covid/mhlw.csv"
 download.file(curl,cdestfile)
 d <- read.csv(cdestfile)
+colnames(d)[1] <- 'Date'
 d <- dplyr::filter(d,Date > as.Date('2022-09-26'))[,c(-2)][,c(seq(2,48,1),1)]
 d <- as.matrix(d[,-48] ) %>% diff()
 d <- as.data.frame(d)
