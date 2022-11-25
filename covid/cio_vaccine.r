@@ -5,7 +5,7 @@ curl <- "https://data.vrs.digital.go.jp/vaccination/opendata/latest/summary_by_d
 cdestfile <- "~/R/R2/covid/summary_by_date.csv"
 download.file(curl,cdestfile)
 w <- read.csv(cdestfile)
-
+colnames(w)[1] <- "date"
 # colnames(w)[2] <- 'start_per_capita'
 # colnames(w)[3] <- 'last_per_capita'
 last(w[,1])
