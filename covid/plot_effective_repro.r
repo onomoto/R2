@@ -100,7 +100,7 @@ print("****** run em_nhk.r befor this file ***********")
   # # w <- as.xts(diff(w[,2])[-1],as.Date(w[,1])[-1])
   # w <- as.xts(as.vector(w[,2]),as.Date(w[,1]))
   w <- dmdf[,-48] %>% apply(.,1,sum) %>% as.xts(.,mdf$t)
-  w <- w *10
+  w <- w *20
   w <- cumsum(w)
   # j <- c()
   # for(i in seq(1,length(w[,1]),1)){
@@ -127,8 +127,8 @@ print("****** run em_nhk.r befor this file ***********")
                    t=as.Date(last(index(w),length_graph)))
 
   g <- g+geom_bar(data=df, aes(y = death, x = t),stat = "identity",alpha=0.5,colour="yellow",fill="yellow")
-  g <- g + geom_hline(yintercept = seq(1000,2000,1000),size=0.5,linetype=2,colour="black",alpha=1)
-  g <- g + annotate("text",label=as.character(seq(100,200,100)),x=last(dmdf$t), y= seq(1000,2000,1000)+18,colour='yellow')
+  g <- g + geom_hline(yintercept = seq(2000,10000,2000),size=0.5,linetype=2,colour="black",alpha=1)
+  g <- g + annotate("text",label=as.character(seq(100,500,100)),x=last(dmdf$t), y= seq(2000,10000,2000)+18,colour='yellow')
 
   # plot(g)
   png("~/Dropbox/R-script/covid/02all.png", width = 1600, height = 1200)
