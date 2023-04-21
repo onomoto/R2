@@ -5,7 +5,7 @@
 # tab -> set Options Range == All -> set Expiration == All -> click View Chain.
 # To download the entire options chain, scroll all the way down, and click on Download CSV.
 #
-# load library
+# load detach
 #
 library(data.table)
 library(lubridate)
@@ -92,3 +92,15 @@ chart1 <- chart1 %>%layout(
   yaxis=list(title='Spot Gamma Exposure ($ billions/1% move)')
 )
 chart1
+
+
+detach("package:lubridate", unload=TRUE)
+detach("package:timeDate", unload=TRUE)
+detach("package:stringr", unload=TRUE)
+detach("package:formattable", unload=TRUE)
+
+detach("package:plotly", unload=TRUE)
+detach("package:data.table", unload=TRUE)
+detach("package:tidyr", unload=TRUE)
+detach("package:purrr", unload=TRUE)
+detach("package:dplyr", unload=TRUE)
