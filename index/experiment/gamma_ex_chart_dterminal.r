@@ -95,8 +95,9 @@ chart1 <- chart1 %>%layout(
   yaxis=list(title='Spot Gamma Exposure ($ billions/1% move)')
 )
 # chart1
-
-
+#
+# !!!PLEASE PUT BREAK HERE CAN'T EXECUTE THE SCRIPT IN A SINGLE FILE!!!!
+#
 library(reticulate)
 # reticulate::install_miniconda()
 # reticulate::conda_install('r-reticulate', 'python-kaleido')
@@ -113,14 +114,14 @@ quit("no")
 # dev.off()
 
 
-detach("package:lubridate", unload=TRUE)
-detach("package:timeDate", unload=TRUE)
-detach("package:stringr", unload=TRUE)
-detach("package:formattable", unload=TRUE)
-
-detach("package:plotly", unload=TRUE)
-detach("package:data.table", unload=TRUE)
-detach("package:tidyr", unload=TRUE)
-
-detach("package:dplyr", unload=TRUE)
-detach("package:purrr", unload=TRUE)
+# detach("package:lubridate", unload=TRUE)
+# detach("package:timeDate", unload=TRUE)
+# detach("package:stringr", unload=TRUE)
+# detach("package:formattable", unload=TRUE)
+#
+# detach("package:plotly", unload=TRUE)
+# detach("package:data.table", unload=TRUE)
+# detach("package:tidyr", unload=TRUE)
+#
+# detach("package:dplyr", unload=TRUE)
+# detach("package:purrr", unload=TRUE)
