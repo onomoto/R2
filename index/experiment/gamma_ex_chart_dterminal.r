@@ -94,7 +94,7 @@ chart1 <- chart1 %>%layout(
   xaxis=list(title='Strike Price'),
   yaxis=list(title='Spot Gamma Exposure ($ billions/1% move)')
 )
-chart1
+# chart1
 
 
 library(reticulate)
