@@ -97,6 +97,22 @@ chart1 <- chart1 %>%layout(
 chart1
 
 
+library(reticulate)
+# reticulate::install_miniconda()
+# reticulate::conda_install('r-reticulate', 'python-kaleido')
+# reticulate::conda_install('r-reticulate', 'plotly', channel = 'plotly')
+# reticulate::use_miniconda('r-reticulate')
+reticulate::py_run_string("import sys")
+
+#the name and type of file (can be .png, .jpeg, etc.)
+save_image(chart1,"/Users/honomoto/Dropbox/R-script/covid/w.png",width=1200,height=800)
+quit("no")
+
+# png("~/Dropbox/R-script/covid/w.png", width = 1200, height = 1000)
+# chart1
+# dev.off()
+
+
 detach("package:lubridate", unload=TRUE)
 detach("package:timeDate", unload=TRUE)
 detach("package:stringr", unload=TRUE)
