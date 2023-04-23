@@ -5,7 +5,8 @@
 # tab -> set Options Range == All -> set Expiration == All -> click View Chain.
 # To download the entire options chain, scroll all the way down, and click on Download CSV.
 #
-# load detach
+# !!!!!!!!!!!!! PLS RESTART R SESSION BEFORE RUN !!!!!!!!!!!! 
+# !!!!!!!!!!!!! DO NOT CHOOSE NEW SESSION !!!!!!!!!!!!!!!!!
 #
 library(data.table)
 library(lubridate)
@@ -96,6 +97,7 @@ chart1 <- chart1 %>%layout(
 )
 chart1
 
+# !!!!!!!!!!!!! PLS PAUSE BEFORE DETACH !!!!!!!!!!!! 
 
 detach("package:lubridate", unload=TRUE)
 detach("package:timeDate", unload=TRUE)
