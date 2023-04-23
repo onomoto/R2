@@ -98,6 +98,8 @@ chart1 <- chart1 %>%layout(
 #
 # !!!PLEASE PUT BREAK HERE CAN'T EXECUTE THE SCRIPT IN A SINGLE FILE!!!!
 #
+readline(prompt="Press [enter] to continue") # wait for input to pause.
+#
 library(reticulate)
 # reticulate::install_miniconda()
 # reticulate::conda_install('r-reticulate', 'python-kaleido')
