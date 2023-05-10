@@ -179,7 +179,7 @@ func <- function(x){
 
 df <- data.frame(monthlyreturn=as.vector(apply(w,1,func)),
                  delta=as.vector(d),sign=as.vector(diff(diff(CLI))[k1970])) #2020
-df <- df[seq(-603,-608,-1),] # remove 2020/3 and some months.
+df <- df[seq(-602,-608,-1),] # remove 2020/3 and some months.
 # df <- df[seq(-1*(dim(df)[1]-13) , -1*(dim(df)[1]-8) ,-1),]
 # wdf <- df
 # df <- df[-1*seq(597,602,1),]
