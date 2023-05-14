@@ -101,6 +101,11 @@ chart1 <- chart1 %>%layout(
 readline(prompt="Press [enter] to continue") # wait for input to pause.
 #
 library(reticulate)
+#
+# !!!!! execute following reticulate at least once on the execution environment
+# !!!!! they are do to install required python packages
+# !!!!! w/o instlation execution will be blocked
+# 
 # reticulate::install_miniconda()
 # reticulate::conda_install('r-reticulate', 'python-kaleido')
 # reticulate::conda_install('r-reticulate', 'plotly', channel = 'plotly')
