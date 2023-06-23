@@ -34,14 +34,18 @@ curl <- "https://data.vrs.digital.go.jp/vaccination/opendata/latest/summary_by_p
 cdestfile <- "~/R/R2/covid/summary_by_region.csv"
 download.file(curl,cdestfile)
 w <- read.csv(cdestfile,fileEncoding ='shift-jis')
-df <- data.frame(w,w[,4]/pref_pop,w[,5]/pref_pop,w[,6]/pref_pop,w[,7]/pref_pop,w[,8]/pref_pop)
-colnames(df)[9] <-  "first"
-colnames(df)[10] <-  "second"
-colnames(df)[11] <-  "third"
-colnames(df)[12] <-  "fourth"
-colnames(df)[13] <-  "fifth"
+df <- data.frame(w,w[,4]/pref_pop,w[,5]/pref_pop,w[,6]/pref_pop,w[,7]/pref_pop,w[,8]/pref_pop,w[,9]/pref_pop)
+colnames(df)[10] <-  "first"       #change 10 -> 11 when seventh starts
+colnames(df)[11] <-  "second"
+colnames(df)[12] <-  "third"
+colnames(df)[13] <-  "fourth"
+colnames(df)[14] <-  "fifth"
+colnames(df)[15] <-  "sixth"        #change 15 -> 16 when seventh starts
+                                    #add 17 when seventh starts
 
-wdf <- df %>% tidyr::gather(variable,value,9:13)
+wdf <- df %>% tidyr::gather(variable,value,10:15) # change 10:15 -> 11:17
+# wdf <- df %>% tidyr::gather(variable,value,16:21) #  change data value from real figure to relative against population. change to 18:24
+
 # 
 # > unique(wdf$variable)
 # [1] "first"  "second" "third"  "fourth"
@@ -49,9 +53,9 @@ wdf <- df %>% tidyr::gather(variable,value,9:13)
 wdf$variable <- factor(wdf$variable,levels=unique(wdf$variable)[length(unique(wdf$variable)):1])
 #                         
 # wdf[,6] <- wdf[,2]
-wdf[,2] <- rep(pref_en,5)
+wdf[,2] <- rep(pref_en,6)
 df <- wdf 
-df[,9] <- df[,9]/10 # convert to percentage.
+# df[,9] <- df[,9]/10 # convert to percentage.
 
 
 # p <- p + theme_gray (base_family = "HiraKakuPro-W3")
@@ -60,7 +64,7 @@ p <- p + theme_gray (base_family = "HiraKakuPro-W3")
 p <- p + theme(axis.text.x = element_text(angle = 270, hjust = 1))
 p <- p + geom_bar(stat = "identity")
 # p <- p + scale_fill_brewer( name="回数",labels=c("2","1") ) #,palette="Spectral")
-p <- p+ scale_fill_brewer(name="回数",labels=c("5回目","4回目","3回目","2回目","1回目"),palette = 'Spectral')
+p <- p+ scale_fill_brewer(name="回数",labels=c("6回目","5回目","4回目","3回目","2回目","1回目"),palette = 'Spectral')  # add 7回目 when seventh starts
 p <- p + scale_x_discrete(limits=unique(df$prefecture_name),label=substr(unique(df$prefecture_name),1,3))
 plot(p)
 
