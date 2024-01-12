@@ -3,7 +3,7 @@
 # 2)原点からの角度をX、月間騰落率をYに取ったグラフ。
 # 3)同じく、2)原点からの角度をX、COVをYに取ったグラフ。
 #
-CLI <- cli_xts$usa
+CLI <- cli_g20
 k1970 <- paste("1970",substr(index(last(CLI)),1,7),sep="::")
 my_palette <- colorRampPalette(c("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF"))
 plot_col <- my_palette(5)[5:1]
@@ -197,6 +197,7 @@ p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
 # p <- p + geom_smooth(method = "auto")
 # p <- p + scale_shape_manual(values=c(0,1,2,10,11,12))
 # p <- p + scale_color_brewer(label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.1","less than -0.1"))  #x-axis label
+
 p <- p + scale_color_brewer(palette="Spectral", label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.05","more than -0.1","less than -0.1"))  #x-axis label
 p <- p + scale_shape_manual(values=c(0,1,2,10,11,12,14),label=c("more than 0.1","more than 0.025","more than ZERO","more then -0.025","more than -0.05","more than -0.1","less than -0.1"))
 # p <- p + stat_smooth(aes(x=delta,y=sign),method="loess",color='white',size=0.3,se=FALSE)

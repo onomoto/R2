@@ -1,4 +1,8 @@
 kikan <- "2000-01-01::"
+
+CLI <- cli_g20
+kikan <- paste0("2000-01-01::",index(last(CLI)))
+
 func <- function(x){
   if(is.na(x)){return(NA)}
   if(x > 0.1){return("a")}
@@ -7,7 +11,7 @@ func <- function(x){
   if(x < -0.1){return("d")}
 }
 
-delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(cli_xts$oecd)[kikan])))
+delta <- append(as.vector(diff(CLI)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(CLI)[kikan])))
 #  [kikan]
 # df <- data.frame(i=as.vector(tmp.predict[kikan][,4]),
 df <- data.frame(i=as.vector(apply.monthly(SP5[,4][kikan],mean)),

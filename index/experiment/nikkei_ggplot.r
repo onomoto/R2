@@ -7,8 +7,8 @@
 
 
 # if(my_update_check(GSPC,Sys.Date()) == "S"){
-#   print("SKIP")
-# }
+#   print("SKIP") 
+# }m,r
 # if(my_update_check(GSPC,Sys.Date()) == "D"){
 #   print("DOWNLOAD")
 #   getSymbols("^GSPC",auto.assign=TRUE)
