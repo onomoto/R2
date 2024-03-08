@@ -86,9 +86,29 @@ TotalGamma <- round(sum(dfAgg$TotalGamma),3)
 
 chart1 <- plot_ly(data = dfAgg, x = ~StrikePrice, y = ~TotalGamma, type = 'bar', name = 'Total Gamma')
 chart1 <- chart1 %>% add_lines(x=spotPrice,
-                               line=list(color= rgb(3, 74, 23, maxColorValue = 255), dash = 'dot'),
+                               line=list(color= rgb(255, 0, 0, maxColorValue = 255), dash = 'longdash'),
                                name= paste('Spot Price: ', round(spotPrice,0))
 )
+
+# chart1 <- chart1 %>% add_lines(x=5000,
+#                                line=list(color= rgb(0, 128, 0, maxColorValue = 255), dash = 'longdash',width=1),
+#                                name='', showlegend = FALSE
+# )
+# chart1 <- chart1 %>% add_lines(x=5100,
+#                                line=list(color= rgb(0, 128, 0, maxColorValue = 255), dash = 'longdash',width=1),
+#                                name='',showlegend = FALSE
+# )
+# chart1 <- chart1 %>% add_lines(x=5200,
+#                                line=list(color= rgb(0, 128, 0, maxColorValue = 255), dash = 'longdash',width=1),
+#                                name='',showlegend = FALSE
+# )
+for(i in seq(4400,6000,100)){
+  chart1 <- chart1 %>% add_lines(x=i,
+  line=list(color= rgb(0, 128, 0, maxColorValue = 255), dash = 'dot',width=1),
+  name='',showlegend = FALSE
+  )
+}
+
 chart1 <- chart1 %>%layout(
   title = paste("Total Gamma: $", TotalGamma,  " Bn per 1% SPX Move ",  todayDate),
   xaxis=list(title='Strike Price'),
