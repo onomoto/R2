@@ -7,7 +7,7 @@
 #   xts = xts object like cli_xts$oecd,
 #   use like  > func("2001-01-01::",5,cli_xts_$oecd)
 #
-func <- function(s="2011-01-01::",m=5,xts=cli_xts$oecd){
+func <- function(s="2011-01-01::",m=5,xts=cli_g20){
 
   head_of_record <- s
   print(head_of_record)
@@ -32,4 +32,4 @@ func <- function(s="2011-01-01::",m=5,xts=cli_xts$oecd){
   plot(p)
 
 }
-func(s="2012-01-01::",5,xts=cli_xts$oecd)
+func(s="2012-01-01::",5,xts=cli_g20)
