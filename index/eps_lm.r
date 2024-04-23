@@ -74,4 +74,4 @@ func <- function(k="2000-01-01::2018-12-31" ,l=5){
   # result.eps$coefficients[1]+result.eps$coefficients[2]*eps_year_xts["2019-01"]+result.eps$coefficients[3]*as.vector((last(PA)))+result.eps$coefficients[4]*as.vector((last(CS)))+result.eps$coefficients[5]*as.vector((last(UC)))+result.eps$coefficients[6]*as.vector(last(diff(cli_xts$oecd, lag = 6)))
 }
 # func("2000-01-01::2019-06-30",5)
-func(paste("2000-01-01::",as.Date(as.yearmon((mondate(index(last(G)))+2)),frac=1),sep=""),5)
+func(paste("2010-01-01::",as.Date(as.yearmon((mondate(index(last(G)))+2)),frac=1),sep=""),5)

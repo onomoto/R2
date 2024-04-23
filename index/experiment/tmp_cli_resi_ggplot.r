@@ -16,7 +16,7 @@ func <- function(x){
   if(x < -0.1){return("d")}
 }
 
-delta <- append(as.vector(diff(cli_xts$oecd)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(cli_xts$oecd)[kikan])))
+delta <- append(as.vector(diff(cli_g20)[kikan]),rep(NA,length(index(tmp.predict)) - length(diff(cli_g20)[kikan])))
 #  [kikan]
 df <- data.frame(i=as.vector(tmp.predict[kikan][,4]),
 # df <- data.frame(i=as.vector(apply.monthly(SP5[,4][kikan],mean)),
@@ -47,9 +47,9 @@ p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 p <- p + geom_path(aes(y=g),colour='red')
 p <- p + geom_path(aes(y=e),colour='blue')
 p <- p+annotate("text",label=as.character("10%"),x=as.Date("2020-01-01"), y=550,colour='black')
-p <- p + geom_hline(yintercept = 250,size=0.5,linetype=1,colour="white",alpha=1)
+p <- p + geom_hline(yintercept = 250,linewidth=0.5,linetype=1,colour="white",alpha=1)
 p <- p+annotate("text",label=as.character("5%"),x=as.Date("2020-01-01"), y=300,colour='black')
-p <- p + geom_hline(yintercept = -250,size=0.5,linetype=1,colour="white",alpha=1)
+p <- p + geom_hline(yintercept = -250,linewidth=0.5,linetype=1,colour="white",alpha=1)
 p <- p+annotate("text",label=as.character("-5%"),x=as.Date("2020-01-01"), y=-200,colour='black')
 p <- p + geom_bar(aes(y=r,fill=clidelta),stat = "identity",colour="black") # need identity to draw value itself.
 p <- p + geom_bar(aes(y=r2),stat = "identity",alpha=0.5) # need identity to draw value itself.
@@ -59,7 +59,7 @@ p <- p +scale_color_brewer(palette="Spectral",na.value = "white",name = "CLI Del
 p <- p +scale_fill_brewer(palette="Spectral",na.value = "white",name = "CLI Delta", labels = c("High","mid High","mid Low","Low","NA"))
 p <- p+theme( rect = element_rect(fill = "grey88",
                                   colour = "black",
-                                  size = 0,
+                                  linewidth = 0,
                                   linetype = 1),
               panel.background = element_rect(fill = "grey88",
                                               colour = "lightblue"),
