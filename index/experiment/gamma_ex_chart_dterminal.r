@@ -102,7 +102,8 @@ chart1 <- chart1 %>% add_lines(x=spotPrice,
 #                                line=list(color= rgb(0, 128, 0, maxColorValue = 255), dash = 'longdash',width=1),
 #                                name='',showlegend = FALSE
 # )
-for(i in seq(4200,6200,100)){
+# for(i in seq(4200,6200,100)){
+for(i in seq(floor((0.008*spotPrice))*100  ,ceiling((0.012*spotPrice))*100 ,100)){
   chart1 <- chart1 %>% add_lines(x=i,
   line=list(color= rgb(0, 64, 0, maxColorValue = 255), dash = 'dot',width=0.5),
   name='',showlegend = FALSE
