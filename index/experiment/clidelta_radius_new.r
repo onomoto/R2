@@ -204,4 +204,4 @@ p <- p + scale_shape_manual(values=c(0,1,2,10,11,12,14),label=c("more than 0.1",
 # p <- p + guides(shape = FALSE)
 plot(p)
 df %>% last(.,6)
-df %>% last(.,6) %>% dplyr::summarise(.,atan2(delta,sign))
+df %>% last(.,6) %>% dplyr::reframe(.,atan2(delta,sign))
