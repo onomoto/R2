@@ -4,20 +4,20 @@
 # 3)compare SPX close price between the end month of cli_xts delta is plus(or minus) and its start.
 # 4)return xts objects which contains. start month of period, updown ration, length of months and monthly average return during period.
 
-func <- function(pm="plus",s="1970-01-01",l=1,th=0){
+func <- function(pm="plus",s="1970-01-01",l=1,th=0,CLI=cli_g20){
   w <- c()
   cat("0")
   cat(length(s))
   if(nchar(s) == 10){ # use nchar() to measure strings length, not length()
     cat("1")
-    last_date <- substr(last(index(cli_xts$oecd)),1,7)
+    last_date <- substr(last(index(CLI)),1,7)
     start_date <- s
     period <- paste(start_date,last_date,sep='::')
   }else{
      # last_date <- l
      period <- s
   }
-  # last_date <- last(index(cli_xts$oecd))
+  # last_date <- last(index(CLI))
   # start_date <- s
   # period <- paste(start_date,last_date,sep='::')
   start_index <- 1
@@ -33,15 +33,15 @@ func <- function(pm="plus",s="1970-01-01",l=1,th=0){
   thrsd <- th
 
 # put flag on the months accoring to the parameter. for "minus" cli delta is less than ZERO, for plus the opposite.
-  for(i in seq(1,length(diff(cli_xts$oecd,lag=lag_month)[period]),1,)){
+  for(i in seq(1,length(diff(CLI,lag=lag_month)[period]),1,)){
     if(plus_or_minus == "minus"){
-      if(as.vector(diff(cli_xts$oecd,lag=lag_month)[period])[i] < thrsd){  # up is "> 0"
+      if(as.vector(diff(CLI,lag=lag_month)[period])[i] < thrsd){  # up is "> 0"
         w <- append(w,1)
       }else{
         w <- append(w,0)
       }
     }else if(plus_or_minus == "plus"){
-      if(as.vector(diff(cli_xts$oecd,lag=lag_month)[period])[i] > thrsd){  # up is "> 0"
+      if(as.vector(diff(CLI,lag=lag_month)[period])[i] > thrsd){  # up is "> 0"
         w <- append(w,1)
       }else{
         w <- append(w,0)
@@ -52,7 +52,7 @@ func <- function(pm="plus",s="1970-01-01",l=1,th=0){
   }
   month_flag <- 0 # status flag
 # check stream and when flag is changes 0 to 1. it is the start of period.
-  for(i in seq(1,length(diff(cli_xts$oecd,lag=lag_month)[period]),1,)){
+  for(i in seq(1,length(diff(CLI,lag=lag_month)[period]),1,)){
     if(w[i] == 1){
       if(month_flag == 0){ # when w is 1 and month_flag is 0, the period starts
         month_flag <- 1
@@ -63,7 +63,7 @@ func <- function(pm="plus",s="1970-01-01",l=1,th=0){
         start_index <- i
       }
       # dc 0602 add output at the end of loop
-      if(i == length(diff(cli_xts$oecd,lag=lag_month)[period])){
+      if(i == length(diff(CLI,lag=lag_month)[period])){
         print("end of the loop")
         result <- append(result,as.xts(as.vector(to.monthly(SP5[period])[,4][i]) / start_price,index(to.monthly(SP5[period])[,4][i])))
                 period_length <- append(period_length,i-start_index)
@@ -117,6 +117,8 @@ rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-
 
 library(ggplot2)
 df <- data.frame(d=rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))[,1],f=rbind(merge(wp,rep(1,length(index(wp))),suffixes =c('','p_or_m')),merge(wm,rep(-1,length(index(wm)))))[,6])
+# temporary fix. review codes before this line.
+colnames(df)[2] <- 'p_or_m'
 p <- ggplot(df, aes(x=result,fill=as.character(p_or_m),color=as.character(p_or_m)))
 p <- p + geom_histogram(bins=30,position = "identity", alpha = 0.5)
 # p <- p + scale_color_brewer(palette = "Set2")
