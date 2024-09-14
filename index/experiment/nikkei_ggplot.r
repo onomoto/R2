@@ -81,4 +81,4 @@ paste("nikkei theoretical is ",round(last(df$g),2))
 remove(output.label)
 remove(df)
 
-beep(2)
+beepr::beep(2)

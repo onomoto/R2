@@ -51,4 +51,4 @@ result_nikkei$coefficients[2]*last(SP5)[,4]+result_nikkei$coefficients[3]*as.vec
 # addLegend(legend.loc = "topleft", legend.names = tmp.legend,col=3)
 # remove(tmp.legend)
 
-beep(2)
+beepr::beep(2)
