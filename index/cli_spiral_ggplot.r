@@ -32,4 +32,4 @@ func <- function(s="2011-01-01::",m=5,xts=cli_g20){
   plot(p)
 
 }
-func(s="2012-01-01::",5,xts=cli_g20)
+func(s="2021-01-01::",5,xts=cli_g20)
