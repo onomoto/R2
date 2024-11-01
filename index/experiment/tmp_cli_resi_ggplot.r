@@ -46,11 +46,11 @@ p <- p + scale_x_date(date_breaks = "2 year", date_labels = "%Y")
 # same as above about mapping=
 p <- p + geom_path(aes(y=g),colour='red')
 p <- p + geom_path(aes(y=e),colour='blue')
-p <- p+annotate("text",label=as.character("10%"),x=as.Date("2020-01-01"), y=550,colour='black')
+p <- p+annotate("text",label=as.character("10%"),x=as.Date("2009-11-01"), y=550,colour='black')
 p <- p + geom_hline(yintercept = 250,linewidth=0.5,linetype=1,colour="white",alpha=1)
-p <- p+annotate("text",label=as.character("5%"),x=as.Date("2020-01-01"), y=300,colour='black')
+p <- p+annotate("text",label=as.character("5%"),x=as.Date("2009-11-01"), y=300,colour='black')
 p <- p + geom_hline(yintercept = -250,linewidth=0.5,linetype=1,colour="white",alpha=1)
-p <- p+annotate("text",label=as.character("-5%"),x=as.Date("2020-01-01"), y=-200,colour='black')
+p <- p+annotate("text",label=as.character("-5%"),x=as.Date("2009-11-01"), y=-200,colour='black')
 p <- p + geom_bar(aes(y=r,fill=clidelta),stat = "identity",colour="black") # need identity to draw value itself.
 p <- p + geom_bar(aes(y=r2),stat = "identity",alpha=0.5) # need identity to draw value itself.
 p <- p + theme(axis.title.x=element_blank(),axis.title.y=element_blank())
