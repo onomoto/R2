@@ -2,7 +2,7 @@
 # source('~/R_proj/R/index/nikkei_gspc_jpy.r', echo=TRUE)
 library(beepr)
 source(paste(getwd(),"index/getsp5.r",sep='/'),echo=TRUE)
-source(paste(getwd(),"index/nikkei_gspc_jpy.r",sep='/'),echo=TRUE)
+# source(paste(getwd(),"index/nikkei_gspc_jpy.r",sep='/'),echo=TRUE)
 COV <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
 
 getSymbols("^NDX",src="yahoo",auto.assign=TRUE)

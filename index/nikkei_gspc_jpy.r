@@ -40,10 +40,16 @@ k3
 # getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
 N225 <- NIKKEI225
 
+cbind(apply.monthly(na.omit(N225[k3]),mean,na.rm=T), as.vector(apply.monthly(SP5[k3][,4],mean,na.rm=T)), as.vector(apply.monthly(na.omit(YJUSDJPY)[k3][,4],mean,na.rm=T) )) -> lmdf
+head(lmdf)
+colnames(lmdf) <- c('N225','SP5','USDJPY')
+summary(lm(N225 ~ SP5 + USDJPY,lmdf))
+result_nikkei <- (lm(N225 ~ SP5 + USDJPY,data.frame(lmdf)))
+predict(result_nikkei,newdata=data.frame(SP5=as.vector(last(SP5[,4])),USDJPY=as.vector(last(YJUSDJPY[,4]))),interval='prediction',level=0.95)
 
-result_nikkei <- lm(apply.monthly(na.omit(N225[k3]),mean)  ~  apply.monthly(SP5[k3][,4],mean) + apply.monthly(na.omit(YJUSDJPY)[k3][,4],mean))
+# result_nikkei <- lm(apply.monthly(na.omit(N225[k3]),mean)  ~  apply.monthly(SP5[k3][,4],mean) + apply.monthly(na.omit(YJUSDJPY)[k3][,4],mean))
 # result_nikkei <- lm(to.monthly(N225[k3])[,4] ~  to.monthly(SP5[k3])[,4] + to.monthly(YJUSDJPY[k3])[,4])
-result_nikkei$coefficients[2]*last(SP5)[,4]+result_nikkei$coefficients[3]*as.vector(last(YJUSDJPY)[,4])+result_nikkei$coefficients[1]
+# result_nikkei$coefficients[2]*last(SP5)[,4]+result_nikkei$coefficients[3]*as.vector(last(YJUSDJPY)[,4])+result_nikkei$coefficients[1]
 # plot(merge(as.xts(predict(result_nikkei),index(residuals(result_nikkei))),to.monthly(N225[k3])[,4],residuals(result_nikkei)))
 
 # plot(merge(as.xts(predict(result_nikkei),index(residuals(result_nikkei))),to.monthly(N225[k3])[,4],residuals(result_nikkei)),main=paste(paste("NIKKEI225 =",round(result_nikkei$coefficients[2],4),"* SP5 +",round(result_nikkei$coefficients[3],2),"*USDJPY +",round(result_nikkei$coefficients[1],2))))
