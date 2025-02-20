@@ -40,8 +40,10 @@ df <- data.frame(
   i=as.vector(apply.monthly(na.omit(N225[k3]),mean)),
   # i=as.vector(to.monthly(N225[k3])[,4]),
   g=as.vector(predict(result_nikkei)),
-  r=as.vector(residuals(result_nikkei)[,1]),
-  t=as.Date(index(residuals(result_nikkei)[,1]))
+  r=as.vector(residuals(result_nikkei)),
+  # r=as.vector(residuals(result_nikkei)[,1]),
+  t=as.Date(index(apply.monthly(na.omit(N225[k3]),mean)))
+  # t=as.Date(index(residuals(result_nikkei)[,1]))
 )
 
 colnames(df)[1] <- 'i'
@@ -50,7 +52,9 @@ colnames(df)[3] <- 'r'
 colnames(df)[4] <- 't'
 
 # standardize date in df$t to the last day of each month.
-df$t[length(df$t)] <-  (as.Date(as.yearmon(mondate(last(index(residuals(result_nikkei)[,1])))+1,frac=1))-1)
+df$t[length(df$t)] <- last(lubridate::ceiling_date(df$t,'month'))-1
+# df$t[length(df$t)] <-  (as.Date(as.yearmon(mondate(last(index(residuals(result_nikkei))))+1,frac=1))-1)
+# df$t[length(df$t)] <-  (as.Date(as.yearmon(mondate(last(index(residuals(result_nikkei)[,1])))+1,frac=1))-1)
 
 output.label <- paste("N225 = ",round(result_nikkei$coefficients[2],digits=2)," * SPX + ",round(result_nikkei$coefficients[3],digits=2)," * USDJPY + ",round(result_nikkei$coefficients[1],digits=2),"\nR Squared is ",round(summary(result_nikkei)$r.squared,4)," \nDF is ",round(summary(result_nikkei)$df[2],0),sep=' ')
 # addLegend(legend.loc = "topleft", legend.names = tmp.legend,col=3)
