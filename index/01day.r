@@ -13,6 +13,7 @@ getSymbols("^DJI",src="yahoo",auto.assign=TRUE)
 # lines(merge(tmp.predict[,c(4,6,7)],rep(as.vector(rep(last(SP5[,4]),length(index(tmp.predict))))))[,4],col=4)
 GSPC <- append(GSPC,cbind(SP5["::2006"][,-4],SP5["::2006"][,4]))
 getSymbols("^VIX",src="yahoo",auto.assign=TRUE)
+VIX[!is.na(VIX[,4]),]  -> VIX
 getSymbols("BTC-USD",src="yahoo",auto.assign=TRUE)
 BTC <- `BTC-USD`
 getSymbols("DX-Y.NYB",src="yahoo",auto.assign=TRUE); DXY <- `DX-Y.NYB`; DXY <- DXY[!is.na(DXY[,4]),] # dollar index
