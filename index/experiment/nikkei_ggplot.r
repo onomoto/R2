@@ -19,7 +19,9 @@
 # }
 if(my_update_check(YJUSDJPY,Sys.Date()) == "D"){
   print("DOWNLOAD")
-  getSymbols("YJUSDJPY",auto.assign=TRUE,src="yahooj")
+  # getSymbols("YJUSDJPY",auto.assign=TRUE,src="yahooj")
+  getSymbols("JPY=X",auto.assign = FALSE,from ="2008-04-01")
+  `JPY=X` -> YJUSDJPY
 }
 
 # if(my_update_check(N225,Sys.Date()) == "S"){
