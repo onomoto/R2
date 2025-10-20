@@ -34,7 +34,7 @@ if(my_update_check(N225,Sys.Date()) == "D"){
   # getSymbols("N225",auto.assign=TRUE,src="FRED")
 }
 
-k3 <- paste("2007-01-01", index(last(SP5)),sep="::")
+k3 <- paste("2008-04-01", index(last(SP5)),sep="::")
 
 
 
@@ -77,7 +77,7 @@ p <- p + xlab("") + ylab("")
 # p <- p + geom_point(aes(y=case_per_capita,size=sign,color=r),alpha=1)
 # p <- p+annotate("text",label=pref_db[,1],x=df[,2], y=df[,1]+0.1,colour='black',family = "HiraKakuProN-W3",size=3)
 p <- p + theme_gray (base_family = "HiraKakuPro-W3")
-p <- p+annotate("text",label=output.label,x=as.Date("2007-01-01"), y=max(as.vector(to.monthly(N225[k3])[,4]))*0.9,hjust = 0)
+p <- p+annotate("text",label=output.label,x=as.Date("2008-04-01"), y=max(as.vector(to.monthly(N225[k3])[,4]))*0.9,hjust = 0)
 
 
 plot(p)

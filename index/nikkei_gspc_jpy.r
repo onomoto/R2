@@ -34,7 +34,7 @@ if(my_update_check(N225,Sys.Date()) == "D"){
 
 
 
-k3 <- paste("2007-01-01", index(last(SP5)),sep="::")
+k3 <- paste("2008-04-01", index(last(SP5)),sep="::")
 k3
 # download other data
 # getSymbols("NIKKEI225",src="FRED",auto.assign=TRUE) # download nikkei 225
