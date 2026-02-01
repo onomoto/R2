@@ -23,3 +23,9 @@ if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.
 }else{
   print("A new month  has come. Please update!!!")
 }
+func <- function(xts=GSPC[,4],n=21){
+  return (((xts/lag(xts)) %>% last(.,n) %>% log())**2 %>% sum() %>% multiply_by(.,252/n) %>% sqrt() %>% multiply_by(.,100))
+}
+o <- c(); for(i in seq(22,(dim(GSPC[,4])[1]),1)){o <<- append(o,func(GSPC[,4][21:i])) }
+as.xts(o,last(index(GSPC),length(o))) -> gspc.rv
+last(gspc.rv,5)
