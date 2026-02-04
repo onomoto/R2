@@ -29,3 +29,8 @@ func <- function(xts=GSPC[,4],n=21){
 o <- c(); for(i in seq(22,(dim(GSPC[,4])[1]),1)){o <<- append(o,func(GSPC[,4][21:i])) }
 as.xts(o,last(index(GSPC),length(o))) -> gspc.rv
 last(gspc.rv,5)
+
+# dim(GSPC["::2025-12-31"])[1] = 908263 then 908264 points the first trading day of 2026.
+# o <- c(); for(i in seq(908264,(dim(GSPC[,4])[1]),1)){o <<- append(o,func(GSPC[,4][21:i])) }
+# append(gspc.rv["::2025-12-31"],as.xts(o,last(index(GSPC),length(o)))) -> gspc.rv
+# last(gspc.rv,40)
