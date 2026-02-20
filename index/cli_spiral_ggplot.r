@@ -7,7 +7,7 @@
 #   xts = xts object like cli_xts$oecd,
 #   use like  > func("2001-01-01::",5,cli_xts_$oecd)
 #
-func <- function(s="2011-01-01::",m=5,xts=cli_g20){
+func <- function(s="2011-01-01::",m=5,xts=cli_g20,region="G20"){
 
   head_of_record <- s
   print(head_of_record)
@@ -24,7 +24,8 @@ func <- function(s="2011-01-01::",m=5,xts=cli_g20){
   p <- p + geom_path(alpha=0.5,aes(color=year))
   p <- p + geom_point(alpha=0.9,aes(color=year),size=2)
 # construct and input title info.
-  title <- paste("Composite Leading Indicator ",paste(lag_month," month delta vs. reading",sep=""),sep="")
+  # title <- paste("Composite Leading Indicator ",paste(lag_month," month delta vs. reading",sep=""),sep="")
+  title <- paste0(region," Composite Leading Indicator ",lag_month," month delta vs. reading")
   p <- p + ggtitle(title)
   p <- p + theme(plot.title = element_text(hjust = 0.5))  # position main title at the center
   p <- p + xlab("Delta") + ylab("Composite Leading Indicator")
@@ -32,4 +33,4 @@ func <- function(s="2011-01-01::",m=5,xts=cli_g20){
   plot(p)
 
 }
-func(s="2021-01-01::",5,xts=cli_g20)
+func(s="2021-01-01::",5,xts=cli_g20,region="G20")
