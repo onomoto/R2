@@ -23,6 +23,16 @@ if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.
 }else{
   print("A new month  has come. Please update!!!")
 }
+#
+# delete duplicated entry. from 2026/3, yahoo mistakably added the duplicated entry to GSPC. remove it.
+# 
+if(dim(GSPC[last(index(GSPC))])[1] == 2)
+{   print("the last entry was duplicated!!")
+  GSPC[-1*(dim(GSPC)[1]-1)] ->> GSPC
+}
+#
+# clculate realized volatiility of GSPC.
+#
 func <- function(xts=GSPC[,4],n=21){
   return (((xts/lag(xts)) %>% last(.,n) %>% log())**2 %>% sum() %>% multiply_by(.,252/n) %>% sqrt() %>% multiply_by(.,100))
 }
