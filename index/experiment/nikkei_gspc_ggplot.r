@@ -98,7 +98,7 @@ plot(p)
 output.label
 paste("nikkei theoretical is ", round(last(df$g), 2))
 
-(df$i / df$g) %>% plot.default(., type = "h", x = as.Date(df$t) - 15)
+(df$i / df$g) %>% plot.default(., type = "h", x = as.Date(df$t) - 15,xlab="")
 abline(h = seq(0.85, 1.15, 0.05), lty = 2)
 abline(v = seq(as.Date(lubridate::floor_date(df$t[1], "month")), as.Date(lubridate::floor_date(last(df$t), "month")), by = "years"), lty = 2)
 
