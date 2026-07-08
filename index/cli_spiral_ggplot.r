@@ -16,7 +16,7 @@ func <- function(s="2011-01-01::",m=5,xts=cli_g20,region="G20"){
 # construct data fram for graph
   reading <- as.numeric(xts[head_of_record])
   delta <- as.numeric(na.omit(diff(xts,lag_month)[head_of_record]))
-  year <- as.character(year(index(na.omit(diff(xts,lag_month)[head_of_record]))))
+  year <- as.character(lubridate::year(index(na.omit(diff(xts,lag_month)[head_of_record]))))
   df <- data.frame(y=reading,x=delta,c=year)
 # draw and input graph info
   p <- ggplot(df, aes(x=x,y=y))
