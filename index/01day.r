@@ -18,12 +18,19 @@ getSymbols("BTC-USD",src="yahoo",auto.assign=TRUE)
 BTC <- `BTC-USD`
 getSymbols("DX-Y.NYB",src="yahoo",auto.assign=TRUE); DXY <- `DX-Y.NYB`; DXY <- DXY[!is.na(DXY[,4]),] # dollar index
 
-if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.monthly(SP5))[,c(1,2,3,4,5)])){
-  tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)] <- last(to.monthly(SP5))[,c(1,2,3,4,5)]
-}else{
-  print("A new month  has come. Please update!!!")
-}
+# if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.monthly(SP5))[,c(1,2,3,4,5)])){
+#   tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)] <- last(to.monthly(SP5))[,c(1,2,3,4,5)]
+# }else{
+#   print("A new month  has come. Please update!!!")
+# }
 #
+if(exists("temp.direct")){
+    if(index(tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)]) == index(last(to.monthly(SP5))[,c(1,2,3,4,5)])){
+        tmp.predict[length(index(tmp.predict)),c(1,2,3,4,5)] <- last(to.monthly(SP5))[,c(1,2,3,4,5)]
+    }else{
+        print("A new month  has come. Please update!!!")
+    }
+}   
 # delete duplicated entry. from 2026/3, yahoo mistakably added the duplicated entry to GSPC. remove it.
 # 
 if(dim(GSPC[last(index(GSPC))])[1] == 2)
