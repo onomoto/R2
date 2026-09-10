@@ -4,6 +4,7 @@ library(beepr)
 source(paste(getwd(),"index/getsp5.r",sep='/'),echo=TRUE)
 # source(paste(getwd(),"index/nikkei_gspc_jpy.r",sep='/'),echo=TRUE)
 COV <- apply.monthly(SP5[,4],sd)/apply.monthly(SP5[,4],mean)
+GSPC[!is.na(GSPC[,4])] -> GSPC
 
 getSymbols("^NDX",src="yahoo",auto.assign=TRUE)
 getSymbols("^TNX",src="yahoo",auto.assign=TRUE)
